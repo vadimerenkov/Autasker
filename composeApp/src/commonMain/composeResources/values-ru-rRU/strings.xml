@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="save">Сохранить</string>
+    <string name="cancel">Отмена</string>
+    <string name="add_title">Добавить заголовок...</string>
+    <string name="add_description">Описание...</string>
+    <string name="new_subtask">Добавить подзадачу...</string>
+    <string name="title">Заголовок</string>
+    <string name="description">Описание</string>
+    <string name="subtask_title">Заголовок подзадачи</string>
+    <string name="date">Дата</string>
+    <string name="time">Время</string>
+    <string name="repeat">Повторять</string>
+    <string name="today">Сегодня</string>
+    <string name="tomorrow">Завтра</string>
+    <string name="yesterday">Вчера</string>
+    <string name="new_task">Новая задача</string>
+    <string name="edit_task">Редактировать задачу</string>
+    <string name="set_default">Назначить по умолчанию</string>
+    <string name="delete_column">Удалить колонку</string>
+    <string name="delete_task">Удалить задачу</string>
+    <string name="completed_on">выполнено</string>
+    <string name="period_in">через</string>
+    <string name="period_ago">назад</string>
+    <string name="importance">Важность:</string>
+    <string name="normal">обычная</string>
+    <string name="high">повышенная</string>
+    <string name="very_high">высокая</string>
+    <string name="critical">критическая</string>
+    <string name="no_tasks">На %1$s нет задач.</string>
+    <string name="all_completed">Все задачи выполнены на %1$s!</string>
+    <string name="move_to">Переместить в...</string>
+    <string name="unnamed_column">безымянная колонка</string>
+    <string name="end_of_day_time">Время конца дня</string>
+    <string name="auto_delete_from_trash">Автоматически удалять задачи из корзины</string>
+    <string name="after_deletion">после удаления.</string>
+    <string name="auto_delete_completed">Автоматически удалять выполненные задачи</string>
+    <string name="after_completion">после выполнения.</string>
+    <string name="first_day_of_week">Первый день недели</string>
+    <string name="tasks">Задачи</string>
+    <string name="settings">Настройки</string>
+    <string name="about">О программе</string>
+    <string name="trash">Корзина</string>
+    <string name="no_items_bin">В корзине пусто.</string>
+    <string name="clear_bin">Очистить корзину</string>
+    <string name="new_column">+ Добавить колонку</string>
+    <string name="set_for_today">Назначить на сегодня</string>
+    <string name="set_for_tomorrow">Назначить на завтра</string>
+    <string name="clear_date">Очистить дату</string>
+    <string name="language">Язык</string>
+    <string name="close_to_tray">Сворачивать в трей вместо закрытия</string>
+    <string name="reminders">Напоминания</string>
+    <string name="show_completed">Показать выполненные задачи</string>
+    <string name="hide_completed">Свернуть выполненные задачи</string>
+    <string name="precisely_time">точно вовремя</string>
+    <string name="time_before">за %1$s %2$s</string>
+    <string name="same_day">в тот же день</string>
+    <string name="auto_launch">Запускать Autasker вместе с системой</string>
+    <string name="day_is_over">День закончился: %1$s! Вы выполнили эти задачи вчера?</string>
+    <string name="what_tasks_today">Что бы вы хотели сделать сегодня?</string>
+    <string name="add_reminder">+ Добавить напоминание</string>
+    <string name="choose_time">Выберите время</string>
+    <string name="start_new_day">Начать новый день</string>
+    <string name="previous">Назад</string>
+    <string name="finish">Готово</string>
+    <string name="next">Дальше</string>
+    <string name="date_format">Формат даты</string>
+    <string name="main">Главная</string>
+    <string name="new_tab">Новая вкладка</string>
+    <string name="support_developer">Поддержать разработчика</string>
+    <string name="rename_tab">Переименовать вкладку</string>
+    <string name="delete_tab">Удалить вкладку</string>
+    <string name="sort_by">Сортировать по...</string>
+
+
+    <string name="theme">Тема</string>
+    <string name="light_theme">Светлая</string>
+    <string name="dark_theme">Тёмная</string>
+    <string name="device_theme">Как на устройстве</string>
+
+    <string name="12_hour">12-часовой</string>
+    <string name="24_hour">24-часовой</string>
+    <string name="time_format">Формат времени</string>
+
+    <string name="mode_completion">После даты выполнения</string>
+    <string name="mode_completion_desc">Следующая задача будет создана через %1$s после даты выполнения.</string>
+
+    <string name="mode_exact">После изначальной даты</string>
+    <string name="mode_exact_desc">Следующая задача будет создана через %1$s после изначальной даты, если эта была выполнена.</string>
+
+    <string name="mode_forgiving">Всегда с заменой</string>
+    <string name="mode_forgiving_desc">Новые задачи всегда будут создаваться, но они заменят предыдущие, если они не были выполнены.</string>
+
+    <string name="mode_always">Всегда</string>
+    <string name="mode_always_desc">Следующие задачи будут создаваться всегда, независимо от выполнения предыдущих.</string>
+
+    <plurals name="every">
+        <item quantity="one">каждый</item>
+        <item quantity="few">каждые</item>
+        <item quantity="many">каждые</item>
+    </plurals>
+    <plurals name="minute">
+        <item quantity="one">минута</item>
+        <item quantity="few">минуты</item>
+        <item quantity="many">минут</item>
+    </plurals>
+    <plurals name="hour">
+        <item quantity="one">час</item>
+        <item quantity="few">часа</item>
+        <item quantity="many">часов</item>
+    </plurals>
+    <plurals name="day">
+        <item quantity="one">день</item>
+        <item quantity="few">дня</item>
+        <item quantity="many">дней</item>
+    </plurals>
+    <plurals name="week">
+        <item quantity="one">неделя</item>
+        <item quantity="few">недели</item>
+        <item quantity="many">недель</item>
+    </plurals>
+    <plurals name="month">
+        <item quantity="one">месяц</item>
+        <item quantity="few">месяца</item>
+        <item quantity="many">месяцев</item>
+    </plurals>
+    <plurals name="year">
+        <item quantity="one">год</item>
+        <item quantity="few">года</item>
+        <item quantity="many">лет</item>
+    </plurals>
+</resources>
