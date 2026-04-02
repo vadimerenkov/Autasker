@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationRail
@@ -13,6 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation3.runtime.NavKey
 import autasker.composeapp.generated.resources.Res
+import autasker.composeapp.generated.resources.about
 import autasker.composeapp.generated.resources.settings
 import autasker.composeapp.generated.resources.tasks
 import autasker.composeapp.generated.resources.trash
@@ -76,6 +78,25 @@ fun MainNavigationRail(
 			label = {
 				Text(
 					text = stringResource(Res.string.settings)
+				)
+			}
+		)
+		NavigationRailItem(
+			selected = backstack.lastOrNull() == AboutRoute,
+			onClick = {
+				if (backstack.lastOrNull() != AboutRoute) {
+					backstack.add(AboutRoute)
+				}
+			},
+			icon = {
+				Icon(
+					imageVector = Icons.Default.Info,
+					contentDescription = null
+				)
+			},
+			label = {
+				Text(
+					text = stringResource(Res.string.about)
 				)
 			}
 		)

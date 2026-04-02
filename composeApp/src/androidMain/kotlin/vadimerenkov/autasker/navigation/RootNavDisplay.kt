@@ -7,8 +7,10 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBarsPadding
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
@@ -31,6 +33,7 @@ import androidx.navigation3.ui.NavDisplay
 import androidx.window.core.layout.WindowSizeClass
 import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.parameter.parametersOf
+import vadimerenkov.autasker.presentation.about.AboutScreen
 import vadimerenkov.autasker.presentation.bin.BinScreen
 import vadimerenkov.autasker.presentation.main.MainScreen
 import vadimerenkov.autasker.presentation.main.MainViewModel
@@ -124,6 +127,13 @@ private fun NavigationRailNavDisplay(
 							.padding(16.dp)
 					)
 				}
+				entry<AboutRoute> {
+					AboutScreen(
+						modifier = Modifier
+							.fillMaxSize()
+							.wrapContentSize()
+					)
+				}
 			}
 		)
 	}
@@ -165,6 +175,13 @@ private fun FoldedDrawerNavDisplay(
 					    modifier = Modifier
 						    .padding(16.dp)
 				    )
+			    }
+			    entry<AboutRoute> {
+				    AboutScreen(
+						modifier = Modifier
+							.fillMaxSize()
+							.wrapContentSize()
+					)
 			    }
 		    }
 	    )

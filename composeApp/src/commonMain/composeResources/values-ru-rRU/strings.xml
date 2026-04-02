@@ -71,7 +71,7 @@
     <string name="rename_tab">Переименовать вкладку</string>
     <string name="delete_tab">Удалить вкладку</string>
     <string name="sort_by">Сортировать по...</string>
-
+    <string name="source_code">Исходный код</string>
 
     <string name="theme">Тема</string>
     <string name="light_theme">Светлая</string>

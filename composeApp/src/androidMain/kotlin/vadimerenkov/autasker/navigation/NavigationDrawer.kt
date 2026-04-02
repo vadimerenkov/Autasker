@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.widthIn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.DrawerValue
@@ -29,6 +30,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation3.runtime.NavBackStack
 import androidx.navigation3.runtime.NavKey
 import autasker.composeapp.generated.resources.Res
+import autasker.composeapp.generated.resources.about
 import autasker.composeapp.generated.resources.settings
 import autasker.composeapp.generated.resources.tasks
 import autasker.composeapp.generated.resources.trash
@@ -141,6 +143,27 @@ fun FoldedNavigationDrawer(
 						onClick = {
 							coroutineScope.launch {
 								backstack.add(SettingsRoute)
+								drawerState.close()
+							}
+						}
+					)
+					NavigationDrawerItem(
+						label = {
+							Text(
+								text = stringResource(Res.string.about),
+								fontSize = 18.sp
+							)
+						},
+						icon = {
+							Icon(
+								imageVector = Icons.Default.Info,
+								contentDescription = null
+							)
+						},
+						selected = backstack.last() == AboutRoute,
+						onClick = {
+							coroutineScope.launch {
+								backstack.add(AboutRoute)
 								drawerState.close()
 							}
 						}

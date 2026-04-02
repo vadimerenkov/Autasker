@@ -33,6 +33,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.input.pointer.PointerEventType
 import androidx.compose.ui.input.pointer.onPointerEvent
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Window
@@ -78,8 +79,6 @@ import vadimerenkov.autasker.presentation.task_edit.TaskEditViewModel
 import vadimerenkov.autasker.presentation.task_edit.calendar.DateTimeScreen
 import vadimerenkov.autasker.presentation.windows.CommonWindow
 import vadimerenkov.autasker.settings.SettingsScreen
-import java.awt.Desktop
-import java.net.URI
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
@@ -87,6 +86,7 @@ fun RootNavDisplay(
 	sendNotification: () -> Unit
 ) {
 	val backstack = remember { mutableStateListOf<NavKey>(MainScreenRoute) }
+	val uriHandler = LocalUriHandler.current
 	val link = stringResource(Res.string.kofi_link)
 	Column {
 		TitleBar(
@@ -104,8 +104,7 @@ fun RootNavDisplay(
 				MenuAction(
 					text = stringResource(Res.string.support_developer)
 				) {
-					val desktop = Desktop.getDesktop()
-					desktop.browse(URI.create(link))
+					uriHandler.openUri(link)
 				}
 //				MenuAction(
 //					text = "New day (hack)"
