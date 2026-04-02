@@ -34,6 +34,7 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.input.pointer.PointerEventType
 import androidx.compose.ui.input.pointer.onPointerEvent
 import androidx.compose.ui.platform.LocalUriHandler
+import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Window
@@ -216,6 +217,7 @@ fun RootNavDisplay(
 					entry<AboutRoute>(metadata = dialog()) {
 						CommonWindow(
 							title = stringResource(Res.string.about),
+							size = DpSize(400.dp, 400.dp),
 							onCloseRequest = { backstack.remove(AboutRoute) }
 						) {
 							AboutScreen()
@@ -224,6 +226,7 @@ fun RootNavDisplay(
 					entry<SettingsRoute>(metadata = dialog()) {
 						CommonWindow(
 							title = stringResource(Res.string.settings),
+							size = DpSize(800.dp, 1000.dp),
 							onCloseRequest = { backstack.remove(SettingsRoute) }
 						) {
 							val scrollState = rememberScrollState()
@@ -291,6 +294,7 @@ private fun EditNavDisplay(
 			entry<TaskEditRoute> {
 				CommonWindow(
 					title = stringResource(Res.string.edit_task),
+					size = DpSize(800.dp, 800.dp),
 					onCloseRequest = onCancel
 				) {
 					TaskEditScreen(
