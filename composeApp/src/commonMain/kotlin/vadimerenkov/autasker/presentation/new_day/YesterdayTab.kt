@@ -15,7 +15,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import autasker.composeapp.generated.resources.Res
+import autasker.composeapp.generated.resources.completed
 import autasker.composeapp.generated.resources.day_is_over
+import autasker.composeapp.generated.resources.set_for_today
 import org.jetbrains.compose.resources.stringResource
 import vadimerenkov.autasker.domain.Task
 import vadimerenkov.autasker.domain.Time
@@ -66,7 +68,7 @@ internal fun YesterdayTab(
 							}
 						)
 						Text(
-							text = "Completed"
+							text = stringResource(Res.string.completed)
 						)
 					}
 					val isToday = task.dueDate?.toLocalDate() == Time.today()
@@ -85,7 +87,7 @@ internal fun YesterdayTab(
 							}
 						)
 						Text(
-							text = "Set for today"
+							text = stringResource(Res.string.set_for_today)
 						)
 					}
 					HorizontalDivider()
