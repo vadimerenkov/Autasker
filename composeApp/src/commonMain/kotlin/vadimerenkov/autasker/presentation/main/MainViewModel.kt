@@ -258,7 +258,7 @@ class MainViewModel(
 //				backstack.add(EditGraph(null, action.categoryId))
 //				println("Added edit graph to backstack $backstack")
 			}
-			is MainAction.OnClick -> {
+			is MainAction.OnTaskClick -> {
 				backstack.add(EditGraph(action.id))
 			}
 			is MainAction.ReorderTasks -> {
@@ -309,7 +309,7 @@ class MainViewModel(
 			}
 			is MainAction.NewTabClick -> {
 				viewModelScope.launch {
-					repository.savePage(Page())
+					repository.savePage(Page(index = state.pages.size + 1))
 				}
 			}
 			is MainAction.OnTabClick -> {

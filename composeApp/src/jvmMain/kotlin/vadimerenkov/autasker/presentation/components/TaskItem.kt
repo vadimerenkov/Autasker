@@ -123,7 +123,7 @@ actual fun TaskItem(
 				)
 				.combinedClickable(
 					onClick = {
-						onAction(MainAction.OnClick(task.id))
+						onAction(MainAction.OnTaskClick(task.id))
 					}
 				)
 				.padding(12.dp)

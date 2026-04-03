@@ -10,7 +10,7 @@ sealed interface MainAction {
 		val id: Long,
 		val isChecked: Boolean
 	): MainAction
-	data class OnClick(val id: Long): MainAction
+	data class OnTaskClick(val id: Long): MainAction
 	data class NewTaskClick(val categoryId: Long): MainAction
 	data object NewColumnClick: MainAction
 	data class DeleteColumn(val id: Long): MainAction

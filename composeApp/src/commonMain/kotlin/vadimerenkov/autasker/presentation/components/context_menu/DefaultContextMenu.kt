@@ -37,7 +37,7 @@ fun DefaultContextMenu(
 				)
 			},
 			onClick = {
-				onAction(MainAction.OnClick(task.id))
+				onAction(MainAction.OnTaskClick(task.id))
 			}
 		)
 		DropdownMenuItem(

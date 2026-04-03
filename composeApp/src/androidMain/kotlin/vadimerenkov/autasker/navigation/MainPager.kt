@@ -32,6 +32,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -44,12 +45,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import autasker.composeapp.generated.resources.Res
 import autasker.composeapp.generated.resources.all_completed
+import autasker.composeapp.generated.resources.edit_tabs
 import autasker.composeapp.generated.resources.new_column
 import autasker.composeapp.generated.resources.new_tab
 import autasker.composeapp.generated.resources.new_task
 import autasker.composeapp.generated.resources.no_tasks
 import autasker.composeapp.generated.resources.today
 import autasker.composeapp.generated.resources.tomorrow
+import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 import vadimerenkov.autasker.domain.TaskCategory
@@ -172,6 +175,7 @@ private fun MainPagerRoot(
 	) + state.categories).filter { it.pageId == state.pages.getOrNull(state.selectedTabIndex)?.id }
 
 	val pagerState = rememberPagerState() { categories.size + 1 }
+	val scope = rememberCoroutineScope()
 
 
 	Scaffold(
@@ -197,7 +201,17 @@ private fun MainPagerRoot(
 						PageTab(
 							page = page,
 							state = state,
-							onTaskAction = onAction
+							onTaskAction = { action ->
+								when (action) {
+									is MainAction.OnTabClick -> {
+										scope.launch {
+											pagerState.scrollToPage(0)
+										}
+									}
+									else -> Unit
+								}
+								onAction(action)
+							}
 						)
 					}
 					IconButton(
@@ -219,7 +233,7 @@ private fun MainPagerRoot(
 					) {
 						Icon(
 							imageVector = Icons.Default.Settings,
-							contentDescription = "CONFIGURE TABS"
+							contentDescription = stringResource(Res.string.edit_tabs)
 						)
 					}
 				}
