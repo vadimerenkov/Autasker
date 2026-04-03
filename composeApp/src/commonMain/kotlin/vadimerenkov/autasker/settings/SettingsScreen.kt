@@ -43,7 +43,6 @@ import autasker.composeapp.generated.resources.auto_delete_from_trash
 import autasker.composeapp.generated.resources.auto_launch
 import autasker.composeapp.generated.resources.close_to_tray
 import autasker.composeapp.generated.resources.date_format
-import autasker.composeapp.generated.resources.day
 import autasker.composeapp.generated.resources.end_of_day_time
 import autasker.composeapp.generated.resources.first_day_of_week
 import autasker.composeapp.generated.resources.language
@@ -52,9 +51,10 @@ import autasker.composeapp.generated.resources.theme
 import autasker.composeapp.generated.resources.time_format
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.getString
-import org.jetbrains.compose.resources.pluralStringResource
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
+import vadimerenkov.autasker.domain.Period
+import vadimerenkov.autasker.domain.toLocalizedString
 import vadimerenkov.autasker.getPlatform
 import vadimerenkov.autasker.presentation.components.IntNumberInputField
 import vadimerenkov.autasker.presentation.theme.AutaskerTheme
@@ -178,7 +178,7 @@ private fun SettingsScreenRoot(
 						.widthIn(max = 100.dp)
 				)
 				Text(
-					text = pluralStringResource(Res.plurals.day, state.daysUntilDeleteCompleted.toInt()),
+					text = Period.DAY.toLocalizedString(state.daysUntilDeleteCompleted.toInt()),
 					color = MaterialTheme.colorScheme.onBackground
 				)
 				Text(
@@ -220,7 +220,7 @@ private fun SettingsScreenRoot(
 						.widthIn(max = 100.dp)
 				)
 				Text(
-					text = pluralStringResource(Res.plurals.day, state.daysUntilDeleteFromTrash.toInt()),
+					text = Period.DAY.toLocalizedString(state.daysUntilDeleteFromTrash.toInt()),
 					color = MaterialTheme.colorScheme.onBackground
 				)
 				Text(

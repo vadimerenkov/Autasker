@@ -112,33 +112,28 @@
     <string name="mode_always">Always</string>
     <string name="mode_always_desc">The next tasks will always be created regardless of the state of completion.</string>
 
-
-    <plurals name="every">
-        <item quantity="one">every</item>
-        <item quantity="other">every</item>
+    <plurals name="every_minute">
+        <item quantity="one">every %1$s minute</item>
+        <item quantity="other">every %1$s minutes</item>
     </plurals>
-    <plurals name="minute">
-        <item quantity="one">minute</item>
-        <item quantity="other">minutes</item>
+    <plurals name="every_hour">
+        <item quantity="one">every %1$s hour</item>
+        <item quantity="other">every %1$s hours</item>
     </plurals>
-    <plurals name="hour">
-        <item quantity="one">hour</item>
-        <item quantity="other">hours</item>
+    <plurals name="every_day">
+        <item quantity="one">every %1$s day</item>
+        <item quantity="other">every %1$s days</item>
     </plurals>
-    <plurals name="day">
-        <item quantity="one">day</item>
-        <item quantity="other">days</item>
+    <plurals name="every_week">
+        <item quantity="one">every %1$s week</item>
+        <item quantity="other">every %1$s weeks</item>
     </plurals>
-    <plurals name="week">
-        <item quantity="one">week</item>
-        <item quantity="other">weeks</item>
+    <plurals name="every_month">
+        <item quantity="one">every %1$s month</item>
+        <item quantity="other">every %1$s months</item>
     </plurals>
-    <plurals name="month">
-        <item quantity="one">month</item>
-        <item quantity="other">months</item>
-    </plurals>
-    <plurals name="year">
-        <item quantity="one">year</item>
-        <item quantity="other">years</item>
+    <plurals name="every_year">
+        <item quantity="one">every %1$s year</item>
+        <item quantity="other">every %1$s years</item>
     </plurals>
 </resources>

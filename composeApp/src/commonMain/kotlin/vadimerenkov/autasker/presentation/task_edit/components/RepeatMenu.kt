@@ -30,13 +30,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import autasker.composeapp.generated.resources.Res
-import autasker.composeapp.generated.resources.every
-import org.jetbrains.compose.resources.pluralStringResource
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.koinInject
 import vadimerenkov.autasker.domain.Period
 import vadimerenkov.autasker.domain.RepeatMode
+import vadimerenkov.autasker.domain.getWordEvery
 import vadimerenkov.autasker.domain.toLocalizedString
 import vadimerenkov.autasker.presentation.components.IntNumberInputField
 import vadimerenkov.autasker.presentation.task_edit.TaskEditAction
@@ -52,7 +50,7 @@ fun RepeatMenu(
 	state: DateTimeState,
 	onAction: (TaskEditAction) -> Unit
 ) {
-	val every = pluralStringResource(Res.plurals.every, (state.times ?: 2).toInt())
+	val every = state.period?.getWordEvery(state.times?.toInt() ?: 0 )
 	Column(
 		verticalArrangement = Arrangement.spacedBy(8.dp)
 	) {
@@ -61,7 +59,7 @@ fun RepeatMenu(
 			modifier = Modifier
 		) {
 			Text(
-				text = every,
+				text = every ?: Period.DAY.getWordEvery(state.times?.toInt() ?: 0),
 				color = MaterialTheme.colorScheme.onBackground
 			)
 			IntNumberInputField(

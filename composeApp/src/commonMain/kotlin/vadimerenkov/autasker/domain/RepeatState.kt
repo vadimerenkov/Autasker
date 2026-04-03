@@ -2,13 +2,11 @@ package vadimerenkov.autasker.domain
 
 import androidx.compose.runtime.Composable
 import autasker.composeapp.generated.resources.Res
-import autasker.composeapp.generated.resources.every
 import autasker.composeapp.generated.resources.mode_completion
 import autasker.composeapp.generated.resources.mode_completion_desc
 import autasker.composeapp.generated.resources.mode_exact
 import autasker.composeapp.generated.resources.mode_exact_desc
 import org.jetbrains.compose.resources.StringResource
-import org.jetbrains.compose.resources.pluralStringResource
 import java.time.DayOfWeek
 
 data class RepeatState(
@@ -46,7 +44,7 @@ enum class RepeatMode(
 
 @Composable
 fun RepeatState.formatted(): String {
-	val every = pluralStringResource(Res.plurals.every, times.toInt())
+	val every = period.getWordEvery(times.toInt())
 	val period = period.toLocalizedString(times.toInt())
 	return if (times == 1L) "$every $period" else "$every $times $period"
 }

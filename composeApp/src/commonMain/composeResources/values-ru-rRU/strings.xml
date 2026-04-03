@@ -96,39 +96,34 @@
     <string name="mode_always">Всегда</string>
     <string name="mode_always_desc">Следующие задачи будут создаваться всегда, независимо от выполнения предыдущих.</string>
 
-    <plurals name="every">
-        <item quantity="one">каждый</item>
-        <item quantity="few">каждые</item>
-        <item quantity="many">каждые</item>
+    <plurals name="every_minute">
+        <item quantity="one">каждую %1$s минуту</item>
+        <item quantity="few">каждые %1$s минуты</item>
+        <item quantity="many">каждые %1$s минут</item>
     </plurals>
-    <plurals name="minute">
-        <item quantity="one">минута</item>
-        <item quantity="few">минуты</item>
-        <item quantity="many">минут</item>
+    <plurals name="every_hour">
+        <item quantity="one">каждый %1$s час</item>
+        <item quantity="few">каждые %1$s часа</item>
+        <item quantity="many">каждые %1$s часов</item>
     </plurals>
-    <plurals name="hour">
-        <item quantity="one">час</item>
-        <item quantity="few">часа</item>
-        <item quantity="many">часов</item>
+    <plurals name="every_day">
+        <item quantity="one">каждый %1$s день</item>
+        <item quantity="few">каждые %1$s дня</item>
+        <item quantity="many">каждые %1$s дней</item>
     </plurals>
-    <plurals name="day">
-        <item quantity="one">день</item>
-        <item quantity="few">дня</item>
-        <item quantity="many">дней</item>
+    <plurals name="every_week">
+        <item quantity="one">каждую %1$s неделю</item>
+        <item quantity="few">каждые %1$s недели</item>
+        <item quantity="many">каждые %1$s недель</item>
     </plurals>
-    <plurals name="week">
-        <item quantity="one">неделя</item>
-        <item quantity="few">недели</item>
-        <item quantity="many">недель</item>
+    <plurals name="every_month">
+        <item quantity="one">каждый %1$s месяц</item>
+        <item quantity="few">каждые %1$s месяца</item>
+        <item quantity="many">каждые %1$s месяцев</item>
     </plurals>
-    <plurals name="month">
-        <item quantity="one">месяц</item>
-        <item quantity="few">месяца</item>
-        <item quantity="many">месяцев</item>
-    </plurals>
-    <plurals name="year">
-        <item quantity="one">год</item>
-        <item quantity="few">года</item>
-        <item quantity="many">лет</item>
+    <plurals name="every_year">
+        <item quantity="one">каждый %1$s год</item>
+        <item quantity="few">каждые %1$s года</item>
+        <item quantity="many">каждые %1$s лет</item>
     </plurals>
 </resources>

@@ -32,6 +32,7 @@ fun PeriodTextBoxMenu(
 		onExpandedChange = onExpandedChange,
 		modifier = modifier
 	) {
+
 		TextField(
 			value = period?.toLocalizedString(times)
 				?: "",
