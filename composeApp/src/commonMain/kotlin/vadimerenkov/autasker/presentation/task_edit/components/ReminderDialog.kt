@@ -3,7 +3,7 @@ package vadimerenkov.autasker.presentation.task_edit.components
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -21,12 +21,14 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
+import autasker.composeapp.generated.resources.Res
+import autasker.composeapp.generated.resources.remind_before
+import org.jetbrains.compose.resources.stringResource
 import vadimerenkov.autasker.domain.Period
 import vadimerenkov.autasker.domain.reminders.Reminder
 import vadimerenkov.autasker.presentation.components.ButtonsRow
@@ -62,12 +64,12 @@ fun ReminderDialog(
 				.background(MaterialTheme.colorScheme.background)
 				.padding(16.dp)
 		) {
-			Row(
-				verticalAlignment = Alignment.CenterVertically,
+			FlowRow(
+				verticalArrangement = Arrangement.Center,
 				horizontalArrangement = Arrangement.spacedBy(16.dp),
 			) {
 				Text(
-					text = "Remind before"
+					text = stringResource(Res.string.remind_before)
 				)
 				IntNumberInputField(
 					value = number,

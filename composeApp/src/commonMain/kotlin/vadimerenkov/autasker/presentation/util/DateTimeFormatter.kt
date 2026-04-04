@@ -67,7 +67,7 @@ object ComposableDateFormatter {
 				value = (duration.inWholeDays / 30.0).roundToInt()
 				Period.MONTH
 			}
-			duration.inWholeHours.absoluteValue >= 48 -> {
+			duration.inWholeHours.absoluteValue >= 24 -> {
 				value = (duration.inWholeHours / 24.0).roundToInt()
 				Period.DAY
 			}
@@ -81,28 +81,29 @@ object ComposableDateFormatter {
 			}
 		}
 
-		return if (isAllDay && (period == Period.MINUTE || period == Period.HOUR)) {
-			formatWholeDayDate(date)
+		return if (isAllDay) {
+			val today = stringResource(Res.string.today).lowercase()
+			val tomorrow = stringResource(Res.string.tomorrow).lowercase()
+			val yesterday = stringResource(Res.string.yesterday).lowercase()
+
+			when {
+				date.toLocalDate().equals(Time.today()) -> today
+				date.toLocalDate().equals(Time.tomorrow()) -> tomorrow
+				date.toLocalDate().equals(Time.yesterday()) -> yesterday
+				else -> {
+					if (value >= 0) {
+						"$in_string $value ${period.toLocalizedString(value)}"
+					} else {
+						"${value.absoluteValue} ${period.toLocalizedString(value.absoluteValue)} $ago_string"
+					}
+				}
+			}
 		} else {
 			if (value >= 0) {
 				"$in_string $value ${period.toLocalizedString(value)}"
 			} else {
 				"${value.absoluteValue} ${period.toLocalizedString(value.absoluteValue)} $ago_string"
 			}
-		}
-	}
-
-	@Composable
-	private fun formatWholeDayDate(date: ZonedDateTime): String {
-		val today = stringResource(Res.string.today)
-		val tomorrow = stringResource(Res.string.tomorrow)
-		val yesterday = stringResource(Res.string.yesterday)
-
-		return when {
-			date.toLocalDate().equals(Time.today()) -> today
-			date.toLocalDate().equals(Time.tomorrow()) -> tomorrow
-			date.toLocalDate().equals(Time.yesterday()) -> yesterday
-			else -> "?"
 		}
 	}
 }

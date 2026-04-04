@@ -75,6 +75,7 @@
     <string name="edit_tabs">Edit tabs</string>
     <string name="source_code">Source code</string>
     <string name="completed">Completed</string>
+    <string name="remind_before">Remind before</string>
 
     <string name="language">Language</string>
     <string name="english">English</string>

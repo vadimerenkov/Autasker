@@ -73,6 +73,7 @@
     <string name="sort_by">Сортировать по...</string>
     <string name="source_code">Исходный код</string>
     <string name="completed">Выполнено</string>
+    <string name="remind_before">Напомнить за</string>
 
 
     <string name="theme">Тема</string>

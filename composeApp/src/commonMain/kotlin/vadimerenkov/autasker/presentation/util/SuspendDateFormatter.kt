@@ -50,26 +50,28 @@ object SuspendDateFormatter {
 		}
 
 		return if (isAllDay && (period == Period.MINUTE || period == Period.HOUR)) {
-			formatWholeDayDate(date)
+			val today = getString(Res.string.today)
+			val tomorrow = getString(Res.string.tomorrow)
+			val yesterday = getString(Res.string.yesterday)
+
+			when {
+				date.toLocalDate().equals(Time.today()) -> today
+				date.toLocalDate().equals(Time.tomorrow()) -> tomorrow
+				date.toLocalDate().equals(Time.yesterday()) -> yesterday
+				else -> {
+					if (value >= 0) {
+						"$in_string $value ${period.getLocalizedString(value)}"
+					} else {
+						"${value.absoluteValue} ${period.getLocalizedString(value.absoluteValue)} $ago_string"
+					}
+				}
+			}
 		} else {
 			if (value >= 0) {
 				"$in_string $value ${period.getLocalizedString(value)}"
 			} else {
 				"${value.absoluteValue} ${period.getLocalizedString(value.absoluteValue)} $ago_string"
 			}
-		}
-	}
-
-	private suspend fun formatWholeDayDate(date: ZonedDateTime): String {
-		val today = getString(Res.string.today)
-		val tomorrow = getString(Res.string.tomorrow)
-		val yesterday = getString(Res.string.yesterday)
-
-		return when {
-			date.toLocalDate().equals(Time.today()) -> today
-			date.toLocalDate().equals(Time.tomorrow()) -> tomorrow
-			date.toLocalDate().equals(Time.yesterday()) -> yesterday
-			else -> "?"
 		}
 	}
 }
