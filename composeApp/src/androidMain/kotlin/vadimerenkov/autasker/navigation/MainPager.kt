@@ -1,5 +1,6 @@
 package vadimerenkov.autasker.navigation
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.background
@@ -176,6 +177,15 @@ private fun MainPagerRoot(
 
 	val pagerState = rememberPagerState() { categories.size + 1 }
 	val scope = rememberCoroutineScope()
+
+	BackHandler(pagerState.currentPage != 0 || state.selectedTabIndex != 0) {
+		scope.launch {
+			when {
+				state.selectedTabIndex != 0 -> onAction(MainAction.OnTabClick(0))
+				pagerState.currentPage != 0 -> pagerState.animateScrollToPage(0)
+			}
+		}
+	}
 
 
 	Scaffold(

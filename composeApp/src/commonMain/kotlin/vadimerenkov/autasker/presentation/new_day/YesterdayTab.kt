@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.HorizontalDivider
@@ -57,6 +58,7 @@ internal fun YesterdayTab(
 					Row(
 						verticalAlignment = Alignment.CenterVertically,
 						modifier = Modifier
+							.fillMaxWidth()
 							.clickable {
 								onCompletedClick(task.id)
 							}
@@ -75,6 +77,7 @@ internal fun YesterdayTab(
 					Row(
 						verticalAlignment = Alignment.CenterVertically,
 						modifier = Modifier
+							.fillMaxWidth()
 							.clickable {
 								onSetTodayClick(task.id, !isToday)
 							}
