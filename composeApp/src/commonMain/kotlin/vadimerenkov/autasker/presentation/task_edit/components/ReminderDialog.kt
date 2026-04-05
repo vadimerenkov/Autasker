@@ -21,6 +21,7 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
@@ -34,6 +35,7 @@ import vadimerenkov.autasker.domain.reminders.Reminder
 import vadimerenkov.autasker.presentation.components.ButtonsRow
 import vadimerenkov.autasker.presentation.components.IntNumberInputField
 import vadimerenkov.autasker.presentation.task_edit.TaskEditAction
+import vadimerenkov.autasker.presentation.util.ComposableDateFormatter
 import java.time.LocalTime
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -65,7 +67,7 @@ fun ReminderDialog(
 				.padding(16.dp)
 		) {
 			FlowRow(
-				verticalArrangement = Arrangement.Center,
+				itemVerticalAlignment = Alignment.CenterVertically,
 				horizontalArrangement = Arrangement.spacedBy(16.dp),
 			) {
 				Text(
@@ -86,14 +88,16 @@ fun ReminderDialog(
 					period = period,
 					onPeriodChange = { period = it },
 					times = number,
-					onExpandedChange = { menuExpanded = it }
+					onExpandedChange = { menuExpanded = it },
+					modifier = Modifier
+						.widthIn(max = 100.dp)
 				)
 				if (period != Period.MINUTE && period != Period.HOUR) {
 					OutlinedButton(
 						onClick = { timePickerDialogOpen = true },
 					) {
 						Text(
-							text = time.toString()
+							text = ComposableDateFormatter.formatTime(time)
 						)
 					}
 				}
