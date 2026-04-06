@@ -88,6 +88,15 @@ compose.desktop {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
             packageName = "Autasker"
             packageVersion = libs.versions.version.name.get()
+
+	        windows {
+				dirChooser = true
+		        menuGroup = "Autasker"
+	        }
         }
+	    buildTypes.release.proguard {
+			obfuscate = true
+			configurationFiles.from(project.file("desktop-proguard.pro"))
+	    }
     }
 }

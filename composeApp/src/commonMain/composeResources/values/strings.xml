@@ -15,7 +15,7 @@
     <string name="tomorrow">Tomorrow</string>
     <string name="yesterday">Yesterday</string>
     <string name="new_task">New task</string>
-    <string name="edit_task">Edit task</string>
+    <string name="edit_task">Edit task...</string>
     <string name="set_default">Set default</string>
     <string name="delete_column">Delete column</string>
     <string name="delete_task">Delete task</string>
@@ -76,6 +76,7 @@
     <string name="source_code">Source code</string>
     <string name="completed">Completed</string>
     <string name="remind_before">Remind before</string>
+    <string name="exit">Exit</string>
 
     <string name="language">Language</string>
     <string name="english">English</string>

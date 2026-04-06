@@ -15,7 +15,7 @@
     <string name="tomorrow">Завтра</string>
     <string name="yesterday">Вчера</string>
     <string name="new_task">Новая задача</string>
-    <string name="edit_task">Редактировать задачу</string>
+    <string name="edit_task">Редактировать задачу...</string>
     <string name="set_default">Назначить по умолчанию</string>
     <string name="delete_column">Удалить колонку</string>
     <string name="delete_task">Удалить задачу</string>
@@ -74,6 +74,7 @@
     <string name="source_code">Исходный код</string>
     <string name="completed">Выполнено</string>
     <string name="remind_before">Напомнить за</string>
+    <string name="exit">Выход</string>
 
 
     <string name="theme">Тема</string>

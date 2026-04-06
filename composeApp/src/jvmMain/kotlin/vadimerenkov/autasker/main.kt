@@ -11,11 +11,13 @@ import androidx.compose.ui.window.application
 import androidx.compose.ui.window.rememberTrayState
 import autasker.composeapp.generated.resources.Res
 import autasker.composeapp.generated.resources.app_icon
+import autasker.composeapp.generated.resources.exit
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
 import org.koin.core.context.GlobalContext.get
 import vadimerenkov.autasker.di.initKoin
 import vadimerenkov.autasker.domain.reminders.ReminderService
@@ -60,7 +62,7 @@ fun main() {
 			},
 			menu = {
 				Item(
-					text = "Exit",
+					text = stringResource(Res.string.exit),
 					onClick = {
 						exitApplication()
 					}
