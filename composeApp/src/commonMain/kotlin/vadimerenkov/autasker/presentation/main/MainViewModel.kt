@@ -254,10 +254,6 @@ class MainViewModel(
 					repository.deleteRemindersForTask(task.id)
 				}
 			}
-			is MainAction.NewTaskClick -> {
-//				backstack.add(EditGraph(null, action.categoryId))
-//				println("Added edit graph to backstack $backstack")
-			}
 			is MainAction.OnTaskClick -> {
 				backstack.add(EditGraph(action.id))
 			}

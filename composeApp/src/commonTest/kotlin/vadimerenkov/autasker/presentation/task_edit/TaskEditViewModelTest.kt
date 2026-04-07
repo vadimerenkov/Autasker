@@ -58,6 +58,7 @@ class TaskEditViewModelTest {
 		)
 		viewModel.onAction(TaskEditAction.TitleChange(task.title))
 		viewModel.saveTask()
+		testDispatcher.scheduler.advanceUntilIdle()
 		assertThat(repository.tasks.value).contains(task)
 	}
 
