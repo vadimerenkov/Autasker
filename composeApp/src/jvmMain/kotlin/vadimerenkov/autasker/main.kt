@@ -20,7 +20,7 @@ import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.koin.core.context.GlobalContext.get
 import vadimerenkov.autasker.di.initKoin
-import vadimerenkov.autasker.domain.reminders.ReminderService
+import vadimerenkov.autasker.domain.reminders.QuartzScheduler
 import vadimerenkov.autasker.navigation.AutaskerApp
 import vadimerenkov.autasker.presentation.util.SuspendDateFormatter
 import vadimerenkov.autasker.presentation.windows.MainWindow
@@ -31,7 +31,7 @@ fun main() {
 	initKoin()
 	val settings: Settings = get().get()
 //	val notificationCenter: NotificationCenter = get().get()
-	val notificationCenter: ReminderService = get().get()
+	val notificationCenter: QuartzScheduler = get().get()
 	val data = runBlocking { settings.dataStore.data.first() }
 
 	System.setProperty("skiko.renderApi", "OPENGL")

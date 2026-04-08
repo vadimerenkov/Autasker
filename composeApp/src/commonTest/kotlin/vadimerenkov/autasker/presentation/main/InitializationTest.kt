@@ -26,6 +26,8 @@ import vadimerenkov.autasker.domain.TaskCategory
 import vadimerenkov.autasker.domain.reminders.Reminder
 import vadimerenkov.autasker.domain.reminders.ReminderService
 import vadimerenkov.autasker.domain.roundToMinutes
+import vadimerenkov.autasker.fakes.FakeAudioPlayer
+import vadimerenkov.autasker.fakes.FakeReminderService
 import vadimerenkov.autasker.fakes.TasksRepositoryFake
 import vadimerenkov.autasker.presentation.task_edit.TaskEditViewModel
 import vadimerenkov.autasker.settings.Settings
@@ -48,7 +50,7 @@ class InitializationTest {
 		Dispatchers.setMain(testDispatcher)
 		repository = TasksRepositoryFake()
 		applicationScope = CoroutineScope(Dispatchers.Main + SupervisorJob())
-		reminderService = ReminderService(repository, applicationScope)
+		reminderService = FakeReminderService(repository)
 		dataStore = createDataStore {
 			val file = File(System.getProperty("java.io.tmpdir"), "test_datastore.preferences_pb")
 			file.absolutePath
@@ -79,7 +81,7 @@ class InitializationTest {
 		)
 		repository.saveTask(task)
 		assertThat(repository.tasks.value).contains(task)
-		val viewModel = MainViewModel(repository, reminderService, AudioPlayer(), settings, mutableListOf())
+		val viewModel = MainViewModel(repository, reminderService, FakeAudioPlayer(), settings, mutableListOf())
 		testDispatcher.scheduler.advanceUntilIdle()
 
 		assertThat(repository.tasks.value).doesNotContain(task)
@@ -95,7 +97,7 @@ class InitializationTest {
 		)
 		repository.saveTask(task)
 		assertThat(repository.tasks.value).contains(task)
-		val viewModel = MainViewModel(repository, reminderService, AudioPlayer(), settings, mutableListOf())
+		val viewModel = MainViewModel(repository, reminderService, FakeAudioPlayer(), settings, mutableListOf())
 		testDispatcher.scheduler.advanceUntilIdle()
 
 		assertThat(repository.tasks.value).contains(task.copy(isDeleted = true, deletedDate = ZonedDateTime.now().roundToMinutes()))

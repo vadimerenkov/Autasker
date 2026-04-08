@@ -6,9 +6,9 @@ import java.net.URI
 import javax.sound.sampled.AudioSystem
 import javax.sound.sampled.FloatControl
 
-actual class AudioPlayer {
+class ClipPlayer: AudioPlayer {
 
-	actual fun play(path: String) {
+	override fun play(path: String) {
 		val clip = AudioSystem.getClip()
 		val uri = URI(Res.getUri(path))
 		val inputStream = AudioSystem.getAudioInputStream(File(uri))

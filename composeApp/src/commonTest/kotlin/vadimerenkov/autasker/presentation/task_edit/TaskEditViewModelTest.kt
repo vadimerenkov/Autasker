@@ -22,7 +22,7 @@ import vadimerenkov.autasker.domain.Period
 import vadimerenkov.autasker.domain.Subtask
 import vadimerenkov.autasker.domain.Task
 import vadimerenkov.autasker.domain.reminders.Reminder
-import vadimerenkov.autasker.domain.reminders.ReminderService
+import vadimerenkov.autasker.fakes.FakeReminderService
 import vadimerenkov.autasker.fakes.TasksRepositoryFake
 
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -42,7 +42,7 @@ class TaskEditViewModelTest {
 			id = null,
 			categoryId = 1,
 			repository = repository,
-			reminderService = ReminderService(repository, scope)
+			reminderService = FakeReminderService(repository)
 		)
 	}
 

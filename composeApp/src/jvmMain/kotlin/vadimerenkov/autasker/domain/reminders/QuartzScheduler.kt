@@ -18,10 +18,10 @@ import vadimerenkov.autasker.domain.Task
 import vadimerenkov.autasker.domain.TasksRepository
 import java.time.ZonedDateTime
 
-actual class ReminderService (
+class QuartzScheduler (
 	private val repository: TasksRepository,
 	private val applicationScope: CoroutineScope
-) {
+): ReminderService {
 	private val channel = Channel<Task>()
 	val events = channel.receiveAsFlow()
 
@@ -32,7 +32,7 @@ actual class ReminderService (
 		rescheduleReminders()
 	}
 
-	actual suspend fun scheduleReminder(taskId: Long, date: ZonedDateTime) {
+	override suspend fun scheduleReminder(taskId: Long, date: ZonedDateTime) {
 
 		val reminderJob = JobBuilder
 			.newJob(ReminderJob::class.java)
@@ -56,7 +56,7 @@ actual class ReminderService (
 		println("Current jobs: ${scheduler.currentlyExecutingJobs}")
 	}
 
-	actual suspend fun cancelRemindersForTask(taskId: Long) {
+	override suspend fun cancelRemindersForTask(taskId: Long) {
 		val jobs = repository.getJobsForTask(taskId)
 		jobs.forEach { job ->
 			scheduler.deleteJob(JobKey(job.key.removePrefix("DEFAULT.")))
@@ -65,7 +65,7 @@ actual class ReminderService (
 		}
 	}
 
-	actual fun rescheduleReminders() {
+	override fun rescheduleReminders() {
 		applicationScope.launch {
 			val jobs = repository.getAllJobs()
 			val jobDetails = jobs.associate { job ->
@@ -103,7 +103,7 @@ actual class ReminderService (
 	}
 
 	class ReminderJob: Job {
-		val reminderService: ReminderService = get().get()
+		val reminderService: QuartzScheduler = get().get()
 
 		override fun execute(context: JobExecutionContext?) {
 			context?.let {
