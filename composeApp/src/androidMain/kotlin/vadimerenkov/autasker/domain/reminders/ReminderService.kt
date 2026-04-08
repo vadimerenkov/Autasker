@@ -16,11 +16,11 @@ import java.time.ZonedDateTime
 import java.util.UUID
 
 @SuppressLint("MissingPermission")
-actual class ReminderService(
+class AlarmManager(
 	private val context: Context,
 	private val repository: TasksRepository,
 	private val applicationScope: CoroutineScope
-) {
+): ReminderService {
 	private val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as? AlarmManager
 	private val packageManager = context.packageManager
 	private val bootReceiver = ComponentName(context, BootReceiver::class.java)
@@ -33,7 +33,7 @@ actual class ReminderService(
 		)
 	}
 
-	actual suspend fun scheduleReminder(taskId: Long, date: ZonedDateTime) {
+	override suspend fun scheduleReminder(taskId: Long, date: ZonedDateTime) {
 		val jobData = JobData(
 			key = UUID.randomUUID().toString(),
 			parentTaskId = taskId,
@@ -60,7 +60,7 @@ actual class ReminderService(
 		println("saved job: $jobData, alarmManager is $alarmManager")
 	}
 
-	actual suspend fun cancelRemindersForTask(taskId: Long) {
+	override suspend fun cancelRemindersForTask(taskId: Long) {
 		val jobs = repository.getJobsForTask(taskId)
 		jobs.forEach { job ->
 
@@ -77,7 +77,7 @@ actual class ReminderService(
 		}
 	}
 
-	actual fun rescheduleReminders() {
+	override fun rescheduleReminders() {
 		applicationScope.launch {
 			val jobs = repository.getAllJobs()
 			var i = 0
