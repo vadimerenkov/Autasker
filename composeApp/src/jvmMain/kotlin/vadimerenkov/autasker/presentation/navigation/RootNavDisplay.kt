@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.CalendarMonth
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material3.HorizontalDivider
@@ -49,6 +50,7 @@ import androidx.navigation3.scene.DialogSceneStrategy.Companion.dialog
 import androidx.navigation3.ui.NavDisplay
 import autasker.composeapp.generated.resources.Res
 import autasker.composeapp.generated.resources.about
+import autasker.composeapp.generated.resources.calendar
 import autasker.composeapp.generated.resources.edit_task
 import autasker.composeapp.generated.resources.kofi_link
 import autasker.composeapp.generated.resources.settings
@@ -61,6 +63,7 @@ import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.parameter.parametersOf
 import vadimerenkov.autasker.navigation.AboutRoute
 import vadimerenkov.autasker.navigation.BinScreenRoute
+import vadimerenkov.autasker.navigation.CalendarRoute
 import vadimerenkov.autasker.navigation.DateTimeRoute
 import vadimerenkov.autasker.navigation.EditGraph
 import vadimerenkov.autasker.navigation.MainScreenRoute
@@ -69,6 +72,7 @@ import vadimerenkov.autasker.navigation.SettingsRoute
 import vadimerenkov.autasker.navigation.TaskEditRoute
 import vadimerenkov.autasker.presentation.about.AboutScreen
 import vadimerenkov.autasker.presentation.bin.BinScreen
+import vadimerenkov.autasker.presentation.calendar.CalendarScreen
 import vadimerenkov.autasker.presentation.components.MenuAction
 import vadimerenkov.autasker.presentation.components.TitleBar
 import vadimerenkov.autasker.presentation.main.MainScreen
@@ -143,6 +147,25 @@ fun RootNavDisplay(
 							backstack.removeAll { it != MainScreenRoute }
 						}
 					)
+					NavigationDrawerItem(
+						shape = RectangleShape,
+						label = {
+							Text(
+								text = stringResource(Res.string.calendar),
+								fontSize = 20.sp
+							)
+						},
+						icon = {
+							Icon(
+								imageVector = Icons.Default.CalendarMonth,
+								contentDescription = null
+							)
+						},
+						selected = backstack.lastOrNull() == CalendarRoute,
+						onClick = {
+							backstack.add(CalendarRoute)
+						}
+					)
 					Spacer(modifier = Modifier.weight(1f))
 					NavigationDrawerItem(
 						shape = RectangleShape,
@@ -204,6 +227,13 @@ fun RootNavDisplay(
 							)
 
 						}
+					}
+					entry<CalendarRoute> {
+						CalendarScreen(
+							onTaskClick = {
+								backstack.add(EditGraph(it))
+							}
+						)
 					}
 					entry<EditGraph>(metadata = dialog()) {
 						EditNavDisplay(

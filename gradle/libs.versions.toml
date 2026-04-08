@@ -37,6 +37,7 @@ exoplayer = "1.10.0"
 autoLaunch = "0.8.0"
 material = "1.13.0"
 adaptive = "1.2.0"
+calendar = "2.10.1"
 
 [libraries]
 junit-jupiter = { module = "org.junit.jupiter:junit-jupiter" }
@@ -87,6 +88,7 @@ exoplayer = { module = "androidx.media3:media3-exoplayer", version.ref = "exopla
 autolaunch = { module = "io.github.vinceglb:auto-launch", version.ref = "autoLaunch" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 material3-adaptive = { module = "org.jetbrains.compose.material3.adaptive:adaptive", version.ref = "adaptive" }
+calendar = { module = "com.kizitonwose.calendar:compose-multiplatform", version.ref = "calendar" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

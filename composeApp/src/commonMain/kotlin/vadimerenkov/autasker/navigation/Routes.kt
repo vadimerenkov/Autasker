@@ -9,6 +9,9 @@ data object MainGraph: NavKey
 @Serializable
 data object MainScreenRoute: NavKey
 @Serializable
+data object CalendarRoute: NavKey
+
+@Serializable
 data object BinScreenRoute: NavKey
 
 @Serializable

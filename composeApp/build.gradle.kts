@@ -50,6 +50,7 @@ kotlin {
 	        implementation(libs.androidx.datastore.preferences)
 	        implementation(libs.reorderable)
 	        implementation(libs.material3.adaptive)
+	        implementation(libs.calendar)
         }
         commonTest.dependencies {
 	        implementation(libs.assertK)
@@ -78,6 +79,7 @@ room {
 
 dependencies {
 	ksp(libs.androidx.room.compiler)
+	androidRuntimeClasspath(libs.compose.ui.tooling)
 }
 
 compose.desktop {

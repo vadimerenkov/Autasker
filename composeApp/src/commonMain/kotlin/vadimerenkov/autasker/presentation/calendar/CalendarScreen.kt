@@ -1,0 +1,166 @@
+package vadimerenkov.autasker.presentation.calendar
+
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import com.kizitonwose.calendar.compose.ContentHeightMode
+import com.kizitonwose.calendar.compose.VerticalCalendar
+import com.kizitonwose.calendar.compose.rememberCalendarState
+import com.kizitonwose.calendar.core.CalendarDay
+import com.kizitonwose.calendar.core.DayPosition
+import kotlinx.datetime.toJavaLocalDate
+import kotlinx.datetime.toJavaYearMonth
+import kotlinx.datetime.toKotlinLocalDate
+import kotlinx.datetime.toKotlinYearMonth
+import org.koin.compose.KoinMultiplatformApplication
+import org.koin.compose.viewmodel.koinViewModel
+import org.koin.core.annotation.KoinExperimentalAPI
+import org.koin.dsl.koinConfiguration
+import vadimerenkov.autasker.di.appModule
+import vadimerenkov.autasker.di.platformModule
+import vadimerenkov.autasker.domain.Time
+import vadimerenkov.autasker.presentation.theme.AutaskerTheme
+import vadimerenkov.autasker.presentation.util.ComposableDateFormatter
+import java.time.YearMonth
+import java.time.format.TextStyle
+import java.util.Locale
+
+@Composable
+fun CalendarScreen(
+	onTaskClick: (Long) -> Unit,
+	modifier: Modifier = Modifier,
+	viewModel: CalendarViewModel = koinViewModel()
+) {
+	CalendarScreenRoot(
+		state = viewModel.state,
+		modifier = modifier,
+		onAction = { action ->
+			when (action) {
+				is CalendarAction.OnTaskClick -> onTaskClick(action.id)
+			}
+		}
+	)
+}
+
+@Composable
+private fun CalendarScreenRoot(
+	state: CalendarState,
+	onAction: (CalendarAction) -> Unit,
+	modifier: Modifier = Modifier
+) {
+	val currentMonth = remember { YearMonth.now() }
+	VerticalCalendar(
+		modifier = modifier
+			.background(MaterialTheme.colorScheme.background)
+			.fillMaxSize(),
+		state = rememberCalendarState(
+			startMonth = currentMonth.minusYears(50).toKotlinYearMonth(),
+			endMonth = currentMonth.plusYears(50).toKotlinYearMonth(),
+			firstVisibleMonth = YearMonth.now().toKotlinYearMonth()
+		),
+		calendarScrollPaged = true,
+		monthHeader = {
+			val month = it.yearMonth.toJavaYearMonth().month.getDisplayName(TextStyle.FULL_STANDALONE, Locale.getDefault())
+			val year = it.yearMonth.year.toString()
+			Text(
+				text = "$month $year",
+				style = MaterialTheme.typography.displayLarge,
+				modifier = Modifier
+					.padding(8.dp)
+			)
+		},
+		contentHeightMode = ContentHeightMode.Fill,
+		dayContent = {
+			DayOfMonthItem(
+				day = it,
+				state = state,
+				onAction = onAction
+			)
+		}
+	)
+}
+
+@Composable
+private fun DayOfMonthItem(
+	day: CalendarDay,
+	state: CalendarState,
+	onAction: (CalendarAction) -> Unit
+) {
+	val isGrayDay = day.position != DayPosition.MonthDate
+	val isToday = day.date == Time.today().toKotlinLocalDate()
+	Column(
+		verticalArrangement = Arrangement.spacedBy(2.dp),
+		modifier = Modifier
+			.border(
+				width = if (isToday) 4.dp else 0.5.dp,
+				color = if (isToday) Color.Red else Color.LightGray
+			)
+			.fillMaxSize()
+	) {
+		Text(
+			text = day.date.day.toString(),
+			modifier = Modifier.padding(8.dp),
+			color = if (isGrayDay) MaterialTheme.colorScheme.primary.copy(alpha = 0.5f) else MaterialTheme.colorScheme.primary
+		)
+		val thisDayTasks = state.tasks
+			.filter { task ->
+				task.dueDate?.toLocalDate() == day.date.toJavaLocalDate()
+			}
+			.sortedBy { it.dueDate }
+
+		thisDayTasks.forEach { task ->
+			Box(
+				modifier = Modifier
+					.background(MaterialTheme.colorScheme.primary)
+					.fillMaxWidth()
+					.clickable {
+						onAction(CalendarAction.OnTaskClick(task.id))
+					}
+			) {
+				val title = if (task.dueDate == null || task.isAllDay) {
+					task.title
+				} else {
+					val time = ComposableDateFormatter.formatTime(task.dueDate.toLocalTime())
+					"$time ${task.title}"
+				}
+				Text(
+					text = title,
+					color = MaterialTheme.colorScheme.onPrimary,
+					maxLines = 2,
+					modifier = Modifier
+						.padding(start = 8.dp, top = 4.dp, bottom = 4.dp, end = 4.dp)
+				)
+
+			}
+		}
+	}
+}
+
+@OptIn(KoinExperimentalAPI::class)
+@Composable
+@Preview
+private fun CalendarPreview() {
+	KoinMultiplatformApplication(config = koinConfiguration { modules(appModule, platformModule) }) {
+		AutaskerTheme {
+			CalendarScreenRoot(
+				state = CalendarState(),
+				onAction = {}
+			)
+		}
+
+	}
+}

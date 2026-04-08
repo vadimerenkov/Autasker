@@ -41,6 +41,7 @@ object ComposableDateFormatter {
 	}
 
 	fun formatTime(time: LocalTime): String {
+
 		val timePattern = when (settings.state.timeFormat) {
 			TimeFormat.CLOCK_12 -> "h:mm a"
 			TimeFormat.CLOCK_24 -> "HH:mm"
