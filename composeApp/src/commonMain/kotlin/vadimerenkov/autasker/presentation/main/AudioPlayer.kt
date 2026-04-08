@@ -1,6 +1,6 @@
 package vadimerenkov.autasker.presentation.main
 
-expect class AudioPlayer {
+interface AudioPlayer {
 
 	fun play(path: String)
 }

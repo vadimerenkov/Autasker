@@ -6,12 +6,12 @@ import androidx.media3.common.MediaItem
 import androidx.media3.exoplayer.ExoPlayer
 import autasker.composeapp.generated.resources.Res
 
-actual class AudioPlayer(
+class ExoPlayer(
 	context: Context
-) {
+): AudioPlayer {
 	val player = ExoPlayer.Builder(context).build()
 
-	actual fun play(path: String) {
+	override fun play(path: String) {
 		val uri = Res.getUri(path).toUri()
 		val mediaItem = MediaItem.fromUri(uri)
 		player.clearMediaItems()

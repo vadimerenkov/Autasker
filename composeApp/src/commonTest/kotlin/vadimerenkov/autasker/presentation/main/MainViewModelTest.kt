@@ -33,6 +33,8 @@ import vadimerenkov.autasker.domain.Task
 import vadimerenkov.autasker.domain.TaskCategory
 import vadimerenkov.autasker.domain.Time
 import vadimerenkov.autasker.domain.reminders.ReminderService
+import vadimerenkov.autasker.fakes.FakeAudioPlayer
+import vadimerenkov.autasker.fakes.FakeReminderService
 import vadimerenkov.autasker.fakes.TasksRepositoryFake
 import vadimerenkov.autasker.settings.Settings
 import java.io.File
@@ -69,7 +71,7 @@ class MainViewModelTest: KoinTest {
 		Dispatchers.setMain(testDispatcher)
 		applicationScope = CoroutineScope(Dispatchers.Main + SupervisorJob())
 		repository = TasksRepositoryFake()
-		reminderService = ReminderService(repository, applicationScope)
+		reminderService = FakeReminderService(repository)
 
 		dataStore = PreferenceDataStoreFactory.create(
 			scope = applicationScope,
@@ -88,7 +90,7 @@ class MainViewModelTest: KoinTest {
 			reminderService = reminderService,
 			settings = settings,
 			backstack = mutableListOf(),
-			audioPlayer = AudioPlayer()
+			audioPlayer = FakeAudioPlayer()
 		)
 	}
 
@@ -156,6 +158,7 @@ class MainViewModelTest: KoinTest {
 
 	@Test
 	fun `New column button clicked, new category is added`() = runBlocking {
+		testDispatcher.scheduler.advanceUntilIdle()
 		assertThat(repository.categories.value.size).isEqualTo(1)
 		viewModel.onAction(MainAction.NewColumnClick)
 		testDispatcher.scheduler.advanceUntilIdle()
