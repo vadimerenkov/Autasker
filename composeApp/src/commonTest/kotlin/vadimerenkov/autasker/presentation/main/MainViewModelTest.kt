@@ -158,6 +158,7 @@ class MainViewModelTest: KoinTest {
 
 	@Test
 	fun `New column button clicked, new category is added`() = runBlocking {
+		testDispatcher.scheduler.advanceUntilIdle()
 		assertThat(repository.categories.value.size).isEqualTo(1)
 		viewModel.onAction(MainAction.NewColumnClick)
 		testDispatcher.scheduler.advanceUntilIdle()
