@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.CalendarMonth
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Info
@@ -31,6 +32,7 @@ import androidx.navigation3.runtime.NavBackStack
 import androidx.navigation3.runtime.NavKey
 import autasker.composeapp.generated.resources.Res
 import autasker.composeapp.generated.resources.about
+import autasker.composeapp.generated.resources.calendar
 import autasker.composeapp.generated.resources.settings
 import autasker.composeapp.generated.resources.tasks
 import autasker.composeapp.generated.resources.trash
@@ -103,6 +105,28 @@ fun FoldedNavigationDrawer(
 							}
 						}
 					)
+					NavigationDrawerItem(
+						shape = RectangleShape,
+						label = {
+							Text(
+								text = stringResource(Res.string.calendar),
+								fontSize = 18.sp
+							)
+						},
+						icon = {
+							Icon(
+								imageVector = Icons.Default.CalendarMonth,
+								contentDescription = null
+							)
+						},
+						selected = backstack.last() == CalendarRoute,
+						onClick = {
+							coroutineScope.launch {
+								backstack.add(CalendarRoute)
+								drawerState.close()
+							}
+						}
+					)
 					Spacer(modifier = Modifier.weight(1f))
 					NavigationDrawerItem(
 						shape = RectangleShape,
@@ -127,6 +151,7 @@ fun FoldedNavigationDrawer(
 						}
 					)
 					NavigationDrawerItem(
+						shape = RectangleShape,
 						label = {
 							Text(
 								text = stringResource(Res.string.settings),
@@ -148,6 +173,7 @@ fun FoldedNavigationDrawer(
 						}
 					)
 					NavigationDrawerItem(
+						shape = RectangleShape,
 						label = {
 							Text(
 								text = stringResource(Res.string.about),

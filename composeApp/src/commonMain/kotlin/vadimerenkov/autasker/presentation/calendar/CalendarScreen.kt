@@ -6,6 +6,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -15,6 +16,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.kizitonwose.calendar.compose.ContentHeightMode
@@ -22,8 +24,11 @@ import com.kizitonwose.calendar.compose.VerticalCalendar
 import com.kizitonwose.calendar.compose.rememberCalendarState
 import com.kizitonwose.calendar.core.CalendarDay
 import com.kizitonwose.calendar.core.DayPosition
+import com.kizitonwose.calendar.core.daysOfWeek
+import kotlinx.datetime.toJavaDayOfWeek
 import kotlinx.datetime.toJavaLocalDate
 import kotlinx.datetime.toJavaYearMonth
+import kotlinx.datetime.toKotlinDayOfWeek
 import kotlinx.datetime.toKotlinLocalDate
 import kotlinx.datetime.toKotlinYearMonth
 import org.koin.compose.KoinMultiplatformApplication
@@ -70,18 +75,27 @@ private fun CalendarScreenRoot(
 		state = rememberCalendarState(
 			startMonth = currentMonth.minusYears(50).toKotlinYearMonth(),
 			endMonth = currentMonth.plusYears(50).toKotlinYearMonth(),
-			firstVisibleMonth = YearMonth.now().toKotlinYearMonth()
+			firstVisibleMonth = YearMonth.now().toKotlinYearMonth(),
+			firstDayOfWeek = state.firstDayOfWeek.toKotlinDayOfWeek()
 		),
 		calendarScrollPaged = true,
 		monthHeader = {
 			val month = it.yearMonth.toJavaYearMonth().month.getDisplayName(TextStyle.FULL_STANDALONE, Locale.getDefault())
 			val year = it.yearMonth.year.toString()
-			Text(
-				text = "$month $year",
-				style = MaterialTheme.typography.displayLarge,
+			Column(
 				modifier = Modifier
-					.padding(8.dp)
-			)
+					.padding(vertical = 8.dp)
+			) {
+				Text(
+					text = "$month $year",
+					style = MaterialTheme.typography.displayLarge,
+					modifier = Modifier
+						.padding(start = 16.dp)
+				)
+				WeekdaysRow(
+					state = state
+				)
+			}
 		},
 		contentHeightMode = ContentHeightMode.Fill,
 		dayContent = {
@@ -146,6 +160,31 @@ private fun DayOfMonthItem(
 				)
 
 			}
+		}
+	}
+}
+
+@Composable
+private fun WeekdaysRow(
+	state: CalendarState,
+	modifier: Modifier = Modifier
+) {
+	val weekdays = daysOfWeek(firstDayOfWeek = state.firstDayOfWeek.toKotlinDayOfWeek()).map {
+		it.toJavaDayOfWeek()
+	}
+
+	Row(
+		horizontalArrangement = Arrangement.SpaceAround,
+		modifier = modifier
+			.fillMaxWidth()
+			.padding(top = 8.dp)
+	) {
+		weekdays.forEach { weekday ->
+			Text(
+				text = weekday.getDisplayName(TextStyle.SHORT, Locale.getDefault()),
+				fontWeight = FontWeight.Bold,
+				color = if (weekday.value > 5) Color.Red else MaterialTheme.colorScheme.onBackground
+			)
 		}
 	}
 }
