@@ -14,23 +14,30 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import autasker.composeapp.generated.resources.Res
+import autasker.composeapp.generated.resources.today
 import com.kizitonwose.calendar.compose.ContentHeightMode
 import com.kizitonwose.calendar.compose.VerticalCalendar
 import com.kizitonwose.calendar.compose.rememberCalendarState
 import com.kizitonwose.calendar.core.CalendarDay
 import com.kizitonwose.calendar.core.DayPosition
 import com.kizitonwose.calendar.core.daysOfWeek
+import com.kizitonwose.calendar.core.now
+import kotlinx.coroutines.launch
 import kotlinx.datetime.toJavaDayOfWeek
 import kotlinx.datetime.toJavaLocalDate
 import kotlinx.datetime.toJavaYearMonth
 import kotlinx.datetime.toKotlinDayOfWeek
 import kotlinx.datetime.toKotlinLocalDate
 import kotlinx.datetime.toKotlinYearMonth
+import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.KoinMultiplatformApplication
 import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.annotation.KoinExperimentalAPI
@@ -38,6 +45,7 @@ import org.koin.dsl.koinConfiguration
 import vadimerenkov.autasker.di.appModule
 import vadimerenkov.autasker.di.platformModule
 import vadimerenkov.autasker.domain.Time
+import vadimerenkov.autasker.presentation.components.SecondaryButton
 import vadimerenkov.autasker.presentation.theme.AutaskerTheme
 import vadimerenkov.autasker.presentation.util.ComposableDateFormatter
 import java.time.YearMonth
@@ -68,16 +76,19 @@ private fun CalendarScreenRoot(
 	modifier: Modifier = Modifier
 ) {
 	val currentMonth = remember { YearMonth.now() }
+	val calendarState = rememberCalendarState(
+		startMonth = currentMonth.minusYears(50).toKotlinYearMonth(),
+		endMonth = currentMonth.plusYears(50).toKotlinYearMonth(),
+		firstVisibleMonth = YearMonth.now().toKotlinYearMonth(),
+		firstDayOfWeek = state.firstDayOfWeek.toKotlinDayOfWeek()
+	)
+	val scope = rememberCoroutineScope()
 	VerticalCalendar(
 		modifier = modifier
 			.background(MaterialTheme.colorScheme.background)
+			.padding(16.dp)
 			.fillMaxSize(),
-		state = rememberCalendarState(
-			startMonth = currentMonth.minusYears(50).toKotlinYearMonth(),
-			endMonth = currentMonth.plusYears(50).toKotlinYearMonth(),
-			firstVisibleMonth = YearMonth.now().toKotlinYearMonth(),
-			firstDayOfWeek = state.firstDayOfWeek.toKotlinDayOfWeek()
-		),
+		state = calendarState,
 		calendarScrollPaged = true,
 		monthHeader = {
 			val month = it.yearMonth.toJavaYearMonth().month.getDisplayName(TextStyle.FULL_STANDALONE, Locale.getDefault())
@@ -86,12 +97,29 @@ private fun CalendarScreenRoot(
 				modifier = Modifier
 					.padding(vertical = 8.dp)
 			) {
-				Text(
-					text = "$month $year",
-					style = MaterialTheme.typography.displayLarge,
+				Row(
+					verticalAlignment = Alignment.CenterVertically,
+					horizontalArrangement = Arrangement.SpaceBetween,
 					modifier = Modifier
-						.padding(start = 16.dp)
-				)
+						.fillMaxWidth()
+				) {
+					Text(
+						text = "$month $year",
+						style = MaterialTheme.typography.displayLarge,
+						modifier = Modifier
+							.padding(start = 16.dp)
+					)
+					if (it.yearMonth != kotlinx.datetime.YearMonth.now()) {
+						SecondaryButton(
+							onClick = {
+								scope.launch {
+									calendarState.animateScrollToMonth(kotlinx.datetime.YearMonth.now())
+								}
+							},
+							text = stringResource(Res.string.today)
+						)
+					}
+				}
 				WeekdaysRow(
 					state = state
 				)
