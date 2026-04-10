@@ -8,5 +8,6 @@ data class CalendarState(
 	val tasks: List<Task> = listOf(),
 	val firstDayOfWeek: DayOfWeek = DayOfWeek.MONDAY,
 	val isDayDialogOpen: Boolean = false,
-	val selectedDay: LocalDate? = null
+	val selectedDay: LocalDate? = null,
+	val startDayHour: Int = 0
 )

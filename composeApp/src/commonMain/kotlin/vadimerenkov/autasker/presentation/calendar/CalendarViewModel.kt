@@ -28,7 +28,7 @@ class CalendarViewModel(
 
 		snapshotFlow { settings.state }
 			.onEach { settingsState ->
-				state = state.copy(firstDayOfWeek = settingsState.firstDayOfWeek)
+				state = state.copy(firstDayOfWeek = settingsState.firstDayOfWeek, startDayHour = settingsState.endOfDayTime.hour)
 			}.launchIn(viewModelScope)
 	}
 

@@ -79,6 +79,7 @@ private fun CalendarScreenRoot(
 ) {
 	if (state.isDayDialogOpen) {
 		CalendarDayDialog(
+			startDayTime = state.startDayHour,
 			selectedDay = state.selectedDay!!,
 			tasks = state.tasks.filter { it.dueDate?.toLocalDate() == state.selectedDay },
 			onDismissRequest = {

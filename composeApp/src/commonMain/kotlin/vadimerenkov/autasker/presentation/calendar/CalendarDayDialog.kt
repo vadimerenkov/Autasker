@@ -4,7 +4,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -29,6 +28,7 @@ import java.time.format.FormatStyle
 
 @Composable
 fun CalendarDayDialog(
+	startDayTime: Int,
 	selectedDay: LocalDate,
 	tasks: List<Task>,
 	onDismissRequest: () -> Unit
@@ -36,6 +36,7 @@ fun CalendarDayDialog(
 	val allDayTasks = tasks.filter { it.isAllDay }
 	val timedTasks = tasks - allDayTasks.toSet()
 	val tasksAtHour = timedTasks.associateBy { it.dueDate!!.hour }
+	println("Tasks at hour is $tasksAtHour")
 	Dialog(
 		onDismissRequest = onDismissRequest
 	) {
@@ -51,7 +52,7 @@ fun CalendarDayDialog(
 				fontSize = 20.sp
 			)
 			LazyColumn(
-//			    verticalArrangement = Arrangement.spacedBy(16.dp),
+				verticalArrangement = Arrangement.spacedBy(16.dp),
 			) {
 				item {
 					Column(
@@ -72,17 +73,37 @@ fun CalendarDayDialog(
 						}
 					}
 				}
-				(0..23).forEach { hour ->
+				(startDayTime..23).forEach { hour ->
 					item {
-						Row(
-							verticalAlignment = Alignment.CenterVertically,
-							modifier = Modifier
-								.fillMaxWidth()
-						) {
+						Column {
 							Text(
 								text = hour.toString()
 							)
+							HorizontalDivider()
+							if (tasksAtHour.containsKey(hour)) {
+								val task = tasksAtHour[hour]!!
+								Box(
+									modifier = Modifier
+										.fillMaxWidth()
+										.background(MaterialTheme.colorScheme.primary)
+								) {
+									Text(
+										text = task.title,
+										color = MaterialTheme.colorScheme.onPrimary,
+										modifier = Modifier.padding(4.dp)
+									)
+								}
+							}
+						}
+					}
+				}
+				if (startDayTime != 0) {
+					(0..<startDayTime).forEach { hour ->
+						item {
 							Column {
+								Text(
+									text = hour.toString()
+								)
 								HorizontalDivider()
 								if (tasksAtHour.containsKey(hour)) {
 									val task = tasksAtHour[hour]!!
@@ -131,7 +152,8 @@ private fun CalendarDayDialogPreview() {
 				)
 			),
 			selectedDay = LocalDate.now(),
-			onDismissRequest = {}
+			onDismissRequest = {},
+			startDayTime = 4
 		)
 	}
 }
