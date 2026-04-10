@@ -64,7 +64,9 @@ fun CalendarScreen(
 		onAction = { action ->
 			when (action) {
 				is CalendarAction.OnTaskClick -> onTaskClick(action.id)
+				else -> Unit
 			}
+			viewModel.onAction(action)
 		}
 	)
 }
@@ -75,6 +77,15 @@ private fun CalendarScreenRoot(
 	onAction: (CalendarAction) -> Unit,
 	modifier: Modifier = Modifier
 ) {
+	if (state.isDayDialogOpen) {
+		CalendarDayDialog(
+			selectedDay = state.selectedDay!!,
+			tasks = state.tasks.filter { it.dueDate?.toLocalDate() == state.selectedDay },
+			onDismissRequest = {
+				onAction(CalendarAction.DismissDialog)
+			}
+		)
+	}
 	val currentMonth = remember { YearMonth.now() }
 	val calendarState = rememberCalendarState(
 		startMonth = currentMonth.minusYears(50).toKotlinYearMonth(),
@@ -151,11 +162,14 @@ private fun DayOfMonthItem(
 				width = if (isToday) 4.dp else 0.5.dp,
 				color = if (isToday) Color.Red else Color.LightGray
 			)
+			.clickable {
+				onAction(CalendarAction.OnDaySelected(day.date.toJavaLocalDate()))
+			}
 			.fillMaxSize()
 	) {
 		Text(
 			text = day.date.day.toString(),
-			modifier = Modifier.padding(8.dp),
+			modifier = Modifier.padding(top = 8.dp, start = 8.dp),
 			color = if (isGrayDay) MaterialTheme.colorScheme.primary.copy(alpha = 0.5f) else MaterialTheme.colorScheme.primary
 		)
 		val thisDayTasks = state.tasks

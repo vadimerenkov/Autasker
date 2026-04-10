@@ -31,4 +31,16 @@ class CalendarViewModel(
 				state = state.copy(firstDayOfWeek = settingsState.firstDayOfWeek)
 			}.launchIn(viewModelScope)
 	}
+
+	fun onAction(action: CalendarAction) {
+		when (action) {
+			CalendarAction.DismissDialog -> {
+				state = state.copy(isDayDialogOpen = false, selectedDay = null)
+			}
+			is CalendarAction.OnDaySelected -> {
+				state = state.copy(isDayDialogOpen = true, selectedDay = action.day)
+			}
+			else -> Unit
+		}
+	}
 }
