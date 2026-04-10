@@ -34,9 +34,8 @@ fun CalendarDayDialog(
 	onDismissRequest: () -> Unit
 ) {
 	val allDayTasks = tasks.filter { it.isAllDay }
-	val timedTasks = tasks - allDayTasks.toSet()
+	val timedTasks = (tasks - allDayTasks.toSet()).sortedBy { it.dueDate }
 	val tasksAtHour = timedTasks.associateBy { it.dueDate!!.hour }
-	println("Tasks at hour is $tasksAtHour")
 	Dialog(
 		onDismissRequest = onDismissRequest
 	) {
@@ -81,17 +80,20 @@ fun CalendarDayDialog(
 							)
 							HorizontalDivider()
 							if (tasksAtHour.containsKey(hour)) {
-								val task = tasksAtHour[hour]!!
-								Box(
-									modifier = Modifier
-										.fillMaxWidth()
-										.background(MaterialTheme.colorScheme.primary)
-								) {
-									Text(
-										text = task.title,
-										color = MaterialTheme.colorScheme.onPrimary,
-										modifier = Modifier.padding(4.dp)
-									)
+								val hourTasks = timedTasks.filter { it.dueDate!!.hour == hour }
+								hourTasks.forEach { task ->
+									Box(
+										modifier = Modifier
+											.fillMaxWidth()
+											.padding(2.dp)
+											.background(MaterialTheme.colorScheme.primary)
+									) {
+										Text(
+											text = task.title,
+											color = MaterialTheme.colorScheme.onPrimary,
+											modifier = Modifier.padding(4.dp)
+										)
+									}
 								}
 							}
 						}
@@ -106,17 +108,20 @@ fun CalendarDayDialog(
 								)
 								HorizontalDivider()
 								if (tasksAtHour.containsKey(hour)) {
-									val task = tasksAtHour[hour]!!
-									Box(
-										modifier = Modifier
-											.fillMaxWidth()
-											.background(MaterialTheme.colorScheme.primary)
-									) {
-										Text(
-											text = task.title,
-											color = MaterialTheme.colorScheme.onPrimary,
-											modifier = Modifier.padding(4.dp)
-										)
+									val hourTasks = timedTasks.filter { it.dueDate!!.hour == hour }
+									hourTasks.forEach { task ->
+										Box(
+											modifier = Modifier
+												.fillMaxWidth()
+												.background(MaterialTheme.colorScheme.primary)
+												.padding(2.dp)
+										) {
+											Text(
+												text = task.title,
+												color = MaterialTheme.colorScheme.onPrimary,
+												modifier = Modifier.padding(4.dp)
+											)
+										}
 									}
 								}
 							}
