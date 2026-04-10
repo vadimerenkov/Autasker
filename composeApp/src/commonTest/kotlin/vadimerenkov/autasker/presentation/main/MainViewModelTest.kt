@@ -28,6 +28,7 @@ import org.koin.test.KoinTestRule
 import vadimerenkov.autasker.data.JobData
 import vadimerenkov.autasker.di.appModule
 import vadimerenkov.autasker.di.platformModule
+import vadimerenkov.autasker.domain.Page
 import vadimerenkov.autasker.domain.Subtask
 import vadimerenkov.autasker.domain.Task
 import vadimerenkov.autasker.domain.TaskCategory
@@ -156,6 +157,8 @@ class MainViewModelTest: KoinTest {
 
 	@Test
 	fun `New column button clicked, new category is added`() = runBlocking {
+		val page = Page(id = 123)
+		repository.savePage(page)
 		assertThat(repository.categories.value.size).isEqualTo(1)
 		viewModel.onAction(MainAction.NewColumnClick)
 		testDispatcher.scheduler.advanceUntilIdle()
