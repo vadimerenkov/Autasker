@@ -89,6 +89,7 @@ class InitializationTest {
 
 	@Test
 	fun `Completed tasks are deleted after 7 days`() = runBlocking {
+		testDispatcher.scheduler.advanceUntilIdle()
 		val task = Task(
 			id = 123,
 			title = "Task to delete",
