@@ -42,3 +42,30 @@ jobs:
       - name: Build Windows MSI
         run: ./gradlew :composeApp:packageMsi
 
+  build-desktop-linux:
+    name: Build Desktop Linux
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v5.0.0
+
+      - name: Build Windows MSI
+        run: ./gradlew :composeApp:packageDeb
+
+  build-android:
+    name: Build Android
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Gradle setup
+        uses: ./.github/actions/gradle-setup
+
+      - name: Build Android debug APK
+        run: ./gradlew :androidApp:assembleDebug
