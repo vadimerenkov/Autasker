@@ -414,7 +414,7 @@ class MainViewModel(
 		rescheduleRemindersForTask(task)
 	}
 
-	fun findTask(id: Long): Task {
+	private fun findTask(id: Long): Task {
 		return state.allTasks.first {
 			it.id == id
 		}

@@ -16,6 +16,7 @@ import vadimerenkov.autasker.data.RoomLocalRepository
 import vadimerenkov.autasker.data.TasksDatabase
 import vadimerenkov.autasker.domain.TasksRepository
 import vadimerenkov.autasker.presentation.bin.BinViewModel
+import vadimerenkov.autasker.presentation.calendar.CalendarViewModel
 import vadimerenkov.autasker.presentation.main.MainViewModel
 import vadimerenkov.autasker.presentation.new_day.NewDayViewModel
 import vadimerenkov.autasker.presentation.task_edit.TaskEditViewModel
@@ -31,6 +32,7 @@ val appModule = module {
 	viewModelOf(::SettingsViewModel)
 	viewModelOf(::BinViewModel)
 	viewModelOf(::NewDayViewModel)
+	viewModelOf(::CalendarViewModel)
 
 	viewModel<TaskEditViewModel> { params ->
 		TaskEditViewModel(params[0], params[1], get(), get())

@@ -35,6 +35,7 @@ import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.parameter.parametersOf
 import vadimerenkov.autasker.presentation.about.AboutScreen
 import vadimerenkov.autasker.presentation.bin.BinScreen
+import vadimerenkov.autasker.presentation.calendar.CalendarScreen
 import vadimerenkov.autasker.presentation.main.MainScreen
 import vadimerenkov.autasker.presentation.main.MainViewModel
 import vadimerenkov.autasker.presentation.new_day.NewDayScreen
@@ -115,6 +116,13 @@ private fun NavigationRailNavDisplay(
 						}
 					)
 				}
+				entry<CalendarRoute> {
+					CalendarScreen(
+						onTaskClick = {
+							mainBackStack.add(EditGraph(it))
+						}
+					)
+				}
 				entry<SettingsRoute> {
 					SettingsScreen(
 						modifier = Modifier
@@ -162,6 +170,13 @@ private fun FoldedDrawerNavDisplay(
 						onNewTaskClick = { categoryId ->
 							mainBackStack.add(EditGraph(null, categoryId))
 						}
+				    )
+			    }
+			    entry<CalendarRoute> {
+				    CalendarScreen(
+					    onTaskClick = {
+						    mainBackStack.add(EditGraph(it))
+					    }
 				    )
 			    }
 			    entry<SettingsRoute> {
