@@ -4,7 +4,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -47,7 +46,6 @@ import vadimerenkov.autasker.di.platformModule
 import vadimerenkov.autasker.domain.Time
 import vadimerenkov.autasker.presentation.components.SecondaryButton
 import vadimerenkov.autasker.presentation.theme.AutaskerTheme
-import vadimerenkov.autasker.presentation.util.ComposableDateFormatter
 import java.time.YearMonth
 import java.time.format.TextStyle
 import java.util.Locale
@@ -84,7 +82,8 @@ private fun CalendarScreenRoot(
 			tasks = state.tasks.filter { it.dueDate?.toLocalDate() == state.selectedDay },
 			onDismissRequest = {
 				onAction(CalendarAction.DismissDialog)
-			}
+			},
+			onAction = onAction
 		)
 	}
 	val currentMonth = remember { YearMonth.now() }
@@ -157,7 +156,6 @@ private fun DayOfMonthItem(
 	val isGrayDay = day.position != DayPosition.MonthDate
 	val isToday = day.date == Time.today().toKotlinLocalDate()
 	Column(
-		verticalArrangement = Arrangement.spacedBy(2.dp),
 		modifier = Modifier
 			.border(
 				width = if (isToday) 4.dp else 0.5.dp,
@@ -180,29 +178,10 @@ private fun DayOfMonthItem(
 			.sortedBy { it.dueDate }
 
 		thisDayTasks.forEach { task ->
-			Box(
-				modifier = Modifier
-					.background(MaterialTheme.colorScheme.primary)
-					.fillMaxWidth()
-					.clickable {
-						onAction(CalendarAction.OnTaskClick(task.id))
-					}
-			) {
-				val title = if (task.dueDate == null || task.isAllDay) {
-					task.title
-				} else {
-					val time = ComposableDateFormatter.formatTime(task.dueDate.toLocalTime())
-					"$time ${task.title}"
-				}
-				Text(
-					text = title,
-					color = MaterialTheme.colorScheme.onPrimary,
-					maxLines = 2,
-					modifier = Modifier
-						.padding(start = 8.dp, top = 4.dp, bottom = 4.dp, end = 4.dp)
-				)
-
-			}
+			CalendarTaskItem(
+				task = task,
+				onAction = onAction
+			)
 		}
 	}
 }

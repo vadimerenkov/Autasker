@@ -2,9 +2,7 @@ package vadimerenkov.autasker.presentation.calendar
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -31,6 +29,7 @@ fun CalendarDayDialog(
 	startDayTime: Int,
 	selectedDay: LocalDate,
 	tasks: List<Task>,
+	onAction: (CalendarAction) -> Unit,
 	onDismissRequest: () -> Unit
 ) {
 	val allDayTasks = tasks.filter { it.isAllDay }
@@ -58,17 +57,10 @@ fun CalendarDayDialog(
 						verticalArrangement = Arrangement.spacedBy(2.dp)
 					) {
 						allDayTasks.forEach { task ->
-							Box(
-								modifier = Modifier
-									.fillMaxWidth()
-									.background(MaterialTheme.colorScheme.primary)
-							) {
-								Text(
-									text = task.title,
-									color = MaterialTheme.colorScheme.onPrimary,
-									modifier = Modifier.padding(4.dp)
-								)
-							}
+							CalendarTaskItem(
+								task = task,
+								onAction = onAction
+							)
 						}
 					}
 				}
@@ -82,18 +74,10 @@ fun CalendarDayDialog(
 							if (tasksAtHour.containsKey(hour)) {
 								val hourTasks = timedTasks.filter { it.dueDate!!.hour == hour }
 								hourTasks.forEach { task ->
-									Box(
-										modifier = Modifier
-											.fillMaxWidth()
-											.padding(2.dp)
-											.background(MaterialTheme.colorScheme.primary)
-									) {
-										Text(
-											text = task.title,
-											color = MaterialTheme.colorScheme.onPrimary,
-											modifier = Modifier.padding(4.dp)
-										)
-									}
+									CalendarTaskItem(
+										task = task,
+										onAction = onAction
+									)
 								}
 							}
 						}
@@ -110,18 +94,10 @@ fun CalendarDayDialog(
 								if (tasksAtHour.containsKey(hour)) {
 									val hourTasks = timedTasks.filter { it.dueDate!!.hour == hour }
 									hourTasks.forEach { task ->
-										Box(
-											modifier = Modifier
-												.fillMaxWidth()
-												.background(MaterialTheme.colorScheme.primary)
-												.padding(2.dp)
-										) {
-											Text(
-												text = task.title,
-												color = MaterialTheme.colorScheme.onPrimary,
-												modifier = Modifier.padding(4.dp)
-											)
-										}
+										CalendarTaskItem(
+											task = task,
+											onAction = onAction
+										)
 									}
 								}
 							}
@@ -158,7 +134,8 @@ private fun CalendarDayDialogPreview() {
 			),
 			selectedDay = LocalDate.now(),
 			onDismissRequest = {},
-			startDayTime = 4
+			startDayTime = 4,
+			onAction = {}
 		)
 	}
 }
