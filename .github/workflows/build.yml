@@ -43,7 +43,7 @@ jobs:
         run: ./gradlew :composeApp:packageMsi
 
   build-desktop-linux:
-    name: Build Desktop Windows
+    name: Build Desktop Linux
     runs-on: ubuntu-latest
     needs: test
     steps:
@@ -69,9 +69,3 @@ jobs:
 
       - name: Build Android debug APK
         run: ./gradlew :androidApp:assembleDebug
-
-      - name: Upload Android debug APK
-        uses: actions/upload-artifact@v4
-        with:
-          name: android-apk
-          path: mobile/build/outputs/apk/debug/*.apk
