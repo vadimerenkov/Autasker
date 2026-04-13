@@ -17,6 +17,8 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material.icons.filled.Add
@@ -47,6 +49,8 @@ import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalHapticFeedback
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -136,6 +140,7 @@ fun TaskColumn(
 					)
 				}
 			}
+			val keyboard = LocalSoftwareKeyboardController.current
 			OutlinedTextField(
 				value = title,
 				onValueChange = {
@@ -145,6 +150,14 @@ fun TaskColumn(
 				enabled = category.isEditable,
 				textStyle = LocalTextStyle.current.copy(
 					fontSize = 16.sp
+				),
+				keyboardOptions = KeyboardOptions(
+					imeAction = ImeAction.Done
+				),
+				keyboardActions = KeyboardActions(
+					onDone = {
+						keyboard?.hide()
+					}
 				),
 				singleLine = true,
 				shape = RectangleShape,

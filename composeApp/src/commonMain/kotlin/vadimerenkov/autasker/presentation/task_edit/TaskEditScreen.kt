@@ -49,6 +49,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.input.key.key
 import androidx.compose.ui.input.key.onPreviewKeyEvent
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -134,6 +135,7 @@ private fun TaskEditScreenRoot(
 					onAction(TaskEditAction.CompletedToggle(it))
 				}
 			)
+			val keyboard = LocalSoftwareKeyboardController.current
 			OutlinedTextField(
 				value = state.title,
 				label = {
@@ -142,6 +144,15 @@ private fun TaskEditScreenRoot(
 						color = MaterialTheme.colorScheme.onBackground
 					)
 				},
+				singleLine = true,
+				keyboardOptions = KeyboardOptions(
+					imeAction = ImeAction.Done
+				),
+				keyboardActions = KeyboardActions(
+					onDone = {
+						keyboard?.hide()
+					}
+				),
 				onValueChange = {
 					onAction(TaskEditAction.TitleChange(it))
 				},
