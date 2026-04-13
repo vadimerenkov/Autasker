@@ -19,6 +19,10 @@ Powered by Kotlin Multiplatform and Jetpack Compose.
 
 </div>
 
+## Screenshots
+
+<img src=https://github.com/vadimerenkov/Autasker/blob/5873cbde38fdf4ef8515cea15e910553b6ba8ff3/screenshots/2026-04-13%20213515.png> <img src=https://github.com/vadimerenkov/Autasker/blob/5873cbde38fdf4ef8515cea15e910553b6ba8ff3/screenshots/2026-04-13%20213523.png> <img src=https://github.com/vadimerenkov/Autasker/blob/5873cbde38fdf4ef8515cea15e910553b6ba8ff3/screenshots/2026-04-13%20213604.png>
+
 ## Roadmap
 
 - Calendar view ✅
