@@ -159,7 +159,7 @@ class MainViewModel(
 				viewModelScope.launch {
 					repository.saveCategory(
 						TaskCategory(
-							index = state.categories.size + 1,
+							index = state.categories.size + 3,
 							pageId = state.pages[state.selectedTabIndex].id
 						)
 					)
