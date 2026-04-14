@@ -37,12 +37,17 @@ import java.time.ZonedDateTime
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class InitializationTest {
+	private lateinit var viewModel: MainViewModel
 	private lateinit var repository: TasksRepositoryFake
 	private lateinit var settings: Settings
 	private lateinit var dataStore: DataStore<Preferences>
 	private lateinit var testDispatcher: TestDispatcher
 	private lateinit var applicationScope: CoroutineScope
 	private lateinit var reminderService: ReminderService
+
+	fun initialize() {
+		viewModel = MainViewModel(repository, reminderService, FakeAudioPlayer(), settings, mutableListOf())
+	}
 
 	@Before
 	fun setUp() {
@@ -81,7 +86,7 @@ class InitializationTest {
 		)
 		repository.saveTask(task)
 		assertThat(repository.tasks.value).contains(task)
-		val viewModel = MainViewModel(repository, reminderService, FakeAudioPlayer(), settings, mutableListOf())
+		initialize()
 		testDispatcher.scheduler.advanceUntilIdle()
 
 		assertThat(repository.tasks.value).doesNotContain(task)
@@ -98,7 +103,7 @@ class InitializationTest {
 		)
 		repository.saveTask(task)
 		assertThat(repository.tasks.value).contains(task)
-		val viewModel = MainViewModel(repository, reminderService, FakeAudioPlayer(), settings, mutableListOf())
+		initialize()
 		testDispatcher.scheduler.advanceUntilIdle()
 
 		assertThat(repository.tasks.value).contains(task.copy(isDeleted = true, deletedDate = ZonedDateTime.now().roundToMinutes()))

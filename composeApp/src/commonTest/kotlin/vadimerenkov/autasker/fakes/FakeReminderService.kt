@@ -20,7 +20,6 @@ class FakeReminderService(
 	}
 
 	override suspend fun cancelRemindersForTask(taskId: Long) {
-		repository.deleteRemindersForTask(taskId)
 		val jobs = repository.getAllJobs()
 		jobs.forEach { job ->
 			repository.deleteJob(job.key)

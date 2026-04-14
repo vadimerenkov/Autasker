@@ -6,20 +6,22 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation3.runtime.NavKey
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.joinAll
 import kotlinx.coroutines.launch
 import vadimerenkov.autasker.domain.RepeatMode
 import vadimerenkov.autasker.domain.Task
 import vadimerenkov.autasker.domain.TasksRepository
 import vadimerenkov.autasker.domain.Time
+import vadimerenkov.autasker.domain.minusReminder
+import vadimerenkov.autasker.domain.reminders.ReminderService
 import vadimerenkov.autasker.settings.Settings
 import java.time.ZoneId
 
 class NewDayViewModel(
 	private val repository: TasksRepository,
 	private val settings: Settings,
-	private val backStack: MutableList<NavKey>
+	private val backStack: MutableList<NavKey>,
+	private val reminderService: ReminderService
 ): ViewModel() {
 	var state by mutableStateOf(NewDayState())
 
@@ -119,6 +121,15 @@ class NewDayViewModel(
 	private fun finish() {
 		val tasks = state.yesterdayTasks + state.todayTasks
 		viewModelScope.launch {
+			tasks.forEach { task ->
+				task.dueDate?.let {
+					reminderService.cancelRemindersForTask(task.id)
+					task.reminders.forEach { reminder ->
+						val date = it.minusReminder(reminder)
+						reminderService.scheduleReminder(task.id, date)
+					}
+				}
+			}
 			repository.saveTasks(tasks)
 
 			val repeatingTasks = repository.getRepeatingTasks()
@@ -126,7 +137,7 @@ class NewDayViewModel(
 			val updatedTasks = mutableListOf<Task>()
 
 			val jobs = repeatingTasks.map { task ->
-				launch(Dispatchers.Default) {
+				launch() {
 					when (task.repeatState.mode) {
 						RepeatMode.ON_COMPLETION, RepeatMode.ON_EXACT -> {
 							if (task.isCompleted) {
@@ -187,6 +198,18 @@ class NewDayViewModel(
 			}
 
 			jobs.joinAll()
+			println("Finished updating tasks: $updatedTasks")
+			updatedTasks.forEach { task ->
+				task.dueDate?.let {
+					reminderService.cancelRemindersForTask(task.id)
+					println("Canceled previous reminders")
+					task.reminders.forEach { reminder ->
+						val date = it.minusReminder(reminder)
+						reminderService.scheduleReminder(task.id, date)
+						println("Scheduled reminder $reminder")
+					}
+				}
+			}
 			repository.saveTasks(updatedTasks)
 			backStack.removeLastOrNull()
 		}

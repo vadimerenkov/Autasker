@@ -2,6 +2,7 @@ package vadimerenkov.autasker.navigation
 
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.CalendarMonth
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Info
@@ -15,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation3.runtime.NavKey
 import autasker.composeapp.generated.resources.Res
 import autasker.composeapp.generated.resources.about
+import autasker.composeapp.generated.resources.calendar
 import autasker.composeapp.generated.resources.settings
 import autasker.composeapp.generated.resources.tasks
 import autasker.composeapp.generated.resources.trash
@@ -39,6 +41,25 @@ fun MainNavigationRail(
 			label = {
 				Text(
 					text = stringResource(Res.string.tasks)
+				)
+			}
+		)
+		NavigationRailItem(
+			selected = backstack.lastOrNull() == CalendarRoute,
+			onClick = {
+				if (backstack.lastOrNull() != CalendarRoute) {
+					backstack.add(CalendarRoute)
+				}
+			},
+			icon = {
+				Icon(
+					imageVector = Icons.Default.CalendarMonth,
+					contentDescription = null
+				)
+			},
+			label = {
+				Text(
+					text = stringResource(Res.string.calendar)
 				)
 			}
 		)
