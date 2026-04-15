@@ -11,10 +11,14 @@ class ClipPlayer: AudioPlayer {
 	override fun play(path: String) {
 		val clip = AudioSystem.getClip()
 		val uri = URI(Res.getUri(path))
-		val inputStream = AudioSystem.getAudioInputStream(File(uri))
-		clip.open(inputStream)
-		val r = clip.getControl(FloatControl.Type.MASTER_GAIN) as FloatControl
-		r.value -= 6
-		clip.start()
+		try {
+			val inputStream = AudioSystem.getAudioInputStream(File(uri))
+			clip.open(inputStream)
+			val r = clip.getControl(FloatControl.Type.MASTER_GAIN) as FloatControl
+			r.value -= 6
+			clip.start()
+		} catch (e: Exception) {
+			e.printStackTrace()
+		}
 	}
 }
