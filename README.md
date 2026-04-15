@@ -35,6 +35,7 @@ Powered by Kotlin Multiplatform and Jetpack Compose.
 - [GitHub - assertk-org/assertk: assertions for kotlin inspired by assertj · GitHub](https://github.com/assertk-org/assertk)
 - [GitHub - vinceglb/AutoLaunch: Launch your Kotlin / KMP app automatically on system startup ✨ · GitHub](https://github.com/vinceglb/AutoLaunch)
 - [GitHub - Syer10/Kotlin-Multiplatform-AppDirs: Kotlin Multiplatform AppDirs is a small library which provides a path to the platform dependent special folder/directory. · GitHub](https://github.com/Syer10/Kotlin-Multiplatform-AppDirs)
+- [GitHub - kizitonwose/Calendar: A highly customizable calendar view and compose library for Android and Kotlin Multiplatform. · GitHub](https://github.com/kizitonwose/Calendar)
 - https://www.quartz-scheduler.org
 
 ## License

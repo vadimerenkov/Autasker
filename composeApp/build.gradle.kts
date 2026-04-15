@@ -90,6 +90,9 @@ compose.desktop {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
             packageName = "Autasker"
             packageVersion = libs.versions.version.name.get()
+	        description = "Autasker - to-do list app"
+	        copyright = "2026 © Vadim Erenkov"
+	        vendor = "Vadim Erenkov"
 
 	        windows {
 				dirChooser = true
