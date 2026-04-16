@@ -42,7 +42,11 @@ fun AutaskerApp(
 		}
 	}
 	val language by remember { derivedStateOf { settings.state.language } }
-	val locale = Locale.forLanguageTag(language.code)
+	val locale: Locale? = if (language == null) {
+		Locale.getDefault()
+	} else {
+		Locale.forLanguageTag(language!!.code)
+	}
 	Locale.setDefault(locale)
 	val LocalLanguage = staticCompositionLocalOf { locale }
 

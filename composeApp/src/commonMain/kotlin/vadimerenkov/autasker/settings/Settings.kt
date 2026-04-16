@@ -38,7 +38,7 @@ class Settings(
 					autoDeleteCompleted = prefs[AUTODELETE_COMPLETED] ?: true,
 					daysUntilDeleteCompleted = prefs[DELETE_COMPLETED_DAYS] ?: 7,
 					firstDayOfWeek = DayOfWeek.of(prefs[FIRST_DAY_OF_WEEK] ?: 1),
-					language = Language.valueOf(prefs[LANGUAGE] ?: Language.ENGLISH.name),
+					language = if (prefs[LANGUAGE] == null) null else Language.valueOf(prefs[LANGUAGE]!!),
 					theme = Theme.valueOf(prefs[THEME] ?: Theme.DEVICE.name),
 					timeFormat = TimeFormat.valueOf(prefs[TIME_FORMAT] ?: TimeFormat.CLOCK_24.name),
 					dateFormat = DateFormat.valueOf(prefs[DATE_FORMAT] ?: DateFormat.DDMMYYYY.name),

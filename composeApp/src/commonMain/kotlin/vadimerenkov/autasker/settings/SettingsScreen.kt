@@ -291,7 +291,7 @@ private fun SettingsScreenRoot(
 					}
 				},
 				description = stringResource(Res.string.language),
-				chosenOption = stringResource(state.language.stringRes)
+				chosenOption = stringResource(state.language!!.stringRes)
 			)
 			DropdownSetting(
 				options = Theme.entries.map { stringResource(it.stringRes) },

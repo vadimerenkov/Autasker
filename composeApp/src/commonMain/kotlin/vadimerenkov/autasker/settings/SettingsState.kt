@@ -20,7 +20,7 @@ data class SettingsState(
 	val closeToTray: Boolean = true,
 	val autoLaunch: Boolean = false,
 	val playSound: Boolean = true,
-	val language: Language = Language.ENGLISH,
+	val language: Language? = null,
 	val theme: Theme = Theme.DEVICE,
 	val timeFormat: TimeFormat = TimeFormat.CLOCK_24,
 	val dateFormat: DateFormat = DateFormat.DDMMYYYY
