@@ -226,6 +226,7 @@ class TaskEditViewModel(
 				importance = task.importance,
 				subtasks = task.subtasks,
 				reminders = task.reminders,
+				isLoading = false,
 
 				tag = state.categories.first { it.id == task.categoryId }.title
 			)

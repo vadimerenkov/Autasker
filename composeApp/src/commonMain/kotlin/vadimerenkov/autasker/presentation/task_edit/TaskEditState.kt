@@ -7,6 +7,7 @@ import vadimerenkov.autasker.domain.reminders.Reminder
 import java.time.ZonedDateTime
 
 data class TaskEditState(
+	val isLoading: Boolean = true,
 	val id: Long = 0,
 	val categoryId: Long = 0,
 	val index: Int = 0,

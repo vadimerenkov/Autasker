@@ -1,9 +1,11 @@
 package vadimerenkov.autasker.presentation.task_edit
 
+import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
@@ -13,6 +15,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
@@ -22,6 +25,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material.icons.filled.CalendarMonth
 import androidx.compose.material3.Checkbox
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuAnchorType
@@ -111,329 +115,347 @@ private fun TaskEditScreenRoot(
 ) {
 	val focusRequester = remember { FocusRequester() }
 
-	LaunchedEffect(true) {
-		if (state.title.isBlank()) {
+	LaunchedEffect(state.isLoading) {
+		if (!state.isLoading && state.title.isBlank()) {
 			focusRequester.requestFocus()
 		}
 	}
 
-	Column(
-		verticalArrangement = Arrangement.spacedBy(16.dp),
+	Box(
+		contentAlignment = Alignment.Center,
 		modifier = modifier
-			.verticalScroll(rememberScrollState())
 			.fillMaxSize()
 	) {
-		Row(
-			verticalAlignment = Alignment.CenterVertically,
-			horizontalArrangement = Arrangement.spacedBy(8.dp),
-			modifier = Modifier
-//				.fillMaxWidth()
-		) {
-			Checkbox(
-				checked = state.isCompleted,
-				onCheckedChange = {
-					onAction(TaskEditAction.CompletedToggle(it))
-				}
-			)
-			val keyboard = LocalSoftwareKeyboardController.current
-			OutlinedTextField(
-				value = state.title,
-				label = {
-					Text(
-						text = stringResource(Res.string.title),
-						color = MaterialTheme.colorScheme.onBackground
-					)
-				},
-				singleLine = true,
-				keyboardOptions = KeyboardOptions(
-					imeAction = ImeAction.Done
-				),
-				keyboardActions = KeyboardActions(
-					onDone = {
-						keyboard?.hide()
-					}
-				),
-				onValueChange = {
-					onAction(TaskEditAction.TitleChange(it))
-				},
-				placeholder = {
-					Text(
-						text = stringResource(Res.string.add_title)
-					)
-				},
-				modifier = Modifier
-					.weight(1f)
-					.focusRequester(focusRequester)
-			)
-			IconButton(
-				onClick = {
-					onAction(TaskEditAction.CalendarToggle)
-					onCalendarOpen()
-				},
-			) {
-				Icon(
-					imageVector = Icons.Default.CalendarMonth,
-					contentDescription = null,
-					tint = MaterialTheme.colorScheme.secondary
-				)
-			}
-		}
-
-		Row(
-			horizontalArrangement = Arrangement.spacedBy(16.dp),
-			verticalAlignment = Alignment.CenterVertically
-		) {
-			var expanded by remember { mutableStateOf(false) }
-			Text(
-				text = stringResource(Res.string.importance),
-				color = MaterialTheme.colorScheme.onBackground
-			)
-			ExposedDropdownMenuBox(
-				expanded = expanded,
-				onExpandedChange = { expanded = it }
-			) {
-				TextField(
-					value = state.importance.toImportance(),
-					onValueChange = {},
-					readOnly = true,
-					trailingIcon = {
-						Icon(
-							imageVector = Icons.Default.ArrowDropDown,
-							contentDescription = null
-						)
-					},
+		AnimatedContent(state.isLoading) { isLoading ->
+			if (isLoading) {
+				CircularProgressIndicator(
 					modifier = Modifier
-						.menuAnchor(ExposedDropdownMenuAnchorType.PrimaryNotEditable)
+						.fillMaxSize()
+						.wrapContentSize()
 				)
-				ExposedDropdownMenu(
-					expanded = expanded,
-					onDismissRequest = { expanded = false }
+			} else {
+				Column(
+					verticalArrangement = Arrangement.spacedBy(16.dp),
+					modifier = Modifier
+						.verticalScroll(rememberScrollState())
+						.fillMaxSize()
 				) {
-					repeat(4) { int ->
-						DropdownMenuItem(
-							text = {
-								Text(
-									text = int.toImportance()
-								)
-							},
-							onClick = {
-								onAction(TaskEditAction.ImportanceChanged(int))
-								expanded = false
+					Row(
+						verticalAlignment = Alignment.CenterVertically,
+						horizontalArrangement = Arrangement.spacedBy(8.dp),
+						modifier = Modifier
+//				.fillMaxWidth()
+					) {
+						Checkbox(
+							checked = state.isCompleted,
+							onCheckedChange = {
+								onAction(TaskEditAction.CompletedToggle(it))
 							}
 						)
-					}
-				}
-			}
-		}
-
-		var categoryMenuOpen by remember { mutableStateOf(false) }
-
-		if (categoryMenuOpen) {
-			Dialog(
-				onDismissRequest = { categoryMenuOpen = false }
-			) {
-				Column(
-					modifier = Modifier
-						.clip(RoundedCornerShape(8.dp))
-						.background(MaterialTheme.colorScheme.background)
-						.padding(8.dp)
-				) {
-					val unnamedColumn = stringResource(Res.string.unnamed_column)
-					state.categories.forEach { category ->
-						Text(
-							text = category.title ?: "<$unnamedColumn>",
-							modifier = Modifier
-								.clip(RoundedCornerShape(8.dp))
-								.clickable {
-									onAction(TaskEditAction.CategorySelected(category.id))
-									categoryMenuOpen = false
+						val keyboard = LocalSoftwareKeyboardController.current
+						OutlinedTextField(
+							value = state.title,
+							label = {
+								Text(
+									text = stringResource(Res.string.title),
+									color = MaterialTheme.colorScheme.onBackground
+								)
+							},
+							singleLine = true,
+							keyboardOptions = KeyboardOptions(
+								imeAction = ImeAction.Done
+							),
+							keyboardActions = KeyboardActions(
+								onDone = {
+									keyboard?.hide()
 								}
-								.padding(8.dp)
+							),
+							onValueChange = {
+								onAction(TaskEditAction.TitleChange(it))
+							},
+							placeholder = {
+								Text(
+									text = stringResource(Res.string.add_title)
+								)
+							},
+							modifier = Modifier
+								.weight(1f)
+								.focusRequester(focusRequester)
 						)
-					}
-				}
-			}
-		}
-		FlowRow(
-			horizontalArrangement = Arrangement.spacedBy(8.dp),
-			verticalArrangement = Arrangement.spacedBy(8.dp)
-		) {
-			val unnamed = stringResource(Res.string.unnamed_column)
-			DataChip(
-				text = state.tag ?: "<$unnamed>",
-				showCross = false,
-				onCrossClick = {},
-				clickable = true,
-				onClick = {
-					categoryMenuOpen = true
-				},
-				modifier = Modifier
-					.fillMaxRowHeight()
-			)
-			if (state.dueDate == null) {
-				val today = stringResource(Res.string.today)
-				val tomorrow = stringResource(Res.string.tomorrow)
-				DataChip(
-					text = "+ ${today.lowercase()}",
-					onClick = {
-						onAction(TaskEditAction.CommonDatePicked(1))
-					},
-					showCross = false,
-					modifier = Modifier
-						.fillMaxRowHeight()
-				)
-				DataChip(
-					text = "+ ${tomorrow.lowercase()}",
-					onClick = {
-						onAction(TaskEditAction.CommonDatePicked(2))
-					},
-					showCross = false,
-					modifier = Modifier
-						.fillMaxRowHeight()
-				)
-			}
-			else {
-				DataChip(
-					text = ComposableDateFormatter.formatDate(state.dueDate, state.isAllDay),
-					onClick = {
-						onAction(TaskEditAction.CalendarToggle)
-						onCalendarOpen()
-					},
-					onCrossClick = {
-						onAction(TaskEditAction.DeleteDate)
-					},
-					modifier = Modifier
-						.fillMaxRowHeight()
-				)
-			}
-			if (state.repeatState.isRepeating) {
-				DataChip(
-					text = state.repeatState.formatted(),
-					onClick = {
-						onAction(TaskEditAction.CalendarToggle)
-						onCalendarOpen()
-					},
-					onCrossClick = {
-						onAction(TaskEditAction.DeleteRepeating)
-					},
-					modifier = Modifier
-						.fillMaxRowHeight()
-				)
-			}
-			state.completedDate?.let {
-				val completed = stringResource(Res.string.completed_on)
-				val formatted = ComposableDateFormatter.formatDate(it, false)
-				DataChip(
-					text = "$completed $formatted",
-					showCross = false,
-					clickable = false,
-					modifier = Modifier
-						.fillMaxRowHeight()
-				)
-			}
-		}
-
-		if (state.subtasks.isNotEmpty()) {
-			val progress by animateFloatAsState(state.subtasks.count { it.isCompleted } / state.subtasks.size.toFloat())
-			LinearProgressIndicator(
-				progress = {
-					progress
-				},
-				drawStopIndicator = { false }
-			)
-			Column(
-				verticalArrangement = Arrangement.spacedBy(4.dp),
-				modifier = Modifier
-	//				.weight(1f)
-			) {
-				state.subtasks.forEachIndexed { index, subtask ->
-					DataChip(
-						text = subtask.title,
-						color = Color.Gray,
-						onCrossClick = {
-							onAction(TaskEditAction.DeleteSubtask(index))
-						},
-						onClick = {
-							onAction(TaskEditAction.SubtaskToggle(index))
-						},
-						leadingIcon = {
-							Checkbox(
-								checked = subtask.isCompleted,
-								onCheckedChange = {
-									onAction(TaskEditAction.SubtaskToggle(index))
-								},
-								modifier = Modifier
-									.size(32.dp)
+						IconButton(
+							onClick = {
+								onAction(TaskEditAction.CalendarToggle)
+								onCalendarOpen()
+							},
+						) {
+							Icon(
+								imageVector = Icons.Default.CalendarMonth,
+								contentDescription = null,
+								tint = MaterialTheme.colorScheme.secondary
 							)
 						}
-					)
-				}
-			}
-		}
+					}
 
-		var subtaskTitle by remember { mutableStateOf("") }
+					Row(
+						horizontalArrangement = Arrangement.spacedBy(16.dp),
+						verticalAlignment = Alignment.CenterVertically
+					) {
+						var expanded by remember { mutableStateOf(false) }
+						Text(
+							text = stringResource(Res.string.importance),
+							color = MaterialTheme.colorScheme.onBackground
+						)
+						ExposedDropdownMenuBox(
+							expanded = expanded,
+							onExpandedChange = { expanded = it }
+						) {
+							TextField(
+								value = state.importance.toImportance(),
+								onValueChange = {},
+								readOnly = true,
+								trailingIcon = {
+									Icon(
+										imageVector = Icons.Default.ArrowDropDown,
+										contentDescription = null
+									)
+								},
+								modifier = Modifier
+									.menuAnchor(ExposedDropdownMenuAnchorType.PrimaryNotEditable)
+							)
+							ExposedDropdownMenu(
+								expanded = expanded,
+								onDismissRequest = { expanded = false }
+							) {
+								repeat(4) { int ->
+									DropdownMenuItem(
+										text = {
+											Text(
+												text = int.toImportance()
+											)
+										},
+										onClick = {
+											onAction(TaskEditAction.ImportanceChanged(int))
+											expanded = false
+										}
+									)
+								}
+							}
+						}
+					}
 
-		OutlinedTextField(
-			value = subtaskTitle,
-			onValueChange = {
-				subtaskTitle = it
-			},
-			placeholder = {
-				Text(
-					text = stringResource(Res.string.new_subtask)
-				)
-			},
-			keyboardActions = KeyboardActions {
-				if (subtaskTitle.isNotBlank()) {
-					onAction(TaskEditAction.SaveSubtask(subtaskTitle))
-					subtaskTitle = ""
-				}
-			},
-			keyboardOptions = KeyboardOptions.Default.copy(
-				imeAction = ImeAction.Next
-			),
-			modifier = Modifier
-				.onPreviewKeyEvent {
-					when (it.key) {
-						Key.Enter -> {
+					var categoryMenuOpen by remember { mutableStateOf(false) }
+
+					if (categoryMenuOpen) {
+						Dialog(
+							onDismissRequest = { categoryMenuOpen = false }
+						) {
+							Column(
+								modifier = Modifier
+									.clip(RoundedCornerShape(8.dp))
+									.background(MaterialTheme.colorScheme.background)
+									.padding(8.dp)
+							) {
+								val unnamedColumn = stringResource(Res.string.unnamed_column)
+								state.categories.forEach { category ->
+									Text(
+										text = category.title ?: "<$unnamedColumn>",
+										modifier = Modifier
+											.clip(RoundedCornerShape(8.dp))
+											.clickable {
+												onAction(TaskEditAction.CategorySelected(category.id))
+												categoryMenuOpen = false
+											}
+											.padding(8.dp)
+									)
+								}
+							}
+						}
+					}
+					FlowRow(
+						horizontalArrangement = Arrangement.spacedBy(8.dp),
+						verticalArrangement = Arrangement.spacedBy(8.dp)
+					) {
+						val unnamed = stringResource(Res.string.unnamed_column)
+						DataChip(
+							text = state.tag ?: "<$unnamed>",
+							showCross = false,
+							onCrossClick = {},
+							clickable = true,
+							onClick = {
+								categoryMenuOpen = true
+							},
+							modifier = Modifier
+								.fillMaxRowHeight()
+						)
+						if (state.dueDate == null) {
+							val today = stringResource(Res.string.today)
+							val tomorrow = stringResource(Res.string.tomorrow)
+							DataChip(
+								text = "+ ${today.lowercase()}",
+								onClick = {
+									onAction(TaskEditAction.CommonDatePicked(1))
+								},
+								showCross = false,
+								modifier = Modifier
+									.fillMaxRowHeight()
+							)
+							DataChip(
+								text = "+ ${tomorrow.lowercase()}",
+								onClick = {
+									onAction(TaskEditAction.CommonDatePicked(2))
+								},
+								showCross = false,
+								modifier = Modifier
+									.fillMaxRowHeight()
+							)
+						}
+						else {
+							DataChip(
+								text = ComposableDateFormatter.formatDate(state.dueDate, state.isAllDay),
+								onClick = {
+									onAction(TaskEditAction.CalendarToggle)
+									onCalendarOpen()
+								},
+								onCrossClick = {
+									onAction(TaskEditAction.DeleteDate)
+								},
+								modifier = Modifier
+									.fillMaxRowHeight()
+							)
+						}
+						if (state.repeatState.isRepeating) {
+							DataChip(
+								text = state.repeatState.formatted(),
+								onClick = {
+									onAction(TaskEditAction.CalendarToggle)
+									onCalendarOpen()
+								},
+								onCrossClick = {
+									onAction(TaskEditAction.DeleteRepeating)
+								},
+								modifier = Modifier
+									.fillMaxRowHeight()
+							)
+						}
+						state.completedDate?.let {
+							val completed = stringResource(Res.string.completed_on)
+							val formatted = ComposableDateFormatter.formatDate(it, false)
+							DataChip(
+								text = "$completed $formatted",
+								showCross = false,
+								clickable = false,
+								modifier = Modifier
+									.fillMaxRowHeight()
+							)
+						}
+					}
+
+					if (state.subtasks.isNotEmpty()) {
+						val progress by animateFloatAsState(state.subtasks.count { it.isCompleted } / state.subtasks.size.toFloat())
+						LinearProgressIndicator(
+							progress = {
+								progress
+							},
+							drawStopIndicator = { false }
+						)
+						Column(
+							verticalArrangement = Arrangement.spacedBy(4.dp),
+							modifier = Modifier
+							//				.weight(1f)
+						) {
+							state.subtasks.forEachIndexed { index, subtask ->
+								DataChip(
+									text = subtask.title,
+									color = Color.Gray,
+									onCrossClick = {
+										onAction(TaskEditAction.DeleteSubtask(index))
+									},
+									onClick = {
+										onAction(TaskEditAction.SubtaskToggle(index))
+									},
+									leadingIcon = {
+										Checkbox(
+											checked = subtask.isCompleted,
+											onCheckedChange = {
+												onAction(TaskEditAction.SubtaskToggle(index))
+											},
+											modifier = Modifier
+												.size(32.dp)
+										)
+									}
+								)
+							}
+						}
+					}
+
+					var subtaskTitle by remember { mutableStateOf("") }
+
+					OutlinedTextField(
+						value = subtaskTitle,
+						onValueChange = {
+							subtaskTitle = it
+						},
+						placeholder = {
+							Text(
+								text = stringResource(Res.string.new_subtask)
+							)
+						},
+						keyboardActions = KeyboardActions {
 							if (subtaskTitle.isNotBlank()) {
 								onAction(TaskEditAction.SaveSubtask(subtaskTitle))
 								subtaskTitle = ""
-								true
-							} else false
-						}
-						else -> false
-					}
-				}
-		)
-		TextField(
-			value = state.description ?: "",
-			label = {
-				Text(
-					text = stringResource(Res.string.description),
-					color = MaterialTheme.colorScheme.onBackground
-				)
-			},
-			placeholder = {
-				Text(
-					text = stringResource(Res.string.add_description)
-				)
-			},
-			onValueChange = {
-				onAction(TaskEditAction.DescriptionChange(it))
-			},
-			minLines = 6,
-			modifier = Modifier
-				.fillMaxWidth()
-		)
+							}
+						},
+						keyboardOptions = KeyboardOptions.Default.copy(
+							imeAction = ImeAction.Next
+						),
+						modifier = Modifier
+							.onPreviewKeyEvent {
+								when (it.key) {
+									Key.Enter -> {
+										if (subtaskTitle.isNotBlank()) {
+											onAction(TaskEditAction.SaveSubtask(subtaskTitle))
+											subtaskTitle = ""
+											true
+										} else false
+									}
+									else -> false
+								}
+							}
+					)
+					TextField(
+						value = state.description ?: "",
+						label = {
+							Text(
+								text = stringResource(Res.string.description),
+								color = MaterialTheme.colorScheme.onBackground
+							)
+						},
+						placeholder = {
+							Text(
+								text = stringResource(Res.string.add_description)
+							)
+						},
+						onValueChange = {
+							onAction(TaskEditAction.DescriptionChange(it))
+						},
+						minLines = 6,
+						modifier = Modifier
+							.fillMaxWidth()
+					)
 //		Text(text = "Category id: ${state.categoryId}")
-		Spacer(modifier = Modifier.weight(1f))
-		ButtonsRow(
-			onPrimaryClick = onSaveTask,
-			isPrimaryButtonEnabled = state.isValid,
-			onSecondaryClick = onCancel
-		)
+					Spacer(modifier = Modifier.weight(1f))
+					ButtonsRow(
+						onPrimaryClick = onSaveTask,
+						isPrimaryButtonEnabled = state.isValid,
+						onSecondaryClick = onCancel
+					)
+				}
+
+			}
+		}
 	}
+
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
