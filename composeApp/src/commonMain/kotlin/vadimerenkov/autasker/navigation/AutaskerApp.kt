@@ -39,6 +39,9 @@ fun AutaskerApp(
 					settings.saveSetting(LANGUAGE, language.name)
 				}
 			}
+			if (!Language.entries.any { it.code == defaultLocale.toLanguageTag() }) {
+				settings.saveSetting(LANGUAGE, Language.ENGLISH.name)
+			}
 		}
 	}
 	val language by remember { derivedStateOf { settings.state.language } }
