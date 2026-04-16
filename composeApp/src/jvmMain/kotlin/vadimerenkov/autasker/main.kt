@@ -30,7 +30,6 @@ fun main() {
 
 	initKoin()
 	val settings: Settings = get().get()
-//	val notificationCenter: NotificationCenter = get().get()
 	val notificationCenter: QuartzScheduler = get().get()
 	val data = runBlocking { settings.dataStore.data.first() }
 
