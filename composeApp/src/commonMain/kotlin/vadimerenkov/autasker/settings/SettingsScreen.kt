@@ -47,6 +47,7 @@ import autasker.composeapp.generated.resources.end_of_day_time
 import autasker.composeapp.generated.resources.first_day_of_week
 import autasker.composeapp.generated.resources.language
 import autasker.composeapp.generated.resources.period_in
+import autasker.composeapp.generated.resources.play_sound
 import autasker.composeapp.generated.resources.theme
 import autasker.composeapp.generated.resources.time_format
 import kotlinx.coroutines.launch
@@ -228,6 +229,14 @@ private fun SettingsScreenRoot(
 					color = MaterialTheme.colorScheme.onBackground
 				)
 			}
+			HorizontalDivider()
+			CheckboxSetting(
+				title = stringResource(Res.string.play_sound),
+				isChecked = state.playSound,
+				onCheckedChange = {
+					onAction(SettingsAction.PlaySoundChange(it))
+				}
+			)
 
 			if (getPlatform().name == "Desktop") {
 				HorizontalDivider()

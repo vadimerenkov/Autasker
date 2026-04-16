@@ -21,4 +21,5 @@ sealed interface SettingsAction {
 	data class DateFormatChange(val format: DateFormat): SettingsAction
 	data class CloseToTray(val toTray: Boolean): SettingsAction
 	data class AutoLaunch(val launch: Boolean): SettingsAction
+	data class PlaySoundChange(val play: Boolean): SettingsAction
 }

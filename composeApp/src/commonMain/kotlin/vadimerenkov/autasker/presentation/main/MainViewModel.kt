@@ -374,8 +374,10 @@ class MainViewModel(
 			}
 		}
 
-		// Sound source: https://freesound.org/people/LittleRainySeasons/sounds/335908/
-		audioPlayer.play("files/ding.wav")
+		if (settings.state.playSound) {
+			// Sound source: https://freesound.org/people/LittleRainySeasons/sounds/335908/
+			audioPlayer.play("files/ding.wav")
+		}
 	}
 
 	private fun uncompleteTask(task: Task) {

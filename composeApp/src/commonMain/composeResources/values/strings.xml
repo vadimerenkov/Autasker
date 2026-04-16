@@ -78,6 +78,7 @@
     <string name="remind_before">Remind before</string>
     <string name="exit">Exit</string>
     <string name="calendar">Calendar</string>
+    <string name="play_sound">Play a sound when completing the task</string>
 
     <string name="language">Language</string>
     <string name="english">English</string>

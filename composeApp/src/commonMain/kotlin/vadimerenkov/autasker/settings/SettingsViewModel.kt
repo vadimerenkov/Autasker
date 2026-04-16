@@ -58,6 +58,9 @@ class SettingsViewModel(
 						AutoLaunch.disable()
 					}
 				}
+				is SettingsAction.PlaySoundChange -> {
+					settings.saveSetting(PLAY_SOUND, action.play)
+				}
 			}
 		}
 	}

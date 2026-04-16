@@ -43,7 +43,8 @@ class Settings(
 					timeFormat = TimeFormat.valueOf(prefs[TIME_FORMAT] ?: TimeFormat.CLOCK_24.name),
 					dateFormat = DateFormat.valueOf(prefs[DATE_FORMAT] ?: DateFormat.DDMMYYYY.name),
 					closeToTray = prefs[TRAY] ?: false,
-					autoLaunch = prefs[AUTOLAUNCH] ?: false
+					autoLaunch = prefs[AUTOLAUNCH] ?: false,
+					playSound = prefs[PLAY_SOUND] ?: true
 				)
 			}
 			.onEach { state = it }

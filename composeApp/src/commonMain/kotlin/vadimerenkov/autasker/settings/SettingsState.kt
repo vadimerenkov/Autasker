@@ -19,6 +19,7 @@ data class SettingsState(
 	val firstDayOfWeek: DayOfWeek = WeekFields.of(Locale.getDefault()).firstDayOfWeek,
 	val closeToTray: Boolean = true,
 	val autoLaunch: Boolean = false,
+	val playSound: Boolean = true,
 	val language: Language = Language.ENGLISH,
 	val theme: Theme = Theme.DEVICE,
 	val timeFormat: TimeFormat = TimeFormat.CLOCK_24,
