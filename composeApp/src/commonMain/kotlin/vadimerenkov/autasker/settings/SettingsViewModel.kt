@@ -61,6 +61,9 @@ class SettingsViewModel(
 				is SettingsAction.PlaySoundChange -> {
 					settings.saveSetting(PLAY_SOUND, action.play)
 				}
+				is SettingsAction.ThemeColorChange -> {
+					settings.saveSetting(THEME_COLOR, action.color.name)
+				}
 			}
 		}
 	}

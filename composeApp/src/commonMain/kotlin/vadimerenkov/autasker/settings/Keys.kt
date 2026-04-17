@@ -23,3 +23,4 @@ internal val SHOW_TODAY_COMPLETED = booleanPreferencesKey("SHOW_TODAY_COMPLETED"
 internal val SHOW_TOMORROW_COMPLETED = booleanPreferencesKey("SHOW_TOMORROW_COMPLETED")
 internal val AUTOLAUNCH = booleanPreferencesKey("AUTOLAUNCH")
 internal val PLAY_SOUND = booleanPreferencesKey("PLAY_SOUND")
+internal val THEME_COLOR = stringPreferencesKey("THEME_COLOR")

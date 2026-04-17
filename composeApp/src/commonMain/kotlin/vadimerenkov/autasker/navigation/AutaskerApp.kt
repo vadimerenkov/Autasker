@@ -56,7 +56,12 @@ fun AutaskerApp(
 	val theme by remember { derivedStateOf { settings.state.theme } }
 	val isDarkTheme = if (theme == Theme.DEVICE) isSystemInDarkTheme() else theme == Theme.DARK
 
-	AutaskerTheme(darkTheme = isDarkTheme) {
+	val color by remember { derivedStateOf { settings.state.themeColor} }
+
+	AutaskerTheme(
+		themeColor = color,
+		darkTheme = isDarkTheme
+	) {
 		CompositionLocalProvider(LocalLanguage provides locale) {
 			content()
 		}

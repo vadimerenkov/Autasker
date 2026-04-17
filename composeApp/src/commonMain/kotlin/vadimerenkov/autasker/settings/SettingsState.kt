@@ -1,5 +1,6 @@
 package vadimerenkov.autasker.settings
 
+import vadimerenkov.autasker.presentation.theme.ThemeColor
 import vadimerenkov.autasker.settings.enums.DateFormat
 import vadimerenkov.autasker.settings.enums.Language
 import vadimerenkov.autasker.settings.enums.Theme
@@ -22,6 +23,7 @@ data class SettingsState(
 	val playSound: Boolean = true,
 	val language: Language? = null,
 	val theme: Theme = Theme.DEVICE,
+	val themeColor: ThemeColor = ThemeColor.BLUE,
 	val timeFormat: TimeFormat = TimeFormat.CLOCK_24,
 	val dateFormat: DateFormat = DateFormat.DDMMYYYY
 ) {

@@ -117,6 +117,7 @@ private fun CalendarScreenRoot(
 					Text(
 						text = "$month $year",
 						style = MaterialTheme.typography.displayLarge,
+						color = MaterialTheme.colorScheme.onBackground,
 						modifier = Modifier
 							.padding(start = 16.dp)
 					)

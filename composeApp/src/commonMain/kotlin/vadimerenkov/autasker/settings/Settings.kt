@@ -13,6 +13,7 @@ import kotlinx.coroutines.flow.onEach
 import vadimerenkov.autasker.domain.Sorting
 import vadimerenkov.autasker.domain.Time
 import vadimerenkov.autasker.domain.toZonedDateTime
+import vadimerenkov.autasker.presentation.theme.ThemeColor
 import vadimerenkov.autasker.settings.enums.DateFormat
 import vadimerenkov.autasker.settings.enums.Language
 import vadimerenkov.autasker.settings.enums.Theme
@@ -40,6 +41,7 @@ class Settings(
 					firstDayOfWeek = DayOfWeek.of(prefs[FIRST_DAY_OF_WEEK] ?: 1),
 					language = if (prefs[LANGUAGE] == null) null else Language.valueOf(prefs[LANGUAGE]!!),
 					theme = Theme.valueOf(prefs[THEME] ?: Theme.DEVICE.name),
+					themeColor = ThemeColor.valueOf(prefs[THEME_COLOR] ?: ThemeColor.BLUE.name),
 					timeFormat = TimeFormat.valueOf(prefs[TIME_FORMAT] ?: TimeFormat.CLOCK_24.name),
 					dateFormat = DateFormat.valueOf(prefs[DATE_FORMAT] ?: DateFormat.DDMMYYYY.name),
 					closeToTray = prefs[TRAY] ?: false,

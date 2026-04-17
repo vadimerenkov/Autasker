@@ -2,6 +2,7 @@ package vadimerenkov.autasker.settings
 
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -10,9 +11,13 @@ import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
@@ -33,6 +38,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import autasker.composeapp.generated.resources.Res
@@ -59,6 +66,7 @@ import vadimerenkov.autasker.domain.toLocalizedString
 import vadimerenkov.autasker.getPlatform
 import vadimerenkov.autasker.presentation.components.IntNumberInputField
 import vadimerenkov.autasker.presentation.theme.AutaskerTheme
+import vadimerenkov.autasker.presentation.theme.ThemeColor
 import vadimerenkov.autasker.settings.components.CheckboxSetting
 import vadimerenkov.autasker.settings.components.DropdownSetting
 import vadimerenkov.autasker.settings.enums.DateFormat
@@ -301,6 +309,52 @@ private fun SettingsScreenRoot(
 				description = stringResource(Res.string.theme),
 				chosenOption = stringResource(state.theme.stringRes)
 			)
+			Row(
+				horizontalArrangement = Arrangement.SpaceEvenly,
+				modifier = Modifier
+					.fillMaxWidth()
+			) {
+				ThemeColor.entries.forEach { color ->
+					val isSelected = color == state.themeColor
+					Column(
+						horizontalAlignment = Alignment.CenterHorizontally,
+						modifier = Modifier
+							.clickable {
+								onAction(SettingsAction.ThemeColorChange(color))
+							}
+							.padding(8.dp)
+					){
+						Box(
+							modifier = Modifier
+								.clip(CircleShape)
+								.size(48.dp)
+								.drawBehind {
+									drawArc(
+										color = color.lightColor,
+										startAngle = 45f,
+										sweepAngle = 180f,
+										useCenter = true
+									)
+									drawArc(
+										color = color.darkColor,
+										startAngle = -135f,
+										sweepAngle = 180f,
+										useCenter = true
+									)
+								}
+								.border(
+									width = if (isSelected) 3.dp else 0.dp,
+									color = if (isSelected) MaterialTheme.colorScheme.onBackground else Color.Transparent,
+									shape = CircleShape
+								)
+						)
+						Text(
+							text = stringResource(color.nameRes),
+							color = MaterialTheme.colorScheme.onBackground
+						)
+					}
+				}
+			}
 		}
 	}
 }
@@ -310,7 +364,7 @@ private fun SettingsScreenRoot(
 private fun SettingsPreview() {
 	AutaskerTheme {
 		SettingsScreenRoot(
-			state = SettingsState(),
+			state = SettingsState(language = Language.ENGLISH),
 			onAction = {},
 			scrollState = rememberScrollState(),
 			modifier = Modifier

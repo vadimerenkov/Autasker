@@ -79,6 +79,7 @@
     <string name="exit">Exit</string>
     <string name="calendar">Calendar</string>
     <string name="play_sound">Play a sound when completing the task</string>
+    <string name="colors">Colors</string>
 
     <string name="language">Language</string>
     <string name="english">English</string>
@@ -88,6 +89,9 @@
     <string name="light_theme">Light</string>
     <string name="dark_theme">Dark</string>
     <string name="device_theme">Device</string>
+
+    <string name="lavender">Lavender</string>
+    <string name="sea">Sea</string>
 
     <string name="yymmdd">1970.12.31</string>
     <string name="mmddyy">12.31.1970</string>
