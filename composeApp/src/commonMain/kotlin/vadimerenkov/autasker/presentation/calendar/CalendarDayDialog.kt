@@ -3,6 +3,7 @@ package vadimerenkov.autasker.presentation.calendar
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -44,6 +45,7 @@ fun CalendarDayDialog(
 				.clip(RoundedCornerShape(8.dp))
 				.background(MaterialTheme.colorScheme.background)
 				.padding(16.dp)
+				.heightIn(max = 720.dp)
 		) {
 			Text(
 				text = selectedDay.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL)),
