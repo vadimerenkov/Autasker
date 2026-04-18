@@ -10,8 +10,10 @@ import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.rememberWindowState
 import androidx.datastore.preferences.core.Preferences
 import autasker.composeapp.generated.resources.Res
+import autasker.composeapp.generated.resources.app_icon
 import autasker.composeapp.generated.resources.app_name
 import kotlinx.coroutines.launch
+import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import vadimerenkov.autasker.presentation.navigation.RootNavDisplay
 import vadimerenkov.autasker.settings.Settings
@@ -34,6 +36,7 @@ fun MainWindow(
 
 	if (isOpen) {
 		Window(
+			icon = painterResource(Res.drawable.app_icon),
 			state = windowState,
 			onCloseRequest = {
 				scope.launch {

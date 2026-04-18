@@ -87,16 +87,22 @@ compose.desktop {
         mainClass = "vadimerenkov.autasker.MainKt"
         nativeDistributions {
 			includeAllModules = true
-            targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
+            targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb, TargetFormat.Rpm)
             packageName = "Autasker"
             packageVersion = libs.versions.version.name.get()
 	        description = "Autasker - to-do list app"
 	        copyright = "2026 © Vadim Erenkov"
 	        vendor = "Vadim Erenkov"
+			licenseFile.set(project.file("LICENSE"))
 
 	        windows {
 				dirChooser = true
 		        menuGroup = "Autasker"
+		        iconFile.set(project.file("app_icon.ico"))
+	        }
+
+	        linux {
+				iconFile.set(project.file("app_icon.png"))
 	        }
         }
 	    buildTypes.release.proguard {

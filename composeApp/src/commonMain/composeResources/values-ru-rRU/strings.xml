@@ -76,6 +76,9 @@
     <string name="remind_before">Напомнить за</string>
     <string name="exit">Выход</string>
     <string name="calendar">Календарь</string>
+    <string name="colors">Цвета</string>
+    <string name="lavender">Лаванда</string>
+    <string name="sea">Море</string>
 
     <string name="theme">Тема</string>
     <string name="light_theme">Светлая</string>
