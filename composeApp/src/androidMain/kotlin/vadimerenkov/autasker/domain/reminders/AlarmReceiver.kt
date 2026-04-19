@@ -25,7 +25,7 @@ class AlarmReceiver: BroadcastReceiver() {
 			val taskId = intent.getLongExtra("taskId", 0)
 			val jobHashCode = intent.getIntExtra("jobHashCode", 0)
 			val task = repository.getTask(taskId)
-			val icon = Icon.createWithResource(context, R.drawable.calendar)
+			val icon = Icon.createWithResource(context, R.drawable.app_icon)
 			println("icon is $icon")
 
 			println("Received alarm for task $task")
