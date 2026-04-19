@@ -97,7 +97,6 @@ private fun CalendarScreenRoot(
 	VerticalCalendar(
 		modifier = modifier
 			.background(MaterialTheme.colorScheme.background)
-			.padding(16.dp)
 			.fillMaxSize(),
 		state = calendarState,
 		calendarScrollPaged = true,

@@ -7,9 +7,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.window.core.layout.WindowSizeClass
 import vadimerenkov.autasker.domain.Task
 import vadimerenkov.autasker.presentation.util.ComposableDateFormatter
 
@@ -18,9 +21,20 @@ fun CalendarTaskItem(
 	task: Task,
 	onAction: (CalendarAction) -> Unit
 ) {
+	val windowSizeClass = currentWindowAdaptiveInfo().windowSizeClass
+	val fontSize = if (windowSizeClass.isWidthAtLeastBreakpoint(WindowSizeClass.WIDTH_DP_MEDIUM_LOWER_BOUND)) {
+		14.sp
+	} else {
+		10.sp
+	}
+	val padding = if (windowSizeClass.isWidthAtLeastBreakpoint(WindowSizeClass.WIDTH_DP_MEDIUM_LOWER_BOUND)) {
+		4.dp
+	} else {
+		2.dp
+	}
 	Box(
 		modifier = Modifier
-			.padding(2.dp)
+			.padding(vertical = 2.dp)
 			.background(MaterialTheme.colorScheme.primary)
 			.fillMaxWidth()
 			.clickable {
@@ -36,9 +50,10 @@ fun CalendarTaskItem(
 		Text(
 			text = title,
 			color = MaterialTheme.colorScheme.onPrimary,
+			fontSize = fontSize,
 			maxLines = 2,
 			modifier = Modifier
-				.padding(start = 8.dp, top = 4.dp, bottom = 4.dp, end = 4.dp)
+				.padding(horizontal = 4.dp)
 		)
 
 	}
