@@ -7,6 +7,9 @@ android-compileSdk = "36"
 android-minSdk = "26"
 android-targetSdk = "36"
 
+androidDesugarJdkLibs = "2.1.5"
+androidTools = "31.12.0"
+
 androidx-activity = "1.13.0"
 androidx-appcompat = "1.7.1"
 androidx-core = "1.18.0"
@@ -16,8 +19,8 @@ androidx-testExt = "1.3.0"
 composeHotReload = "1.0.0"
 composeMultiplatform = "1.10.3"
 junit = "4.13.2"
-kotlin = "2.3.10" # must be the same
-ksp = "2.3.5" # must be the same
+kotlin = "2.3.20"
+ksp = "2.3.5"
 kotlinx-coroutines = "1.10.2"
 room = "2.8.4"
 sqlite = "2.6.2"
@@ -38,7 +41,6 @@ autoLaunch = "0.8.0"
 material = "1.13.0"
 adaptive = "1.2.0"
 calendar = "2.10.1"
-kotlinStdlib = "2.3.10"
 runner = "1.5.2"
 core = "1.5.0"
 
@@ -92,9 +94,16 @@ autolaunch = { module = "io.github.vinceglb:auto-launch", version.ref = "autoLau
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 material3-adaptive = { module = "org.jetbrains.compose.material3.adaptive:adaptive", version.ref = "adaptive" }
 calendar = { module = "com.kizitonwose.calendar:compose-multiplatform", version.ref = "calendar" }
-kotlin-stdlib = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib", version.ref = "kotlinStdlib" }
+kotlin-stdlib = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib", version.ref = "kotlin" }
 androidx-runner = { group = "androidx.test", name = "runner", version.ref = "runner" }
 androidx-core = { group = "androidx.test", name = "core", version.ref = "core" }
+
+android-gradlePlugin = { group = "com.android.tools.build", name = "gradle", version.ref = "agp" }
+android-tools-common = { group = "com.android.tools", name = "common", version.ref = "androidTools" }
+compose-gradlePlugin = { group = "org.jetbrains.kotlin", name = "compose-compiler-gradle-plugin", version.ref = "kotlin" }
+kotlin-gradlePlugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
+androidx-room-gradle-plugin = { module = "androidx.room:room-gradle-plugin", version.ref = "room" }
+ksp-gradlePlugin = { group = "com.google.devtools.ksp", name = "com.google.devtools.ksp.gradle.plugin", version.ref = "ksp" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
@@ -109,6 +118,7 @@ serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref 
 androidKmpLibrary = { id = "com.android.kotlin.multiplatform.library", version.ref = "agp" }
 androidLint = { id = "com.android.lint", version.ref = "agp" }
 
+convention-android-application = { id = "vadimerenkov.autasker.convention.android.application" }
 
 [bundles]
 koin = ["koin-compose", "koin-compose-navigation", "koin-compose-viewmodel", "koin-core"]

@@ -41,13 +41,13 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import vadimerenkov.autasker.domain.Task
-import vadimerenkov.autasker.domain.formatted
-import vadimerenkov.autasker.presentation.components.context_menu.DefaultContextMenu
-import vadimerenkov.autasker.presentation.components.context_menu.DeletedContextMenu
-import vadimerenkov.autasker.presentation.main.MainAction
-import vadimerenkov.autasker.presentation.theme.AutaskerTheme
-import vadimerenkov.autasker.presentation.util.ComposableDateFormatter
+import vadimerenkov.autasker.common.domain.Task
+import vadimerenkov.autasker.common.domain.formatted
+import vadimerenkov.autasker.common.presentation.components.context_menu.DefaultContextMenu
+import vadimerenkov.autasker.common.presentation.components.context_menu.DeletedContextMenu
+import vadimerenkov.autasker.common.presentation.main.MainAction
+import vadimerenkov.autasker.common.presentation.theme.AutaskerTheme
+import vadimerenkov.autasker.common.presentation.util.ComposableDateFormatter
 
 @Composable
 actual fun TaskItem(

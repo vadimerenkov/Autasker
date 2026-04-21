@@ -23,7 +23,7 @@
             </intent-filter>
         </activity>
         <receiver android:name=".common.domain.reminders.AlarmReceiver"/>
-        <receiver android:name=".domain.reminders.BootReceiver" android:enabled="false" android:exported="true">
+        <receiver android:name=".common.domain.reminders.BootReceiver" android:enabled="false" android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED"/>
             </intent-filter>

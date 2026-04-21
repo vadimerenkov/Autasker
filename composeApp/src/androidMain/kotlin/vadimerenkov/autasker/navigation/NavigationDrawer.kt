@@ -30,12 +30,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation3.runtime.NavBackStack
 import androidx.navigation3.runtime.NavKey
-import autasker.composeapp.generated.resources.Res
-import autasker.composeapp.generated.resources.about
-import autasker.composeapp.generated.resources.calendar
-import autasker.composeapp.generated.resources.settings
-import autasker.composeapp.generated.resources.tasks
-import autasker.composeapp.generated.resources.trash
+import autasker.common.generated.resources.Res
+import autasker.common.generated.resources.about
+import autasker.common.generated.resources.calendar
+import autasker.common.generated.resources.settings
+import autasker.common.generated.resources.tasks
+import autasker.common.generated.resources.trash
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.stringResource
 

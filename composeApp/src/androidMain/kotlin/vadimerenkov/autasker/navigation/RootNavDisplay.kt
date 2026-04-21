@@ -113,6 +113,9 @@ private fun NavigationRailNavDisplay(
 						viewModel = viewModel,
 						onNewTaskClick = { categoryId ->
 							mainBackStack.add(EditGraph(null, categoryId))
+						},
+						onTaskClick = {
+							mainBackStack.add(EditGraph(it))
 						}
 					)
 				}

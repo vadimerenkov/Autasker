@@ -9,9 +9,9 @@ import android.graphics.drawable.Icon
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import org.koin.core.context.GlobalContext.get
-import vadimerenkov.autasker.composeapp.R
-import vadimerenkov.autasker.domain.TasksRepository
-import vadimerenkov.autasker.presentation.util.SuspendDateFormatter
+import vadimerenkov.autasker.common.R
+import vadimerenkov.autasker.common.domain.TasksRepository
+import vadimerenkov.autasker.common.presentation.util.SuspendDateFormatter
 
 class AlarmReceiver: BroadcastReceiver() {
 	val repository: TasksRepository = get().get()

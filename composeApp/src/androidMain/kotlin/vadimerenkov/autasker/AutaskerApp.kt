@@ -4,8 +4,8 @@ import android.app.Application
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import org.koin.android.ext.koin.androidContext
+import vadimerenkov.autasker.common.R
 import vadimerenkov.autasker.common.domain.reminders.REMINDER_CHANNEL
-import vadimerenkov.autasker.composeapp.R
 import vadimerenkov.autasker.di.initKoin
 
 class AutaskerApp: Application() {

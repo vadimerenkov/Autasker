@@ -16,22 +16,10 @@ kotlin {
 	// which platforms this KMP module supports.
 	// See: https://kotlinlang.org/docs/multiplatform-discover-project.html#targets
 	android {
+		compileSdk = libs.versions.android.compileSdk.get().toInt()
+		minSdk = libs.versions.android.minSdk.get().toInt()
 		namespace = "vadimerenkov.autasker.common"
-		compileSdk {
-			version = release(36) {
-				minorApiLevel = 1
-			}
-		}
-		minSdk = 26
-
-		withHostTestBuilder {
-		}
-
-		withDeviceTestBuilder {
-			sourceSetTreeName = "test"
-		}.configure {
-			instrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-		}
+		experimentalProperties["android.experimental.kmp.enableAndroidResources"] = true
 	}
 
 	// For iOS targets, this is also where you should
@@ -53,7 +41,7 @@ kotlin {
 			dependencies {
 				implementation(libs.kotlin.stdlib)
 				implementation(libs.androidx.room.runtime)
-				implementation(libs.androidx.room.compiler)
+//				implementation(libs.androidx.room.compiler)
 				implementation(libs.compose.runtime)
 				implementation(libs.compose.foundation)
 				implementation(libs.compose.ui)
@@ -86,27 +74,15 @@ kotlin {
 		jvmMain.dependencies {
 			implementation(libs.quartz)
 			implementation(libs.autolaunch)
-		}
-
-		commonTest {
-			dependencies {
-				implementation(libs.kotlin.test)
-			}
+			implementation(compose.desktop.currentOs)
+			implementation(libs.kotlinx.coroutinesSwing)
 		}
 
 		androidMain {
 			dependencies {
-				// Add Android-specific dependencies here. Note that this source set depends on
-				// commonMain by default and will correctly pull the Android artifacts of any KMP
-				// dependencies declared in commonMain.
-			}
-		}
-
-		getByName("androidDeviceTest") {
-			dependencies {
-				implementation(libs.androidx.runner)
-				implementation(libs.androidx.core)
-				implementation(libs.androidx.testExt.junit)
+				implementation(libs.androidx.activity.compose)
+				implementation(libs.koin.android)
+				implementation(libs.exoplayer)
 			}
 		}
 	}

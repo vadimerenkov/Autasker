@@ -3,7 +3,8 @@ package vadimerenkov.autasker.common.presentation.main
 import android.content.Context
 import androidx.core.net.toUri
 import androidx.media3.common.MediaItem
-import autasker.composeapp.generated.resources.Res
+import androidx.media3.exoplayer.ExoPlayer
+import autasker.common.generated.resources.Res
 
 class ExoPlayer(
 	context: Context
