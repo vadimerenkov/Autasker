@@ -8,9 +8,9 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.koin.compose.koinInject
+import vadimerenkov.autasker.common.settings.Settings
 import vadimerenkov.autasker.navigation.AutaskerApp
 import vadimerenkov.autasker.navigation.RootNavDisplay
-import vadimerenkov.autasker.settings.Settings
 
 @OptIn(ExperimentalMaterial3Api::class)
 class MainActivity : ComponentActivity() {

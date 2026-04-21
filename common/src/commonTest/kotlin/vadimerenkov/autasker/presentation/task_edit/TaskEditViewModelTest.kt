@@ -1,6 +1,7 @@
 package vadimerenkov.autasker.presentation.task_edit
 
 import assertk.assertThat
+import assertk.assertions.contains
 import assertk.assertions.doesNotContain
 import assertk.assertions.isEqualTo
 import assertk.assertions.isNull
@@ -17,12 +18,12 @@ import kotlinx.coroutines.test.setMain
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
+import vadimerenkov.autasker.common.domain.Period
+import vadimerenkov.autasker.common.domain.Subtask
+import vadimerenkov.autasker.common.domain.Task
+import vadimerenkov.autasker.common.domain.reminders.Reminder
 import vadimerenkov.autasker.common.presentation.task_edit.TaskEditAction
 import vadimerenkov.autasker.common.presentation.task_edit.TaskEditViewModel
-import vadimerenkov.autasker.domain.Period
-import vadimerenkov.autasker.domain.Subtask
-import vadimerenkov.autasker.domain.Task
-import vadimerenkov.autasker.domain.reminders.Reminder
 import vadimerenkov.autasker.fakes.FakeReminderService
 import vadimerenkov.autasker.fakes.TasksRepositoryFake
 

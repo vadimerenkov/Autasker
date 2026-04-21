@@ -52,4 +52,6 @@ dependencies {
 	androidTestImplementation(libs.androidx.espresso.core)
 	debugImplementation(libs.compose.ui.tooling.preview)
 	debugImplementation(libs.compose.ui.tooling)
+
+	implementation(projects.common)
 }

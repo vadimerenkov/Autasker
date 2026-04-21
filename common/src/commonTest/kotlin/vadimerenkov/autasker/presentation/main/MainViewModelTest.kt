@@ -4,6 +4,8 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.core.Preferences
 import assertk.assertThat
+import assertk.assertions.contains
+import assertk.assertions.isEmpty
 import assertk.assertions.isEqualTo
 import assertk.assertions.isTrue
 import kotlinx.coroutines.CoroutineScope
@@ -24,18 +26,18 @@ import org.junit.rules.TemporaryFolder
 import org.koin.core.KoinApplication
 import org.koin.test.KoinTest
 import org.koin.test.KoinTestRule
+import vadimerenkov.autasker.common.data.JobData
+import vadimerenkov.autasker.common.di.commonModule
+import vadimerenkov.autasker.common.di.commonPlatformModule
+import vadimerenkov.autasker.common.domain.Page
+import vadimerenkov.autasker.common.domain.Subtask
+import vadimerenkov.autasker.common.domain.Task
+import vadimerenkov.autasker.common.domain.TaskCategory
+import vadimerenkov.autasker.common.domain.Time
+import vadimerenkov.autasker.common.domain.reminders.ReminderService
 import vadimerenkov.autasker.common.presentation.main.MainAction
 import vadimerenkov.autasker.common.presentation.main.MainViewModel
 import vadimerenkov.autasker.common.settings.Settings
-import vadimerenkov.autasker.data.JobData
-import vadimerenkov.autasker.di.appModule
-import vadimerenkov.autasker.di.platformModule
-import vadimerenkov.autasker.domain.Page
-import vadimerenkov.autasker.domain.Subtask
-import vadimerenkov.autasker.domain.Task
-import vadimerenkov.autasker.domain.TaskCategory
-import vadimerenkov.autasker.domain.Time
-import vadimerenkov.autasker.domain.reminders.ReminderService
 import vadimerenkov.autasker.fakes.FakeAudioPlayer
 import vadimerenkov.autasker.fakes.FakeReminderService
 import vadimerenkov.autasker.fakes.TasksRepositoryFake
@@ -50,7 +52,7 @@ class MainViewModelTest: KoinTest {
 	@get:Rule
 	val koinTestRule = KoinTestRule.create {
 		// Your KoinApplication instance here
-		KoinApplication.modules(appModule, platformModule)
+		KoinApplication.init().modules(commonModule, commonPlatformModule)
 	}
 
 	@get:Rule
@@ -91,7 +93,6 @@ class MainViewModelTest: KoinTest {
 			repository = repository,
 			reminderService = reminderService,
 			settings = settings,
-			backstack = mutableListOf(),
 			audioPlayer = FakeAudioPlayer()
 		)
 	}

@@ -4,8 +4,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.ExperimentalComposeUiApi
-import androidx.compose.ui.window.Notification
-import androidx.compose.ui.window.TrayState
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.rememberWindowState
 import androidx.datastore.preferences.core.Preferences
@@ -23,7 +21,6 @@ import vadimerenkov.autasker.common.settings.saveWindowState
 @Composable
 fun MainWindow(
 	isOpen: Boolean,
-	trayState: TrayState,
 	settings: Settings,
 	preferences: Preferences,
 	onExitRequest: () -> Unit,
@@ -51,12 +48,7 @@ fun MainWindow(
 			},
 			title = stringResource(Res.string.app_name)
 		) {
-			RootNavDisplay(
-				sendNotification = {
-					val notification = Notification("This is a title", "This is a message")
-					trayState.sendNotification(notification)
-				}
-			)
+			RootNavDisplay(settings)
 		}
 	}
 }

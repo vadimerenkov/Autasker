@@ -72,7 +72,6 @@ fun main() {
 
 			MainWindow(
 				isOpen = isOpen,
-				trayState = trayState,
 				settings = settings,
 				preferences = data,
 				toTrayRequest = {

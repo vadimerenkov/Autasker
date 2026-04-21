@@ -4,6 +4,7 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import assertk.assertThat
+import assertk.assertions.contains
 import assertk.assertions.doesNotContain
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -19,19 +20,19 @@ import kotlinx.coroutines.test.setMain
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
+import vadimerenkov.autasker.common.domain.Period
+import vadimerenkov.autasker.common.domain.Task
+import vadimerenkov.autasker.common.domain.TaskCategory
+import vadimerenkov.autasker.common.domain.reminders.Reminder
+import vadimerenkov.autasker.common.domain.reminders.ReminderService
+import vadimerenkov.autasker.common.domain.roundToMinutes
 import vadimerenkov.autasker.common.presentation.main.MainViewModel
+import vadimerenkov.autasker.common.presentation.task_edit.TaskEditViewModel
 import vadimerenkov.autasker.common.settings.Settings
 import vadimerenkov.autasker.common.settings.createDataStore
-import vadimerenkov.autasker.domain.Period
-import vadimerenkov.autasker.domain.Task
-import vadimerenkov.autasker.domain.TaskCategory
-import vadimerenkov.autasker.domain.reminders.Reminder
-import vadimerenkov.autasker.domain.reminders.ReminderService
-import vadimerenkov.autasker.domain.roundToMinutes
 import vadimerenkov.autasker.fakes.FakeAudioPlayer
 import vadimerenkov.autasker.fakes.FakeReminderService
 import vadimerenkov.autasker.fakes.TasksRepositoryFake
-import vadimerenkov.autasker.presentation.task_edit.TaskEditViewModel
 import java.io.File
 import java.time.ZonedDateTime
 
@@ -47,7 +48,7 @@ class InitializationTest {
 
 	fun initialize() {
 		viewModel =
-			MainViewModel(repository, reminderService, FakeAudioPlayer(), settings, mutableListOf())
+			MainViewModel(repository, reminderService, FakeAudioPlayer(), settings)
 	}
 
 	@Before

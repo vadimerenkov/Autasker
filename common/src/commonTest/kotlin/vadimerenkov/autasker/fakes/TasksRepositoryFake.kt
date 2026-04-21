@@ -5,14 +5,14 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
-import vadimerenkov.autasker.data.JobData
-import vadimerenkov.autasker.domain.Page
-import vadimerenkov.autasker.domain.Subtask
-import vadimerenkov.autasker.domain.Task
-import vadimerenkov.autasker.domain.TaskCategory
-import vadimerenkov.autasker.domain.TasksRepository
-import vadimerenkov.autasker.domain.Time
-import vadimerenkov.autasker.domain.reminders.Reminder
+import vadimerenkov.autasker.common.data.JobData
+import vadimerenkov.autasker.common.domain.Page
+import vadimerenkov.autasker.common.domain.Subtask
+import vadimerenkov.autasker.common.domain.Task
+import vadimerenkov.autasker.common.domain.TaskCategory
+import vadimerenkov.autasker.common.domain.TasksRepository
+import vadimerenkov.autasker.common.domain.Time
+import vadimerenkov.autasker.common.domain.reminders.Reminder
 import java.time.ZonedDateTime
 
 class TasksRepositoryFake: TasksRepository {

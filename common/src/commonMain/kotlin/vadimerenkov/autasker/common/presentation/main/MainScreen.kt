@@ -53,6 +53,7 @@ import vadimerenkov.autasker.common.presentation.main.components.PageTab
 @Composable
 fun MainScreen(
 	onNewTaskClick: (Long) -> Unit,
+	onTaskClick: (Long) -> Unit,
 	modifier: Modifier = Modifier,
 	viewModel: MainViewModel = koinViewModel(),
 	lazyState: LazyListState = rememberLazyListState(),
@@ -80,6 +81,9 @@ fun MainScreen(
 				}
 				is MainAction.NewTaskClick -> {
 					onNewTaskClick(action.categoryId)
+				}
+				is MainAction.OnTaskClick -> {
+					onTaskClick(action.id)
 				}
 				else -> Unit
 			}

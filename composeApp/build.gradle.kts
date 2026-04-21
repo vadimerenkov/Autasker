@@ -50,18 +50,6 @@ kotlin {
 	        implementation(projects.common)
 	        implementation(projects.calendar)
         }
-        commonTest.dependencies {
-	        implementation(libs.assertK)
-	        implementation(libs.junit)
-	        implementation(libs.kotlinx.coroutines.core)
-	        implementation(libs.kotlinx.coroutines.test)
-	        implementation(libs.koin.test)
-	        implementation(libs.koin.test.junit)
-	        implementation(project.dependencies.platform("org.junit:junit-bom:6.0.3"))
-	        implementation(libs.junit.jupiter)
-	        implementation(libs.junit.platform.launcher)
-
-        }
         jvmMain.dependencies {
             implementation(compose.desktop.currentOs)
             implementation(libs.kotlinx.coroutinesSwing)

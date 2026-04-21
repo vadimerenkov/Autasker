@@ -25,6 +25,7 @@ import androidx.compose.material3.PermanentDrawerSheet
 import androidx.compose.material3.PermanentNavigationDrawer
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -74,14 +75,20 @@ import vadimerenkov.autasker.common.presentation.task_edit.TaskEditScreen
 import vadimerenkov.autasker.common.presentation.task_edit.TaskEditViewModel
 import vadimerenkov.autasker.common.presentation.task_edit.calendar.DateTimeScreen
 import vadimerenkov.autasker.common.presentation.windows.CommonWindow
+import vadimerenkov.autasker.common.settings.Settings
 import vadimerenkov.autasker.common.settings.SettingsScreen
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun RootNavDisplay(
-	sendNotification: () -> Unit
+	settings: Settings
 ) {
 	val backstack = remember { mutableStateListOf<NavKey>(MainScreenRoute) }
+	LaunchedEffect(true) {
+		if (settings.checkForNewDay()) {
+			backstack.add(NewDayRoute)
+		}
+	}
 	val uriHandler = LocalUriHandler.current
 	val link = stringResource(Res.string.kofi_link)
 	Column {
@@ -200,6 +207,9 @@ fun RootNavDisplay(
 								viewModel = viewModel,
 								onNewTaskClick = { categoryId ->
 									backstack.add(EditGraph(null, categoryId))
+								},
+								onTaskClick = { id ->
+									backstack.add(EditGraph(id))
 								},
 								modifier = Modifier
 									.onPointerEvent(

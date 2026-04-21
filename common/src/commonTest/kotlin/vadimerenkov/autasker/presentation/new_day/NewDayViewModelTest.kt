@@ -2,6 +2,8 @@ package vadimerenkov.autasker.presentation.new_day
 
 import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import assertk.assertThat
+import assertk.assertions.isEmpty
+import assertk.assertions.isNotEmpty
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -16,14 +18,14 @@ import org.junit.Test
 import org.junit.rules.TemporaryFolder
 import org.koin.core.KoinApplication
 import org.koin.test.KoinTestRule
+import vadimerenkov.autasker.common.di.commonModule
+import vadimerenkov.autasker.common.di.commonPlatformModule
+import vadimerenkov.autasker.common.domain.RepeatState
+import vadimerenkov.autasker.common.domain.Task
+import vadimerenkov.autasker.common.domain.reminders.Reminder
 import vadimerenkov.autasker.common.presentation.new_day.NewDayAction
 import vadimerenkov.autasker.common.presentation.new_day.NewDayViewModel
 import vadimerenkov.autasker.common.settings.Settings
-import vadimerenkov.autasker.di.appModule
-import vadimerenkov.autasker.di.platformModule
-import vadimerenkov.autasker.domain.RepeatState
-import vadimerenkov.autasker.domain.Task
-import vadimerenkov.autasker.domain.reminders.Reminder
 import vadimerenkov.autasker.fakes.FakeReminderService
 import vadimerenkov.autasker.fakes.TasksRepositoryFake
 import java.time.ZonedDateTime
@@ -34,7 +36,7 @@ class NewDayViewModelTest {
 	@get:Rule
 	val koinTestRule = KoinTestRule.create {
 		// Your KoinApplication instance here
-		KoinApplication.modules(appModule, platformModule)
+		KoinApplication.init().modules(commonModule, commonPlatformModule)
 	}
 
 	@get:Rule
