@@ -56,6 +56,7 @@ import autasker.composeapp.generated.resources.tomorrow
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
+import vadimerenkov.autasker.common.presentation.main.components.PageTab
 import vadimerenkov.autasker.domain.TaskCategory
 import vadimerenkov.autasker.domain.Time
 import vadimerenkov.autasker.presentation.components.TaskColumn
@@ -65,7 +66,6 @@ import vadimerenkov.autasker.presentation.main.MainViewModel
 import vadimerenkov.autasker.presentation.main.components.EditTabsDialog
 import vadimerenkov.autasker.presentation.main.components.MovingColumnDialog
 import vadimerenkov.autasker.presentation.main.components.MovingTaskDialog
-import vadimerenkov.autasker.presentation.main.components.PageTab
 
 @Composable
 fun MainPager(

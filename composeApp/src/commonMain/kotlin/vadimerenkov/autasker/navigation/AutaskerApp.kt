@@ -8,16 +8,12 @@ import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.staticCompositionLocalOf
-import vadimerenkov.autasker.presentation.theme.AutaskerTheme
-import vadimerenkov.autasker.settings.DATE_FORMAT
-import vadimerenkov.autasker.settings.FIRST_DAY_OF_WEEK
-import vadimerenkov.autasker.settings.LANGUAGE
-import vadimerenkov.autasker.settings.Settings
-import vadimerenkov.autasker.settings.TIME_FORMAT
-import vadimerenkov.autasker.settings.enums.DateFormat
-import vadimerenkov.autasker.settings.enums.Language
-import vadimerenkov.autasker.settings.enums.Theme
-import vadimerenkov.autasker.settings.enums.TimeFormat
+import vadimerenkov.autasker.common.presentation.theme.AutaskerTheme
+import vadimerenkov.autasker.common.settings.Settings
+import vadimerenkov.autasker.common.settings.enums.DateFormat
+import vadimerenkov.autasker.common.settings.enums.Language
+import vadimerenkov.autasker.common.settings.enums.Theme
+import vadimerenkov.autasker.common.settings.enums.TimeFormat
 import java.util.Locale
 
 @Composable
@@ -30,17 +26,17 @@ fun AutaskerApp(
 		if (savedLocale == null) {
 			val defaultLocale = Locale.getDefault()
 			if (defaultLocale.toLanguageTag() == "en-US") {
-				settings.saveSetting(TIME_FORMAT, TimeFormat.CLOCK_12.name)
-				settings.saveSetting(DATE_FORMAT, DateFormat.MMDDYYYY.name)
-				settings.saveSetting(FIRST_DAY_OF_WEEK, 7)
+				settings.saveTimeFormat(TimeFormat.CLOCK_12)
+				settings.saveDateFormat(DateFormat.MMDDYYYY)
+				settings.saveFirstDayOfWeek(7)
 			}
 			Language.entries.forEach { language ->
 				if (language.code == defaultLocale.toLanguageTag()) {
-					settings.saveSetting(LANGUAGE, language.name)
+					settings.saveLanguage(language)
 				}
 			}
 			if (!Language.entries.any { it.code == defaultLocale.toLanguageTag() }) {
-				settings.saveSetting(LANGUAGE, Language.ENGLISH.name)
+				settings.saveLanguage(Language.ENGLISH)
 			}
 		}
 	}

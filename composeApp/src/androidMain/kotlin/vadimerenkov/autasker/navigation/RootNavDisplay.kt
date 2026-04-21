@@ -33,17 +33,17 @@ import androidx.navigation3.ui.NavDisplay
 import androidx.window.core.layout.WindowSizeClass
 import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.parameter.parametersOf
-import vadimerenkov.autasker.presentation.about.AboutScreen
-import vadimerenkov.autasker.presentation.bin.BinScreen
-import vadimerenkov.autasker.presentation.calendar.CalendarScreen
-import vadimerenkov.autasker.presentation.main.MainScreen
-import vadimerenkov.autasker.presentation.main.MainViewModel
-import vadimerenkov.autasker.presentation.new_day.NewDayScreen
-import vadimerenkov.autasker.presentation.new_day.NewDayViewModel
-import vadimerenkov.autasker.presentation.task_edit.TaskEditScreen
-import vadimerenkov.autasker.presentation.task_edit.TaskEditViewModel
-import vadimerenkov.autasker.presentation.task_edit.calendar.DateTimeScreen
-import vadimerenkov.autasker.settings.SettingsScreen
+import vadimerenkov.autasker.calendar.CalendarScreen
+import vadimerenkov.autasker.common.presentation.about.AboutScreen
+import vadimerenkov.autasker.common.presentation.bin.BinScreen
+import vadimerenkov.autasker.common.presentation.main.MainScreen
+import vadimerenkov.autasker.common.presentation.main.MainViewModel
+import vadimerenkov.autasker.common.presentation.new_day.NewDayScreen
+import vadimerenkov.autasker.common.presentation.new_day.NewDayViewModel
+import vadimerenkov.autasker.common.presentation.task_edit.TaskEditScreen
+import vadimerenkov.autasker.common.presentation.task_edit.TaskEditViewModel
+import vadimerenkov.autasker.common.presentation.task_edit.calendar.DateTimeScreen
+import vadimerenkov.autasker.common.settings.SettingsScreen
 
 @Composable
 fun RootNavDisplay() {

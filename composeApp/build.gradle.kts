@@ -32,12 +32,10 @@ kotlin {
         commonMain.dependencies {
             implementation(libs.compose.runtime)
             implementation(libs.compose.foundation)
-            implementation(libs.material3)
+	        implementation(libs.compose.ui)
+	        implementation(libs.material3)
 	        implementation(libs.material.icons.extended)
 	        implementation(libs.bundles.koin)
-            implementation(libs.compose.ui)
-	        implementation(libs.androidx.room.runtime)
-	        implementation(libs.androidx.sqlite.bundled)
             implementation(libs.compose.components.resources)
             implementation(libs.compose.ui.tooling.preview)
 	        implementation(libs.androidx.lifecycle.viewmodelCompose)
@@ -45,12 +43,12 @@ kotlin {
 	        implementation(libs.kotlinx.serialization.json)
 	        implementation(libs.kotlinx.serialization.core)
 	        implementation(libs.bundles.navigation3)
-	        implementation(libs.appdirs)
 	        implementation(libs.androidx.datastore)
 	        implementation(libs.androidx.datastore.preferences)
-	        implementation(libs.reorderable)
 	        implementation(libs.material3.adaptive)
-	        implementation(libs.calendar)
+
+	        implementation(projects.common)
+	        implementation(projects.calendar)
         }
         commonTest.dependencies {
 	        implementation(libs.assertK)
@@ -67,8 +65,6 @@ kotlin {
         jvmMain.dependencies {
             implementation(compose.desktop.currentOs)
             implementation(libs.kotlinx.coroutinesSwing)
-	        implementation(libs.quartz)
-	        implementation(libs.autolaunch)
         }
     }
 }

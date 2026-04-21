@@ -9,9 +9,9 @@ import androidx.compose.ui.window.Notification
 import androidx.compose.ui.window.Tray
 import androidx.compose.ui.window.application
 import androidx.compose.ui.window.rememberTrayState
-import autasker.composeapp.generated.resources.Res
-import autasker.composeapp.generated.resources.app_icon
-import autasker.composeapp.generated.resources.exit
+import autasker.common.generated.resources.Res
+import autasker.common.generated.resources.app_icon
+import autasker.common.generated.resources.exit
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
@@ -19,12 +19,12 @@ import kotlinx.coroutines.withContext
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.koin.core.context.GlobalContext.get
+import vadimerenkov.autasker.common.domain.reminders.QuartzScheduler
+import vadimerenkov.autasker.common.presentation.util.SuspendDateFormatter
+import vadimerenkov.autasker.common.settings.Settings
 import vadimerenkov.autasker.di.initKoin
-import vadimerenkov.autasker.domain.reminders.QuartzScheduler
 import vadimerenkov.autasker.navigation.AutaskerApp
-import vadimerenkov.autasker.presentation.util.SuspendDateFormatter
-import vadimerenkov.autasker.presentation.windows.MainWindow
-import vadimerenkov.autasker.settings.Settings
+import vadimerenkov.autasker.navigation.MainWindow
 
 fun main() {
 
