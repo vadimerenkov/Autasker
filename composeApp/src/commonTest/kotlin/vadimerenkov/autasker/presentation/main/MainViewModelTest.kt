@@ -23,21 +23,29 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TemporaryFolder
+import org.koin.core.KoinApplication
 import org.koin.test.KoinTest
 import org.koin.test.KoinTestRule
-import vadimerenkov.autasker.data.JobData
-import vadimerenkov.autasker.di.appModule
-import vadimerenkov.autasker.di.platformModule
-import vadimerenkov.autasker.domain.Page
-import vadimerenkov.autasker.domain.Subtask
-import vadimerenkov.autasker.domain.Task
-import vadimerenkov.autasker.domain.TaskCategory
-import vadimerenkov.autasker.domain.Time
-import vadimerenkov.autasker.domain.reminders.ReminderService
+import vadimerenkov.autasker.calendar.calendarModule
+import vadimerenkov.autasker.core.database.di.coreDatabaseModule
+import vadimerenkov.autasker.core.database.di.platformCoreDatabaseModule
+import vadimerenkov.autasker.core.domain.Page
+import vadimerenkov.autasker.core.domain.ReminderJob
+import vadimerenkov.autasker.core.domain.Subtask
+import vadimerenkov.autasker.core.domain.Task
+import vadimerenkov.autasker.core.domain.TaskCategory
+import vadimerenkov.autasker.core.domain.Time
+import vadimerenkov.autasker.core.domain.di.coreDomainModule
+import vadimerenkov.autasker.core.domain.di.platformCoreDomainModule
+import vadimerenkov.autasker.core.domain.reminders.ReminderService
+import vadimerenkov.autasker.core.domain.settings.Settings
+import vadimerenkov.autasker.core.presentation.di.corePresentationModule
+import vadimerenkov.autasker.core.presentation.di.platformCorePresentationModule
+import vadimerenkov.autasker.core.presentation.main.MainAction
+import vadimerenkov.autasker.core.presentation.main.MainViewModel
 import vadimerenkov.autasker.fakes.FakeAudioPlayer
 import vadimerenkov.autasker.fakes.FakeReminderService
 import vadimerenkov.autasker.fakes.TasksRepositoryFake
-import vadimerenkov.autasker.settings.Settings
 import java.io.File
 import java.time.Instant
 import java.time.ZoneId
@@ -49,7 +57,15 @@ class MainViewModelTest: KoinTest {
 	@get:Rule
 	val koinTestRule = KoinTestRule.create {
 		// Your KoinApplication instance here
-		modules(appModule, platformModule)
+		KoinApplication.init().modules(
+			coreDatabaseModule,
+			platformCoreDatabaseModule,
+			coreDomainModule,
+			platformCoreDomainModule,
+			corePresentationModule,
+			platformCorePresentationModule,
+			calendarModule
+		)
 	}
 
 	@get:Rule
@@ -90,7 +106,6 @@ class MainViewModelTest: KoinTest {
 			repository = repository,
 			reminderService = reminderService,
 			settings = settings,
-			backstack = mutableListOf(),
 			audioPlayer = FakeAudioPlayer()
 		)
 	}
@@ -142,7 +157,7 @@ class MainViewModelTest: KoinTest {
 			title = "TestTask",
 			categoryId = 1
 		)
-		val job = JobData(
+		val job = ReminderJob(
 			key = "123",
 			parentTaskId = 123,
 			triggerDate = Instant.now()

@@ -1,8 +1,8 @@
 package vadimerenkov.autasker.fakes
 
-import vadimerenkov.autasker.data.JobData
-import vadimerenkov.autasker.domain.TasksRepository
-import vadimerenkov.autasker.domain.reminders.ReminderService
+import vadimerenkov.autasker.core.domain.ReminderJob
+import vadimerenkov.autasker.core.domain.TasksRepository
+import vadimerenkov.autasker.core.domain.reminders.ReminderService
 import java.time.ZonedDateTime
 import java.util.UUID
 
@@ -11,11 +11,13 @@ class FakeReminderService(
 ): ReminderService {
 
 	override suspend fun scheduleReminder(taskId: Long, date: ZonedDateTime) {
-		repository.saveJob(JobData(
-			key = UUID.randomUUID().toString(),
-			parentTaskId = taskId,
-			triggerDate = date.toInstant()
-		))
+		repository.saveJob(
+			ReminderJob(
+				key = UUID.randomUUID().toString(),
+				parentTaskId = taskId,
+				triggerDate = date.toInstant()
+			)
+		)
 		println("Scheduled a reminder for task $taskId")
 	}
 

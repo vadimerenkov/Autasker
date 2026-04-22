@@ -33,17 +33,17 @@ import androidx.navigation3.ui.NavDisplay
 import androidx.window.core.layout.WindowSizeClass
 import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.parameter.parametersOf
-import vadimerenkov.autasker.presentation.about.AboutScreen
-import vadimerenkov.autasker.presentation.bin.BinScreen
-import vadimerenkov.autasker.presentation.calendar.CalendarScreen
-import vadimerenkov.autasker.presentation.main.MainScreen
-import vadimerenkov.autasker.presentation.main.MainViewModel
-import vadimerenkov.autasker.presentation.new_day.NewDayScreen
-import vadimerenkov.autasker.presentation.new_day.NewDayViewModel
-import vadimerenkov.autasker.presentation.task_edit.TaskEditScreen
-import vadimerenkov.autasker.presentation.task_edit.TaskEditViewModel
-import vadimerenkov.autasker.presentation.task_edit.calendar.DateTimeScreen
-import vadimerenkov.autasker.settings.SettingsScreen
+import vadimerenkov.autasker.calendar.CalendarScreen
+import vadimerenkov.autasker.core.presentation.about.AboutScreen
+import vadimerenkov.autasker.core.presentation.bin.BinScreen
+import vadimerenkov.autasker.core.presentation.main.MainScreen
+import vadimerenkov.autasker.core.presentation.main.MainViewModel
+import vadimerenkov.autasker.core.presentation.new_day.NewDayScreen
+import vadimerenkov.autasker.core.presentation.new_day.NewDayViewModel
+import vadimerenkov.autasker.core.presentation.settings.SettingsScreen
+import vadimerenkov.autasker.core.presentation.task_edit.TaskEditScreen
+import vadimerenkov.autasker.core.presentation.task_edit.TaskEditViewModel
+import vadimerenkov.autasker.core.presentation.task_edit.calendar.DateTimeScreen
 
 @Composable
 fun RootNavDisplay() {
@@ -113,6 +113,9 @@ private fun NavigationRailNavDisplay(
 						viewModel = viewModel,
 						onNewTaskClick = { categoryId ->
 							mainBackStack.add(EditGraph(null, categoryId))
+						},
+						onTaskClick = {
+							mainBackStack.add(EditGraph(it))
 						}
 					)
 				}
@@ -169,6 +172,9 @@ private fun FoldedDrawerNavDisplay(
 					    viewModel = viewModel,
 						onNewTaskClick = { categoryId ->
 							mainBackStack.add(EditGraph(null, categoryId))
+						},
+						onTaskClick = {
+							mainBackStack.add(EditGraph(it))
 						}
 				    )
 			    }

@@ -3,6 +3,11 @@ package vadimerenkov.autasker.domain
 import assertk.assertThat
 import assertk.assertions.isEqualTo
 import org.junit.Test
+import vadimerenkov.autasker.core.domain.Period
+import vadimerenkov.autasker.core.domain.RepeatMode
+import vadimerenkov.autasker.core.domain.RepeatState
+import vadimerenkov.autasker.core.domain.plusPeriod
+import vadimerenkov.autasker.core.domain.roundToMinutes
 import java.time.DayOfWeek
 import java.time.ZoneId
 import java.time.ZonedDateTime

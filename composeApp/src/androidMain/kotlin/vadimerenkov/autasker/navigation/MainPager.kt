@@ -44,34 +44,34 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import autasker.composeapp.generated.resources.Res
-import autasker.composeapp.generated.resources.all_completed
-import autasker.composeapp.generated.resources.edit_tabs
-import autasker.composeapp.generated.resources.new_column
-import autasker.composeapp.generated.resources.new_tab
-import autasker.composeapp.generated.resources.new_task
-import autasker.composeapp.generated.resources.no_tasks
-import autasker.composeapp.generated.resources.today
-import autasker.composeapp.generated.resources.tomorrow
+import autasker.core.presentation.generated.resources.Res
+import autasker.core.presentation.generated.resources.all_completed
+import autasker.core.presentation.generated.resources.edit_tabs
+import autasker.core.presentation.generated.resources.new_column
+import autasker.core.presentation.generated.resources.new_tab
+import autasker.core.presentation.generated.resources.new_task
+import autasker.core.presentation.generated.resources.no_tasks
+import autasker.core.presentation.generated.resources.today
+import autasker.core.presentation.generated.resources.tomorrow
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
-import vadimerenkov.autasker.domain.TaskCategory
-import vadimerenkov.autasker.domain.Time
-import vadimerenkov.autasker.presentation.components.TaskColumn
-import vadimerenkov.autasker.presentation.main.MainAction
-import vadimerenkov.autasker.presentation.main.MainState
-import vadimerenkov.autasker.presentation.main.MainViewModel
-import vadimerenkov.autasker.presentation.main.components.EditTabsDialog
-import vadimerenkov.autasker.presentation.main.components.MovingColumnDialog
-import vadimerenkov.autasker.presentation.main.components.MovingTaskDialog
-import vadimerenkov.autasker.presentation.main.components.PageTab
+import vadimerenkov.autasker.core.domain.TaskCategory
+import vadimerenkov.autasker.core.domain.Time
+import vadimerenkov.autasker.core.presentation.components.TaskColumn
+import vadimerenkov.autasker.core.presentation.main.MainAction
+import vadimerenkov.autasker.core.presentation.main.MainState
+import vadimerenkov.autasker.core.presentation.main.components.EditTabsDialog
+import vadimerenkov.autasker.core.presentation.main.components.MovingColumnDialog
+import vadimerenkov.autasker.core.presentation.main.components.MovingTaskDialog
+import vadimerenkov.autasker.core.presentation.main.components.PageTab
 
 @Composable
 fun MainPager(
 	onNewTaskClick: (Long) -> Unit,
+	onTaskClick: (Long) -> Unit,
 	modifier: Modifier = Modifier,
-	viewModel: MainViewModel = koinViewModel()
+	viewModel: vadimerenkov.autasker.core.presentation.main.MainViewModel = koinViewModel()
 ) {
 	var showMovingTaskDialog by remember { mutableStateOf(false) }
 	var showMovingCategoryDialog by remember { mutableStateOf(false) }
@@ -93,6 +93,9 @@ fun MainPager(
 				}
 				is MainAction.NewTaskClick -> {
 					onNewTaskClick(action.categoryId)
+				}
+				is MainAction.OnTaskClick -> {
+					onTaskClick(action.id)
 				}
 				else -> Unit
 			}

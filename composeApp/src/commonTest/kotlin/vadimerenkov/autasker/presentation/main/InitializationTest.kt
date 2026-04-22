@@ -20,18 +20,19 @@ import kotlinx.coroutines.test.setMain
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
-import vadimerenkov.autasker.domain.Period
-import vadimerenkov.autasker.domain.Task
-import vadimerenkov.autasker.domain.TaskCategory
-import vadimerenkov.autasker.domain.reminders.Reminder
-import vadimerenkov.autasker.domain.reminders.ReminderService
-import vadimerenkov.autasker.domain.roundToMinutes
+import vadimerenkov.autasker.core.domain.Period
+import vadimerenkov.autasker.core.domain.Task
+import vadimerenkov.autasker.core.domain.TaskCategory
+import vadimerenkov.autasker.core.domain.reminders.Reminder
+import vadimerenkov.autasker.core.domain.reminders.ReminderService
+import vadimerenkov.autasker.core.domain.roundToMinutes
+import vadimerenkov.autasker.core.domain.settings.Settings
+import vadimerenkov.autasker.core.domain.settings.createDataStore
+import vadimerenkov.autasker.core.presentation.main.MainViewModel
+import vadimerenkov.autasker.core.presentation.task_edit.TaskEditViewModel
 import vadimerenkov.autasker.fakes.FakeAudioPlayer
 import vadimerenkov.autasker.fakes.FakeReminderService
 import vadimerenkov.autasker.fakes.TasksRepositoryFake
-import vadimerenkov.autasker.presentation.task_edit.TaskEditViewModel
-import vadimerenkov.autasker.settings.Settings
-import vadimerenkov.autasker.settings.createDataStore
 import java.io.File
 import java.time.ZonedDateTime
 
@@ -46,7 +47,8 @@ class InitializationTest {
 	private lateinit var reminderService: ReminderService
 
 	fun initialize() {
-		viewModel = MainViewModel(repository, reminderService, FakeAudioPlayer(), settings, mutableListOf())
+		viewModel =
+			MainViewModel(repository, reminderService, FakeAudioPlayer(), settings)
 	}
 
 	@Before

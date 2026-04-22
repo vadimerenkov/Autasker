@@ -16,15 +16,23 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TemporaryFolder
+import org.koin.core.KoinApplication
 import org.koin.test.KoinTestRule
-import vadimerenkov.autasker.di.appModule
-import vadimerenkov.autasker.di.platformModule
-import vadimerenkov.autasker.domain.RepeatState
-import vadimerenkov.autasker.domain.Task
-import vadimerenkov.autasker.domain.reminders.Reminder
+import vadimerenkov.autasker.calendar.calendarModule
+import vadimerenkov.autasker.core.database.di.coreDatabaseModule
+import vadimerenkov.autasker.core.database.di.platformCoreDatabaseModule
+import vadimerenkov.autasker.core.domain.RepeatState
+import vadimerenkov.autasker.core.domain.Task
+import vadimerenkov.autasker.core.domain.di.coreDomainModule
+import vadimerenkov.autasker.core.domain.di.platformCoreDomainModule
+import vadimerenkov.autasker.core.domain.reminders.Reminder
+import vadimerenkov.autasker.core.domain.settings.Settings
+import vadimerenkov.autasker.core.presentation.di.corePresentationModule
+import vadimerenkov.autasker.core.presentation.di.platformCorePresentationModule
+import vadimerenkov.autasker.core.presentation.new_day.NewDayAction
+import vadimerenkov.autasker.core.presentation.new_day.NewDayViewModel
 import vadimerenkov.autasker.fakes.FakeReminderService
 import vadimerenkov.autasker.fakes.TasksRepositoryFake
-import vadimerenkov.autasker.settings.Settings
 import java.time.ZonedDateTime
 
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -33,7 +41,15 @@ class NewDayViewModelTest {
 	@get:Rule
 	val koinTestRule = KoinTestRule.create {
 		// Your KoinApplication instance here
-		modules(appModule, platformModule)
+		KoinApplication.init().modules(
+			coreDatabaseModule,
+			platformCoreDatabaseModule,
+			coreDomainModule,
+			platformCoreDomainModule,
+			corePresentationModule,
+			platformCorePresentationModule,
+			calendarModule
+		)
 	}
 
 	@get:Rule

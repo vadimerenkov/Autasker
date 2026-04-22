@@ -11,4 +11,5 @@ plugins {
 	alias(libs.plugins.room) apply false
 	alias(libs.plugins.serialization) apply false
 	alias(libs.plugins.androidKmpLibrary) apply false
+	alias(libs.plugins.androidLint) apply false
 }

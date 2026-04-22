@@ -1,28 +1,15 @@
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 
 plugins {
-    alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.composeHotReload)
 	alias(libs.plugins.room)
 	alias(libs.plugins.ksp)
-	alias(libs.plugins.serialization)
-	alias(libs.plugins.androidKmpLibrary)
+	alias(libs.plugins.convention.kmp.library)
 }
 
 kotlin {
-	android {
-		compileSdk = libs.versions.android.compileSdk.get().toInt()
-		minSdk = libs.versions.android.minSdk.get().toInt()
-		namespace = "vadimerenkov.autasker.composeapp"
-		experimentalProperties["android.experimental.kmp.enableAndroidResources"] = true
-	}
-
-	jvmToolchain(21)
-    
-    jvm()
-
     sourceSets {
         androidMain.dependencies {
             implementation(libs.androidx.activity.compose)
@@ -32,12 +19,10 @@ kotlin {
         commonMain.dependencies {
             implementation(libs.compose.runtime)
             implementation(libs.compose.foundation)
-            implementation(libs.material3)
+	        implementation(libs.compose.ui)
+	        implementation(libs.material3)
 	        implementation(libs.material.icons.extended)
 	        implementation(libs.bundles.koin)
-            implementation(libs.compose.ui)
-	        implementation(libs.androidx.room.runtime)
-	        implementation(libs.androidx.sqlite.bundled)
             implementation(libs.compose.components.resources)
             implementation(libs.compose.ui.tooling.preview)
 	        implementation(libs.androidx.lifecycle.viewmodelCompose)
@@ -45,31 +30,30 @@ kotlin {
 	        implementation(libs.kotlinx.serialization.json)
 	        implementation(libs.kotlinx.serialization.core)
 	        implementation(libs.bundles.navigation3)
-	        implementation(libs.appdirs)
 	        implementation(libs.androidx.datastore)
 	        implementation(libs.androidx.datastore.preferences)
-	        implementation(libs.reorderable)
 	        implementation(libs.material3.adaptive)
-	        implementation(libs.calendar)
-        }
-        commonTest.dependencies {
-	        implementation(libs.assertK)
-	        implementation(libs.junit)
-	        implementation(libs.kotlinx.coroutines.core)
-	        implementation(libs.kotlinx.coroutines.test)
-	        implementation(libs.koin.test)
-	        implementation(libs.koin.test.junit)
-	        implementation(project.dependencies.platform("org.junit:junit-bom:6.0.3"))
-	        implementation(libs.junit.jupiter)
-	        implementation(libs.junit.platform.launcher)
 
+	        implementation(projects.calendar)
+	        implementation(projects.core.database)
+	        implementation(projects.core.domain)
+	        implementation(projects.core.presentation)
         }
         jvmMain.dependencies {
             implementation(compose.desktop.currentOs)
             implementation(libs.kotlinx.coroutinesSwing)
-	        implementation(libs.quartz)
-	        implementation(libs.autolaunch)
         }
+	    commonTest.dependencies {
+		    implementation(libs.assertK)
+		    implementation(libs.junit)
+		    implementation(libs.kotlinx.coroutines.core)
+		    implementation(libs.kotlinx.coroutines.test)
+		    implementation(libs.koin.test)
+		    implementation(libs.koin.test.junit)
+		    implementation(project.dependencies.platform("org.junit:junit-bom:6.0.3"))
+		    implementation(libs.junit.jupiter)
+		    implementation(libs.junit.platform.launcher)
+	    }
     }
 }
 

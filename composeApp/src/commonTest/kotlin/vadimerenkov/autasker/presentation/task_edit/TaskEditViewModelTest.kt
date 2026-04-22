@@ -18,10 +18,12 @@ import kotlinx.coroutines.test.setMain
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
-import vadimerenkov.autasker.domain.Period
-import vadimerenkov.autasker.domain.Subtask
-import vadimerenkov.autasker.domain.Task
-import vadimerenkov.autasker.domain.reminders.Reminder
+import vadimerenkov.autasker.core.domain.Period
+import vadimerenkov.autasker.core.domain.Subtask
+import vadimerenkov.autasker.core.domain.Task
+import vadimerenkov.autasker.core.domain.reminders.Reminder
+import vadimerenkov.autasker.core.presentation.task_edit.TaskEditAction
+import vadimerenkov.autasker.core.presentation.task_edit.TaskEditViewModel
 import vadimerenkov.autasker.fakes.FakeReminderService
 import vadimerenkov.autasker.fakes.TasksRepositoryFake
 
