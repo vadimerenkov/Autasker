@@ -1,23 +1,15 @@
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 
 plugins {
-    alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.composeHotReload)
 	alias(libs.plugins.room)
 	alias(libs.plugins.ksp)
-	alias(libs.plugins.serialization)
-	alias(libs.plugins.androidKmpLibrary)
+	alias(libs.plugins.convention.kmp.library)
 }
 
 kotlin {
-	android {
-		compileSdk = libs.versions.android.compileSdk.get().toInt()
-		minSdk = libs.versions.android.minSdk.get().toInt()
-		namespace = "vadimerenkov.autasker.composeapp"
-		experimentalProperties["android.experimental.kmp.enableAndroidResources"] = true
-	}
 
 	jvmToolchain(21)
     

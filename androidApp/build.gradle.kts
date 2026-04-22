@@ -4,7 +4,6 @@ plugins {
 }
 
 dependencies {
-	implementation(projects.composeApp)
 	implementation(libs.androidx.core.ktx)
 	implementation(libs.androidx.activity.compose)
 	implementation(libs.koin.android)
@@ -22,5 +21,6 @@ dependencies {
 	debugImplementation(libs.compose.ui.tooling.preview)
 	debugImplementation(libs.compose.ui.tooling)
 
+	implementation(projects.composeApp)
 	implementation(projects.common)
 }

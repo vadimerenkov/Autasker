@@ -38,5 +38,9 @@ gradlePlugin {
 			id = "vadimerenkov.autasker.convention.android.application"
 			implementationClass = "AndroidApplicationConventionPlugin"
 		}
+		register("kmpLibrary") {
+			id = "vadimerenkov.autasker.convention.kmp.library"
+			implementationClass = "KmpLibraryConventionPlugin"
+		}
 	}
 }

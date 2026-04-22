@@ -119,6 +119,7 @@ androidKmpLibrary = { id = "com.android.kotlin.multiplatform.library", version.r
 androidLint = { id = "com.android.lint", version.ref = "agp" }
 
 convention-android-application = { id = "vadimerenkov.autasker.convention.android.application" }
+convention-kmp-library = { id = "vadimerenkov.autasker.convention.kmp.library" }
 
 [bundles]
 koin = ["koin-compose", "koin-compose-navigation", "koin-compose-viewmodel", "koin-core"]

@@ -1,26 +1,14 @@
 plugins {
-	alias(libs.plugins.kotlinMultiplatform)
-	alias(libs.plugins.androidKmpLibrary)
+	alias(libs.plugins.convention.kmp.library)
 	alias(libs.plugins.androidLint)
 	alias(libs.plugins.room)
 	alias(libs.plugins.composeMultiplatform)
 	alias(libs.plugins.composeCompiler)
 	alias(libs.plugins.composeHotReload)
 	alias(libs.plugins.ksp)
-	alias(libs.plugins.serialization)
 }
 
 kotlin {
-
-	// Target declarations - add or remove as needed below. These define
-	// which platforms this KMP module supports.
-	// See: https://kotlinlang.org/docs/multiplatform-discover-project.html#targets
-	android {
-		compileSdk = libs.versions.android.compileSdk.get().toInt()
-		minSdk = libs.versions.android.minSdk.get().toInt()
-		namespace = "vadimerenkov.autasker.common"
-		experimentalProperties["android.experimental.kmp.enableAndroidResources"] = true
-	}
 
 	// For iOS targets, this is also where you should
 	// configure native binary output. For more information, see:
