@@ -1,7 +1,6 @@
 package vadimerenkov.autasker.fakes
 
-import vadimerenkov.autasker.common.presentation.main.AudioPlayer
-
+import vadimerenkov.autasker.core.presentation.main.AudioPlayer
 
 class FakeAudioPlayer: AudioPlayer {
 

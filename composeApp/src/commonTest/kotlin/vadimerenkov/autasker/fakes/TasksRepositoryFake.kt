@@ -5,14 +5,14 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
-import vadimerenkov.autasker.common.data.JobData
-import vadimerenkov.autasker.common.domain.Page
-import vadimerenkov.autasker.common.domain.Subtask
-import vadimerenkov.autasker.common.domain.Task
-import vadimerenkov.autasker.common.domain.TaskCategory
-import vadimerenkov.autasker.common.domain.TasksRepository
-import vadimerenkov.autasker.common.domain.Time
-import vadimerenkov.autasker.common.domain.reminders.Reminder
+import vadimerenkov.autasker.core.domain.Page
+import vadimerenkov.autasker.core.domain.ReminderJob
+import vadimerenkov.autasker.core.domain.Subtask
+import vadimerenkov.autasker.core.domain.Task
+import vadimerenkov.autasker.core.domain.TaskCategory
+import vadimerenkov.autasker.core.domain.TasksRepository
+import vadimerenkov.autasker.core.domain.Time
+import vadimerenkov.autasker.core.domain.reminders.Reminder
 import java.time.ZonedDateTime
 
 class TasksRepositoryFake: TasksRepository {
@@ -26,7 +26,7 @@ class TasksRepositoryFake: TasksRepository {
 	))
 	val subtasks = MutableStateFlow(emptyList<Subtask>())
 	val reminders = MutableStateFlow(emptyList<Reminder>())
-	val jobs = MutableStateFlow(emptyList<JobData>())
+	val jobs = MutableStateFlow(emptyList<ReminderJob>())
 	val pages = MutableStateFlow(emptyList<Page>())
 
 	override suspend fun saveTask(task: Task): Long {
@@ -133,15 +133,15 @@ class TasksRepositoryFake: TasksRepository {
 		reminders.value -= reminders.value.filter { it.parentTaskId == id }
 	}
 
-	override suspend fun getAllJobs(): List<JobData> {
+	override suspend fun getAllJobs(): List<ReminderJob> {
 		return jobs.value
 	}
 
-	override suspend fun saveJob(job: JobData) {
+	override suspend fun saveJob(job: ReminderJob) {
 		jobs.value += job
 	}
 
-	override suspend fun getJobsForTask(id: Long): List<JobData> {
+	override suspend fun getJobsForTask(id: Long): List<ReminderJob> {
 		return jobs.value.filter { it.parentTaskId == id }
 	}
 

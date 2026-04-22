@@ -26,18 +26,23 @@ import org.junit.rules.TemporaryFolder
 import org.koin.core.KoinApplication
 import org.koin.test.KoinTest
 import org.koin.test.KoinTestRule
-import vadimerenkov.autasker.common.data.JobData
-import vadimerenkov.autasker.common.di.commonModule
-import vadimerenkov.autasker.common.di.commonPlatformModule
-import vadimerenkov.autasker.common.domain.Page
-import vadimerenkov.autasker.common.domain.Subtask
-import vadimerenkov.autasker.common.domain.Task
-import vadimerenkov.autasker.common.domain.TaskCategory
-import vadimerenkov.autasker.common.domain.Time
-import vadimerenkov.autasker.common.domain.reminders.ReminderService
-import vadimerenkov.autasker.common.presentation.main.MainAction
-import vadimerenkov.autasker.common.presentation.main.MainViewModel
-import vadimerenkov.autasker.common.settings.Settings
+import vadimerenkov.autasker.calendar.calendarModule
+import vadimerenkov.autasker.core.database.di.coreDatabaseModule
+import vadimerenkov.autasker.core.database.di.platformCoreDatabaseModule
+import vadimerenkov.autasker.core.domain.Page
+import vadimerenkov.autasker.core.domain.ReminderJob
+import vadimerenkov.autasker.core.domain.Subtask
+import vadimerenkov.autasker.core.domain.Task
+import vadimerenkov.autasker.core.domain.TaskCategory
+import vadimerenkov.autasker.core.domain.Time
+import vadimerenkov.autasker.core.domain.di.coreDomainModule
+import vadimerenkov.autasker.core.domain.di.platformCoreDomainModule
+import vadimerenkov.autasker.core.domain.reminders.ReminderService
+import vadimerenkov.autasker.core.domain.settings.Settings
+import vadimerenkov.autasker.core.presentation.di.corePresentationModule
+import vadimerenkov.autasker.core.presentation.di.platformCorePresentationModule
+import vadimerenkov.autasker.core.presentation.main.MainAction
+import vadimerenkov.autasker.core.presentation.main.MainViewModel
 import vadimerenkov.autasker.fakes.FakeAudioPlayer
 import vadimerenkov.autasker.fakes.FakeReminderService
 import vadimerenkov.autasker.fakes.TasksRepositoryFake
@@ -52,7 +57,15 @@ class MainViewModelTest: KoinTest {
 	@get:Rule
 	val koinTestRule = KoinTestRule.create {
 		// Your KoinApplication instance here
-		KoinApplication.init().modules(commonModule, commonPlatformModule)
+		KoinApplication.init().modules(
+			coreDatabaseModule,
+			platformCoreDatabaseModule,
+			coreDomainModule,
+			platformCoreDomainModule,
+			corePresentationModule,
+			platformCorePresentationModule,
+			calendarModule
+		)
 	}
 
 	@get:Rule
@@ -144,7 +157,7 @@ class MainViewModelTest: KoinTest {
 			title = "TestTask",
 			categoryId = 1
 		)
-		val job = JobData(
+		val job = ReminderJob(
 			key = "123",
 			parentTaskId = 123,
 			triggerDate = Instant.now()
