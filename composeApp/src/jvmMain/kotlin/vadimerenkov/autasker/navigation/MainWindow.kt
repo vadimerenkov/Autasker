@@ -7,9 +7,9 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.rememberWindowState
 import androidx.datastore.preferences.core.Preferences
-import autasker.common.generated.resources.Res
-import autasker.common.generated.resources.app_icon
-import autasker.common.generated.resources.app_name
+import autasker.core.presentation.generated.resources.Res
+import autasker.core.presentation.generated.resources.app_icon
+import autasker.core.presentation.generated.resources.app_name
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
@@ -39,7 +39,7 @@ fun MainWindow(
 					settings.saveWindowState(windowState)
 					settings.saveExitTime()
 
-					if (settings.state.closeToTray) {
+					if (settings.state.value.closeToTray) {
 						toTrayRequest()
 					} else {
 						onExitRequest()

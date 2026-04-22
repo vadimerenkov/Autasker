@@ -14,10 +14,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import autasker.common.generated.resources.Res
-import autasker.common.generated.resources.what_tasks_today
+import autasker.core.presentation.generated.resources.Res
+import autasker.core.presentation.generated.resources.what_tasks_today
 import org.jetbrains.compose.resources.stringResource
-import vadimerenkov.autasker.common.domain.Task
+import vadimerenkov.autasker.core.domain.Task
 
 @Composable
 internal fun TodayTab(

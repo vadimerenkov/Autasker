@@ -8,12 +8,12 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
-import vadimerenkov.autasker.common.domain.Task
-import vadimerenkov.autasker.common.domain.TasksRepository
-import vadimerenkov.autasker.common.domain.Time
-import vadimerenkov.autasker.common.domain.minusReminder
-import vadimerenkov.autasker.common.domain.reminders.ReminderService
-import vadimerenkov.autasker.common.presentation.main.MainAction
+import vadimerenkov.autasker.core.domain.Task
+import vadimerenkov.autasker.core.domain.TasksRepository
+import vadimerenkov.autasker.core.domain.Time
+import vadimerenkov.autasker.core.domain.minusReminder
+import vadimerenkov.autasker.core.domain.reminders.ReminderService
+import vadimerenkov.autasker.core.presentation.main.MainAction
 
 class BinViewModel(
 	private val repository: TasksRepository,
@@ -79,7 +79,7 @@ class BinViewModel(
 			.getRemindersForTask(task.id)
 			.forEach { reminder ->
 				if (task.dueDate?.minusReminder(reminder)?.isBefore(Time.now()) == false) {
-					reminderService.scheduleReminder(task.id, task.dueDate.minusReminder(reminder))
+					reminderService.scheduleReminder(task.id, task.dueDate!!.minusReminder(reminder))
 				}
 			}
 	}

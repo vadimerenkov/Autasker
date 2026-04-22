@@ -42,38 +42,43 @@ import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import autasker.common.generated.resources.Res
-import autasker.common.generated.resources.after_completion
-import autasker.common.generated.resources.after_deletion
-import autasker.common.generated.resources.auto_delete_completed
-import autasker.common.generated.resources.auto_delete_from_trash
-import autasker.common.generated.resources.auto_launch
-import autasker.common.generated.resources.close_to_tray
-import autasker.common.generated.resources.date_format
-import autasker.common.generated.resources.end_of_day_time
-import autasker.common.generated.resources.first_day_of_week
-import autasker.common.generated.resources.language
-import autasker.common.generated.resources.period_in
-import autasker.common.generated.resources.play_sound
-import autasker.common.generated.resources.theme
-import autasker.common.generated.resources.time_format
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import autasker.core.presentation.generated.resources.Res
+import autasker.core.presentation.generated.resources.after_completion
+import autasker.core.presentation.generated.resources.after_deletion
+import autasker.core.presentation.generated.resources.auto_delete_completed
+import autasker.core.presentation.generated.resources.auto_delete_from_trash
+import autasker.core.presentation.generated.resources.auto_launch
+import autasker.core.presentation.generated.resources.close_to_tray
+import autasker.core.presentation.generated.resources.date_format
+import autasker.core.presentation.generated.resources.end_of_day_time
+import autasker.core.presentation.generated.resources.first_day_of_week
+import autasker.core.presentation.generated.resources.language
+import autasker.core.presentation.generated.resources.period_in
+import autasker.core.presentation.generated.resources.play_sound
+import autasker.core.presentation.generated.resources.theme
+import autasker.core.presentation.generated.resources.time_format
 import kotlinx.coroutines.launch
-import org.jetbrains.compose.resources.getString
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
-import vadimerenkov.autasker.common.domain.Period
-import vadimerenkov.autasker.common.domain.toLocalizedString
-import vadimerenkov.autasker.common.getPlatform
-import vadimerenkov.autasker.common.presentation.components.IntNumberInputField
-import vadimerenkov.autasker.common.presentation.theme.AutaskerTheme
-import vadimerenkov.autasker.common.presentation.theme.ThemeColor
-import vadimerenkov.autasker.common.settings.enums.DateFormat
-import vadimerenkov.autasker.common.settings.enums.Language
-import vadimerenkov.autasker.common.settings.enums.Theme
-import vadimerenkov.autasker.common.settings.enums.TimeFormat
+import vadimerenkov.autasker.core.domain.Period
 import vadimerenkov.autasker.core.domain.settings.SettingsState
+import vadimerenkov.autasker.core.domain.settings.enums.DateFormat
+import vadimerenkov.autasker.core.domain.settings.enums.Language
+import vadimerenkov.autasker.core.domain.settings.enums.Theme
+import vadimerenkov.autasker.core.domain.settings.enums.ThemeColor
+import vadimerenkov.autasker.core.domain.settings.enums.TimeFormat
+import vadimerenkov.autasker.core.presentation.Platform
+import vadimerenkov.autasker.core.presentation.components.IntNumberInputField
+import vadimerenkov.autasker.core.presentation.extensions.darkColor
+import vadimerenkov.autasker.core.presentation.extensions.lightColor
+import vadimerenkov.autasker.core.presentation.extensions.nameRes
+import vadimerenkov.autasker.core.presentation.extensions.stringRes
+import vadimerenkov.autasker.core.presentation.extensions.toLocalizedString
+import vadimerenkov.autasker.core.presentation.getPlatform
 import vadimerenkov.autasker.core.presentation.settings.components.CheckboxSetting
 import vadimerenkov.autasker.core.presentation.settings.components.DropdownSetting
+import vadimerenkov.autasker.core.presentation.theme.AutaskerTheme
 import java.time.DayOfWeek
 import java.time.LocalTime
 import java.time.format.TextStyle
@@ -85,8 +90,9 @@ fun SettingsScreen(
 	scrollState: ScrollState = rememberScrollState(),
 	viewModel: SettingsViewModel = koinViewModel()
 ) {
+	val state by viewModel.settings.state.collectAsStateWithLifecycle()
 	SettingsScreenRoot(
-		state = viewModel.settings.state,
+		state = state,
 		scrollState = scrollState,
 		modifier = modifier,
 		onAction = viewModel::onAction
@@ -247,7 +253,7 @@ private fun SettingsScreenRoot(
 				}
 			)
 
-			if (getPlatform().name == "Desktop") {
+			if (getPlatform() == Platform.DESKTOP) {
 				HorizontalDivider()
 				CheckboxSetting(
 					title = stringResource(Res.string.close_to_tray),
@@ -298,18 +304,18 @@ private fun SettingsScreenRoot(
 					Locale.getDefault()
 				)
 			)
-			val languages = Language.entries.map { stringResource(it.stringRes) }.sorted()
+			val languages = Language.entries.map { it.endonym }.sorted()
 			DropdownSetting(
 				options = languages,
 				onOptionChosen = { index ->
 					scope.launch {
 						val language =
-							Language.entries.first { getString(it.stringRes) == languages[index] }
+							Language.entries.first { it.endonym == languages[index] }
 						onAction(SettingsAction.LanguageChange(language))
 					}
 				},
 				description = stringResource(Res.string.language),
-				chosenOption = stringResource(state.language!!.stringRes)
+				chosenOption = state.language?.endonym ?: Language.ENGLISH.endonym
 			)
 			DropdownSetting(
 				options = Theme.entries.map { stringResource(it.stringRes) },

@@ -5,8 +5,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import autasker.common.generated.resources.Res
-import autasker.common.generated.resources.main
+import autasker.core.presentation.generated.resources.Res
+import autasker.core.presentation.generated.resources.main
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.first
@@ -15,17 +15,17 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.getString
-import vadimerenkov.autasker.common.domain.Page
-import vadimerenkov.autasker.common.domain.Subtask
-import vadimerenkov.autasker.common.domain.Task
-import vadimerenkov.autasker.common.domain.TaskCategory
-import vadimerenkov.autasker.common.domain.TasksRepository
-import vadimerenkov.autasker.common.domain.Time
-import vadimerenkov.autasker.common.domain.minusReminder
-import vadimerenkov.autasker.common.domain.reminders.Reminder
-import vadimerenkov.autasker.common.domain.reminders.ReminderService
-import vadimerenkov.autasker.common.domain.roundToMinutes
-import vadimerenkov.autasker.common.settings.Settings
+import vadimerenkov.autasker.core.domain.Page
+import vadimerenkov.autasker.core.domain.Subtask
+import vadimerenkov.autasker.core.domain.Task
+import vadimerenkov.autasker.core.domain.TaskCategory
+import vadimerenkov.autasker.core.domain.TasksRepository
+import vadimerenkov.autasker.core.domain.Time
+import vadimerenkov.autasker.core.domain.minusReminder
+import vadimerenkov.autasker.core.domain.reminders.Reminder
+import vadimerenkov.autasker.core.domain.reminders.ReminderService
+import vadimerenkov.autasker.core.domain.roundToMinutes
+import vadimerenkov.autasker.core.domain.settings.Settings
 import java.time.LocalDate
 import java.time.LocalTime
 import java.time.ZoneId
@@ -44,7 +44,7 @@ class MainViewModel(
 	private var changeTitleJob: Job? = null
 
 	init {
-		if (settings.state.autoDeleteFromTrash) {
+		if (settings.state.value.autoDeleteFromTrash) {
 			val tasksToDelete = mutableListOf<Task>()
 			val subtasksToDelete = mutableListOf<Subtask>()
 			viewModelScope.launch {
@@ -52,7 +52,7 @@ class MainViewModel(
 					.first()
 					.forEach { task ->
 						val deletedDate = task.deletedDate
-						if (deletedDate?.isBefore(settings.state.deletedCutoffDate) == true) {
+						if (deletedDate?.isBefore(settings.state.value.deletedCutoffDate) == true) {
 							tasksToDelete.add(task)
 							subtasksToDelete.addAll(task.subtasks)
 						}
@@ -67,12 +67,12 @@ class MainViewModel(
 			}
 		}
 
-		if (settings.state.autoDeleteCompleted) {
+		if (settings.state.value.autoDeleteCompleted) {
 			val tasksToDelete = mutableListOf<Task>()
 			viewModelScope.launch {
 				repository.getCompletedTasks()
 					.forEach { task ->
-						if (task.completedDate?.isBefore(settings.state.completedCutoffDate) == true) {
+						if (task.completedDate?.isBefore(settings.state.value.completedCutoffDate) == true) {
 							tasksToDelete.add(
 								task.copy(
 									isDeleted = true,
@@ -346,10 +346,10 @@ class MainViewModel(
 		viewModelScope.launch {
 			if (task.repeatState.isRepeating
 				&& (task.dueDate?.isBefore(Time.todayStart()) == true
-					|| task.calculateNewDate(settings.state.firstDayOfWeek)?.isBefore(Time.todayEnd()) == true)) {
+					|| task.calculateNewDate(settings.state.value.firstDayOfWeek)?.isBefore(Time.todayEnd()) == true)) {
 						repository.saveTask(task.copy(
 							isCompleted = false,
-							dueDate = task.calculateNewDate(settings.state.firstDayOfWeek)
+							dueDate = task.calculateNewDate(settings.state.value.firstDayOfWeek)
 						))
 						rescheduleRemindersForTask(task)
 			} else {
@@ -358,7 +358,7 @@ class MainViewModel(
 			}
 		}
 
-		if (settings.state.playSound) {
+		if (settings.state.value.playSound) {
 			// Sound source: https://freesound.org/people/LittleRainySeasons/sounds/335908/
 			audioPlayer.play("files/ding.wav")
 		}
@@ -379,7 +379,7 @@ class MainViewModel(
 			.getRemindersForTask(task.id)
 			.forEach { reminder ->
 				if (task.dueDate?.minusReminder(reminder)?.isBefore(Time.now()) == false) {
-					reminderService.scheduleReminder(task.id, task.dueDate.minusReminder(reminder))
+					reminderService.scheduleReminder(task.id, task.dueDate!!.minusReminder(reminder))
 				}
 			}
 	}

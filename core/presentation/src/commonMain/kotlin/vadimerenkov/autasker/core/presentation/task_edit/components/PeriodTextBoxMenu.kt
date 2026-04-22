@@ -11,8 +11,8 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import vadimerenkov.autasker.common.domain.Period
-import vadimerenkov.autasker.common.domain.toLocalizedString
+import vadimerenkov.autasker.core.domain.Period
+import vadimerenkov.autasker.core.presentation.extensions.toLocalizedString
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

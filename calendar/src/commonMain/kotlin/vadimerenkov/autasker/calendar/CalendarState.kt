@@ -1,6 +1,6 @@
 package vadimerenkov.autasker.calendar
 
-import vadimerenkov.autasker.common.domain.Task
+import vadimerenkov.autasker.core.domain.Task
 import java.time.DayOfWeek
 import java.time.LocalDate
 

@@ -13,8 +13,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.window.core.layout.WindowSizeClass
-import vadimerenkov.autasker.common.domain.Task
-import vadimerenkov.autasker.common.presentation.util.ComposableDateFormatter
+import vadimerenkov.autasker.core.domain.Task
+import vadimerenkov.autasker.core.presentation.util.ComposableDateFormatter
 
 @Composable
 fun CalendarTaskItem(

@@ -22,21 +22,22 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
-import autasker.common.generated.resources.Res
-import autasker.common.generated.resources.delete_tab
-import autasker.common.generated.resources.new_tab
+import autasker.core.presentation.generated.resources.Res
+import autasker.core.presentation.generated.resources.delete_tab
+import autasker.core.presentation.generated.resources.new_tab
 import org.jetbrains.compose.resources.stringResource
 import sh.calvin.reorderable.ReorderableItem
 import sh.calvin.reorderable.rememberReorderableLazyListState
-import vadimerenkov.autasker.common.domain.Page
-import vadimerenkov.autasker.common.presentation.components.ButtonsRow
-import vadimerenkov.autasker.common.presentation.main.MainState
+import vadimerenkov.autasker.core.domain.Page
+import vadimerenkov.autasker.core.presentation.components.ButtonsRow
+import vadimerenkov.autasker.core.presentation.main.MainState
 
 @Composable
 fun EditTabsDialog(

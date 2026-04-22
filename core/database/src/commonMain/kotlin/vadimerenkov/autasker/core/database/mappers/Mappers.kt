@@ -1,12 +1,14 @@
 package vadimerenkov.autasker.core.database.mappers
 
 import vadimerenkov.autasker.core.database.CategoryData
+import vadimerenkov.autasker.core.database.JobData
 import vadimerenkov.autasker.core.database.PageData
 import vadimerenkov.autasker.core.database.ReminderData
 import vadimerenkov.autasker.core.database.SubtaskData
 import vadimerenkov.autasker.core.database.TaskData
 import vadimerenkov.autasker.core.domain.Page
 import vadimerenkov.autasker.core.domain.Period
+import vadimerenkov.autasker.core.domain.ReminderJob
 import vadimerenkov.autasker.core.domain.Subtask
 import vadimerenkov.autasker.core.domain.Task
 import vadimerenkov.autasker.core.domain.TaskCategory
@@ -160,5 +162,21 @@ fun Page.toData(): PageData {
 		id = id,
 		title = title,
 		index = index
+	)
+}
+
+fun ReminderJob.toData(): JobData {
+	return JobData(
+		key = key,
+		parentTaskId = parentTaskId,
+		triggerDate = triggerDate
+	)
+}
+
+fun JobData.toJob(): ReminderJob {
+	return ReminderJob(
+		key = key,
+		parentTaskId = parentTaskId,
+		triggerDate = triggerDate
 	)
 }

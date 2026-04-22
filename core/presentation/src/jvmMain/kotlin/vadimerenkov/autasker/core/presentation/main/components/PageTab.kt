@@ -21,14 +21,14 @@ import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.input.key.key
 import androidx.compose.ui.input.key.onPreviewKeyEvent
 import androidx.compose.ui.input.pointer.PointerButton
-import autasker.common.generated.resources.Res
-import autasker.common.generated.resources.delete_tab
-import autasker.common.generated.resources.new_tab
-import autasker.common.generated.resources.rename_tab
+import autasker.core.presentation.generated.resources.Res
+import autasker.core.presentation.generated.resources.delete_tab
+import autasker.core.presentation.generated.resources.new_tab
+import autasker.core.presentation.generated.resources.rename_tab
 import org.jetbrains.compose.resources.stringResource
-import vadimerenkov.autasker.common.domain.Page
-import vadimerenkov.autasker.common.presentation.main.MainAction
-import vadimerenkov.autasker.common.presentation.main.MainState
+import vadimerenkov.autasker.core.domain.Page
+import vadimerenkov.autasker.core.presentation.main.MainAction
+import vadimerenkov.autasker.core.presentation.main.MainState
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable

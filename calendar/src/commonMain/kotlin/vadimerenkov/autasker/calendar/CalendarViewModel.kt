@@ -8,8 +8,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import vadimerenkov.autasker.common.domain.TasksRepository
-import vadimerenkov.autasker.common.settings.Settings
+import vadimerenkov.autasker.core.domain.TasksRepository
+import vadimerenkov.autasker.core.domain.settings.Settings
 
 class CalendarViewModel(
 	repository: TasksRepository,
@@ -26,7 +26,7 @@ class CalendarViewModel(
 				state = state.copy(tasks = list)
 			}.launchIn(viewModelScope)
 
-		snapshotFlow { settings.state }
+		snapshotFlow { settings.state.value }
 			.onEach { settingsState ->
 				state = state.copy(firstDayOfWeek = settingsState.firstDayOfWeek, startDayHour = settingsState.endOfDayTime.hour)
 			}.launchIn(viewModelScope)

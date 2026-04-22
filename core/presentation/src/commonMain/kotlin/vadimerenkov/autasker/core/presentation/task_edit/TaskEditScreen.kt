@@ -58,25 +58,25 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
-import autasker.common.generated.resources.Res
-import autasker.common.generated.resources.add_description
-import autasker.common.generated.resources.add_title
-import autasker.common.generated.resources.completed_on
-import autasker.common.generated.resources.description
-import autasker.common.generated.resources.importance
-import autasker.common.generated.resources.new_subtask
-import autasker.common.generated.resources.title
-import autasker.common.generated.resources.today
-import autasker.common.generated.resources.tomorrow
-import autasker.common.generated.resources.unnamed_column
+import autasker.core.presentation.generated.resources.Res
+import autasker.core.presentation.generated.resources.add_description
+import autasker.core.presentation.generated.resources.add_title
+import autasker.core.presentation.generated.resources.completed_on
+import autasker.core.presentation.generated.resources.description
+import autasker.core.presentation.generated.resources.importance
+import autasker.core.presentation.generated.resources.new_subtask
+import autasker.core.presentation.generated.resources.title
+import autasker.core.presentation.generated.resources.today
+import autasker.core.presentation.generated.resources.tomorrow
+import autasker.core.presentation.generated.resources.unnamed_column
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
-import vadimerenkov.autasker.common.domain.formatted
-import vadimerenkov.autasker.common.domain.toImportance
-import vadimerenkov.autasker.common.presentation.components.ButtonsRow
-import vadimerenkov.autasker.common.presentation.components.DataChip
-import vadimerenkov.autasker.common.presentation.util.ComposableDateFormatter
+import vadimerenkov.autasker.core.presentation.components.ButtonsRow
+import vadimerenkov.autasker.core.presentation.components.DataChip
+import vadimerenkov.autasker.core.presentation.extensions.formatted
+import vadimerenkov.autasker.core.presentation.extensions.toImportance
+import vadimerenkov.autasker.core.presentation.util.ComposableDateFormatter
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

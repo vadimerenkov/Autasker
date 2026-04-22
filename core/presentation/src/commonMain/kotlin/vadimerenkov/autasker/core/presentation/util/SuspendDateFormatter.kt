@@ -1,15 +1,15 @@
 package vadimerenkov.autasker.core.presentation.util
 
-import autasker.common.generated.resources.Res
-import autasker.common.generated.resources.period_ago
-import autasker.common.generated.resources.period_in
-import autasker.common.generated.resources.today
-import autasker.common.generated.resources.tomorrow
-import autasker.common.generated.resources.yesterday
+import autasker.core.presentation.generated.resources.Res
+import autasker.core.presentation.generated.resources.period_ago
+import autasker.core.presentation.generated.resources.period_in
+import autasker.core.presentation.generated.resources.today
+import autasker.core.presentation.generated.resources.tomorrow
+import autasker.core.presentation.generated.resources.yesterday
 import org.jetbrains.compose.resources.getString
-import vadimerenkov.autasker.common.domain.Period
-import vadimerenkov.autasker.common.domain.Time
-import vadimerenkov.autasker.common.domain.getLocalizedString
+import vadimerenkov.autasker.core.domain.Period
+import vadimerenkov.autasker.core.domain.Time
+import vadimerenkov.autasker.core.presentation.extensions.getLocalizedString
 import java.time.Duration
 import java.time.ZonedDateTime
 import kotlin.math.absoluteValue

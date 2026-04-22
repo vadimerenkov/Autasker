@@ -15,13 +15,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import autasker.common.generated.resources.Res
-import autasker.common.generated.resources.completed
-import autasker.common.generated.resources.day_is_over
-import autasker.common.generated.resources.set_for_today
+import autasker.core.presentation.generated.resources.Res
+import autasker.core.presentation.generated.resources.completed
+import autasker.core.presentation.generated.resources.day_is_over
+import autasker.core.presentation.generated.resources.set_for_today
 import org.jetbrains.compose.resources.stringResource
-import vadimerenkov.autasker.common.domain.Task
-import vadimerenkov.autasker.common.domain.Time
+import vadimerenkov.autasker.core.domain.Task
+import vadimerenkov.autasker.core.domain.Time
 import java.time.format.TextStyle
 import java.util.Locale
 

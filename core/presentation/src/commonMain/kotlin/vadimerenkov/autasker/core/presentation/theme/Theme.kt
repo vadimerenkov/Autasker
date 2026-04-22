@@ -4,6 +4,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import vadimerenkov.autasker.core.domain.settings.enums.ThemeColor
 
 val blue_lightScheme = lightColorScheme(
     primary = blue_primaryLight,

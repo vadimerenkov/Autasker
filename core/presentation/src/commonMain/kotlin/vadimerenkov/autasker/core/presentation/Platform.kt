@@ -1,3 +1,8 @@
 package vadimerenkov.autasker.core.presentation
 
-expect fun platform(): String
+enum class Platform {
+	DESKTOP,
+	ANDROID
+}
+
+expect fun getPlatform(): Platform

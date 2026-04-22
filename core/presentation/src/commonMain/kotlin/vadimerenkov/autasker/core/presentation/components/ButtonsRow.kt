@@ -10,9 +10,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import autasker.common.generated.resources.Res
-import autasker.common.generated.resources.cancel
-import autasker.common.generated.resources.save
+import autasker.core.presentation.generated.resources.Res
+import autasker.core.presentation.generated.resources.cancel
+import autasker.core.presentation.generated.resources.save
 import org.jetbrains.compose.resources.stringResource
 
 @Composable

@@ -10,8 +10,8 @@ import android.content.pm.PackageManager
 import android.util.Log
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-import vadimerenkov.autasker.common.data.JobData
-import vadimerenkov.autasker.common.domain.TasksRepository
+import vadimerenkov.autasker.core.domain.ReminderJob
+import vadimerenkov.autasker.core.domain.TasksRepository
 import vadimerenkov.autasker.core.domain.reminders.ReminderService
 import java.time.ZonedDateTime
 import java.util.UUID
@@ -35,7 +35,7 @@ class AlarmManager(
 	}
 
 	override suspend fun scheduleReminder(taskId: Long, date: ZonedDateTime) {
-		val jobData = JobData(
+		val jobData = ReminderJob(
 			key = UUID.randomUUID().toString(),
 			parentTaskId = taskId,
 			triggerDate = date.toInstant()

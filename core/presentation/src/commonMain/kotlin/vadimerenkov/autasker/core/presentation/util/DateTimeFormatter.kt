@@ -1,19 +1,20 @@
 package vadimerenkov.autasker.core.presentation.util
 
 import androidx.compose.runtime.Composable
-import autasker.common.generated.resources.Res
-import autasker.common.generated.resources.period_ago
-import autasker.common.generated.resources.period_in
-import autasker.common.generated.resources.today
-import autasker.common.generated.resources.tomorrow
-import autasker.common.generated.resources.yesterday
+import autasker.core.presentation.generated.resources.Res
+import autasker.core.presentation.generated.resources.period_ago
+import autasker.core.presentation.generated.resources.period_in
+import autasker.core.presentation.generated.resources.today
+import autasker.core.presentation.generated.resources.tomorrow
+import autasker.core.presentation.generated.resources.yesterday
 import org.jetbrains.compose.resources.stringResource
-import vadimerenkov.autasker.common.domain.Period
-import vadimerenkov.autasker.common.domain.Time
-import vadimerenkov.autasker.common.domain.toLocalizedString
-import vadimerenkov.autasker.common.settings.Settings
-import vadimerenkov.autasker.common.settings.enums.DateFormat
-import vadimerenkov.autasker.common.settings.enums.TimeFormat
+import org.koin.core.context.GlobalContext.get
+import vadimerenkov.autasker.core.domain.Period
+import vadimerenkov.autasker.core.domain.Time
+import vadimerenkov.autasker.core.domain.settings.Settings
+import vadimerenkov.autasker.core.domain.settings.enums.DateFormat
+import vadimerenkov.autasker.core.domain.settings.enums.TimeFormat
+import vadimerenkov.autasker.core.presentation.extensions.toLocalizedString
 import java.time.LocalTime
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
@@ -25,12 +26,12 @@ object ComposableDateFormatter {
 	val settings: Settings = get().get()
 
 	fun formatDate(date: ZonedDateTime, isAllDay: Boolean): String {
-		val datePattern = when (settings.state.dateFormat) {
+		val datePattern = when (settings.state.value.dateFormat) {
 			DateFormat.YYYYMMDD -> "yyyy.MM.dd"
 			DateFormat.DDMMYYYY -> "dd.MM.yyyy"
 			DateFormat.MMDDYYYY -> "MM.dd.yyyy"
 		}
-		val timePattern = when (settings.state.timeFormat) {
+		val timePattern = when (settings.state.value.timeFormat) {
 			TimeFormat.CLOCK_12 -> "h:mm a"
 			TimeFormat.CLOCK_24 -> "HH:mm"
 		}
@@ -41,7 +42,7 @@ object ComposableDateFormatter {
 
 	fun formatTime(time: LocalTime): String {
 
-		val timePattern = when (settings.state.timeFormat) {
+		val timePattern = when (settings.state.value.timeFormat) {
 			TimeFormat.CLOCK_12 -> "h:mm a"
 			TimeFormat.CLOCK_24 -> "HH:mm"
 		}

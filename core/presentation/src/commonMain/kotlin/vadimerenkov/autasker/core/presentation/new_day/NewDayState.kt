@@ -1,6 +1,7 @@
 package vadimerenkov.autasker.core.presentation.new_day
 
-import vadimerenkov.autasker.common.domain.Task
+import vadimerenkov.autasker.core.domain.Task
+
 
 data class NewDayState(
 	val listOfTabs: List<Tab> = emptyList(),

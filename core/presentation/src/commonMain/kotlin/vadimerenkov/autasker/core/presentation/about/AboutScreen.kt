@@ -19,13 +19,14 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import autasker.common.generated.resources.Res
-import autasker.common.generated.resources.github
-import autasker.common.generated.resources.kofi_symbol
-import autasker.common.generated.resources.source_code
-import autasker.common.generated.resources.support_developer
+import autasker.core.presentation.generated.resources.Res
+import autasker.core.presentation.generated.resources.github
+import autasker.core.presentation.generated.resources.kofi_symbol
+import autasker.core.presentation.generated.resources.source_code
+import autasker.core.presentation.generated.resources.support_developer
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
+import vadimerenkov.autasker.core.presentation.theme.AutaskerTheme
 import java.time.Year
 
 @Composable
@@ -102,7 +103,7 @@ fun AboutScreen(
 @Composable
 @Preview
 private fun AboutScreenPreview() {
-	_root_ide_package_.vadimerenkov.autasker.common.presentation.theme.AutaskerTheme {
-		_root_ide_package_.vadimerenkov.autasker.common.presentation.about.AboutScreen()
+	AutaskerTheme {
+		AboutScreen()
 	}
 }

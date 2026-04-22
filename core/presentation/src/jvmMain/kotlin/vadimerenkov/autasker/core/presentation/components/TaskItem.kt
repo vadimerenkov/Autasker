@@ -42,12 +42,12 @@ import androidx.compose.ui.input.pointer.PointerButton
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import vadimerenkov.autasker.common.domain.Task
-import vadimerenkov.autasker.common.domain.formatted
-import vadimerenkov.autasker.common.presentation.components.context_menu.DefaultContextMenu
-import vadimerenkov.autasker.common.presentation.components.context_menu.DeletedContextMenu
-import vadimerenkov.autasker.common.presentation.main.MainAction
-import vadimerenkov.autasker.common.presentation.util.ComposableDateFormatter
+import vadimerenkov.autasker.core.domain.Task
+import vadimerenkov.autasker.core.presentation.components.context_menu.DefaultContextMenu
+import vadimerenkov.autasker.core.presentation.components.context_menu.DeletedContextMenu
+import vadimerenkov.autasker.core.presentation.extensions.formatted
+import vadimerenkov.autasker.core.presentation.main.MainAction
+import vadimerenkov.autasker.core.presentation.util.ComposableDateFormatter
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -139,12 +139,12 @@ actual fun TaskItem(
 						.fillMaxWidth()
 				) {
 					Text(
-						text = ComposableDateFormatter.formatDate(task.dueDate, task.isAllDay),
+						text = ComposableDateFormatter.formatDate(task.dueDate!!, task.isAllDay),
 						style = MaterialTheme.typography.bodySmall,
 						color = secondaryColor
 					)
 					Text(
-						text = ComposableDateFormatter.formatDuration(task.dueDate, task.isAllDay),
+						text = ComposableDateFormatter.formatDuration(task.dueDate!!, task.isAllDay),
 						style = MaterialTheme.typography.bodySmall,
 						color = secondaryColor
 					)

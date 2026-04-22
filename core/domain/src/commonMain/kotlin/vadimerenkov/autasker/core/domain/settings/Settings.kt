@@ -1,15 +1,15 @@
 package vadimerenkov.autasker.core.domain.settings
 
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.update
 import vadimerenkov.autasker.core.domain.Sorting
 import vadimerenkov.autasker.core.domain.Time
 import vadimerenkov.autasker.core.domain.settings.enums.DateFormat
@@ -26,8 +26,8 @@ class Settings(
 	val dataStore: DataStore<Preferences>,
 	private val applicationScope: CoroutineScope
 ) {
-	var state by mutableStateOf(SettingsState())
-		private set
+	val _state = MutableStateFlow(SettingsState())
+	val state = _state.asStateFlow()
 
 	init {
 		dataStore.data
@@ -49,7 +49,9 @@ class Settings(
 					playSound = prefs[PLAY_SOUND] ?: true
 				)
 			}
-			.onEach { state = it }
+			.onEach { newState ->
+				_state.update { newState }
+			}
 			.launchIn(applicationScope)
 	}
 

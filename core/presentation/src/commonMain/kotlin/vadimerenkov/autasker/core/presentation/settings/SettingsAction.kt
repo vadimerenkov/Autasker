@@ -1,10 +1,10 @@
 package vadimerenkov.autasker.core.presentation.settings
 
-import vadimerenkov.autasker.common.presentation.theme.ThemeColor
-import vadimerenkov.autasker.common.settings.enums.DateFormat
-import vadimerenkov.autasker.common.settings.enums.Language
-import vadimerenkov.autasker.common.settings.enums.Theme
-import vadimerenkov.autasker.common.settings.enums.TimeFormat
+import vadimerenkov.autasker.core.domain.settings.enums.DateFormat
+import vadimerenkov.autasker.core.domain.settings.enums.Language
+import vadimerenkov.autasker.core.domain.settings.enums.Theme
+import vadimerenkov.autasker.core.domain.settings.enums.ThemeColor
+import vadimerenkov.autasker.core.domain.settings.enums.TimeFormat
 import java.time.DayOfWeek
 import java.time.LocalTime
 

@@ -1,9 +1,9 @@
 package vadimerenkov.autasker.core.presentation.task_edit
 
-import vadimerenkov.autasker.common.domain.RepeatState
-import vadimerenkov.autasker.common.domain.Subtask
-import vadimerenkov.autasker.common.domain.TaskCategory
-import vadimerenkov.autasker.common.domain.reminders.Reminder
+import vadimerenkov.autasker.core.domain.RepeatState
+import vadimerenkov.autasker.core.domain.Subtask
+import vadimerenkov.autasker.core.domain.TaskCategory
+import vadimerenkov.autasker.core.domain.reminders.Reminder
 import java.time.ZonedDateTime
 
 data class TaskEditState(

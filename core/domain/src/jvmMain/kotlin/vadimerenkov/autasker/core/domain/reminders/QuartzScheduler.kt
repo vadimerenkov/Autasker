@@ -1,10 +1,11 @@
-package vadimerenkov.autasker.core.data.reminders
+package vadimerenkov.autasker.core.domain.reminders
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
+import org.koin.core.context.GlobalContext.get
 import org.quartz.Job
 import org.quartz.JobBuilder
 import org.quartz.JobExecutionContext
@@ -12,9 +13,8 @@ import org.quartz.JobKey
 import org.quartz.Scheduler
 import org.quartz.TriggerBuilder
 import org.quartz.impl.StdSchedulerFactory
-import vadimerenkov.autasker.common.data.JobData
-import vadimerenkov.autasker.common.domain.Task
-import vadimerenkov.autasker.common.domain.TasksRepository
+import vadimerenkov.autasker.core.domain.Task
+import vadimerenkov.autasker.core.domain.TasksRepository
 import java.time.ZonedDateTime
 
 class QuartzScheduler (
@@ -45,7 +45,7 @@ class QuartzScheduler (
 			.build()
 
 		scheduler.scheduleJob(reminderJob, trigger)
-		val job = JobData(
+		val job = vadimerenkov.autasker.core.domain.ReminderJob(
 			key = reminderJob.key.toString(),
 			parentTaskId = taskId,
 			triggerDate = date.toInstant()

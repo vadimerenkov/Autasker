@@ -1,5 +1,6 @@
 package vadimerenkov.autasker.core.domain
 
+import org.koin.core.context.GlobalContext.get
 import vadimerenkov.autasker.core.domain.settings.Settings
 import java.time.LocalDate
 import java.time.LocalTime
@@ -16,7 +17,7 @@ object Time {
 	fun now(): ZonedDateTime {
 		val realNow = LocalTime.now()
 		val midnight = LocalTime.MIDNIGHT
-		val setTime = settings.state.endOfDayTime
+		val setTime = settings.state.value.endOfDayTime
 
 		return if (realNow.isAfter(midnight) && realNow.isBefore(setTime)) {
 			ZonedDateTime.now().minusDays(1)
@@ -29,7 +30,7 @@ object Time {
 	fun tomorrow(): LocalDate = today().plusDays(1)
 	fun yesterday(): LocalDate = today().minusDays(1)
 
-	fun startDayTime(): LocalTime = settings.state.endOfDayTime
+	fun startDayTime(): LocalTime = settings.state.value.endOfDayTime
 
 	fun todayStart(): ZonedDateTime = today().atTime(startDayTime()).atZone(ZoneId.systemDefault())
 	fun todayEnd(): ZonedDateTime = today().plusDays(1).atTime(startDayTime()).atZone(ZoneId.systemDefault()).minusMinutes(1)

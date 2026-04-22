@@ -1,8 +1,8 @@
 package vadimerenkov.autasker.core.presentation.task_edit
 
-import vadimerenkov.autasker.common.domain.Period
-import vadimerenkov.autasker.common.domain.RepeatMode
-import vadimerenkov.autasker.common.domain.reminders.Reminder
+import vadimerenkov.autasker.core.domain.Period
+import vadimerenkov.autasker.core.domain.RepeatMode
+import vadimerenkov.autasker.core.domain.reminders.Reminder
 import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.LocalTime

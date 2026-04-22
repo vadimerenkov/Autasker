@@ -3,7 +3,7 @@ package vadimerenkov.autasker.core.database
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import vadimerenkov.autasker.common.domain.RepeatState
+import vadimerenkov.autasker.core.domain.RepeatState
 
 @Entity
 data class TaskData(

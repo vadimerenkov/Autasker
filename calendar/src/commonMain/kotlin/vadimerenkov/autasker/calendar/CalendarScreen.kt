@@ -19,8 +19,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import autasker.common.generated.resources.Res
-import autasker.common.generated.resources.today
+import autasker.core.presentation.generated.resources.Res
+import autasker.core.presentation.generated.resources.today
 import com.kizitonwose.calendar.compose.ContentHeightMode
 import com.kizitonwose.calendar.compose.VerticalCalendar
 import com.kizitonwose.calendar.compose.rememberCalendarState
@@ -37,8 +37,8 @@ import kotlinx.datetime.toKotlinLocalDate
 import kotlinx.datetime.toKotlinYearMonth
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
-import vadimerenkov.autasker.common.domain.Time
-import vadimerenkov.autasker.common.presentation.components.SecondaryButton
+import vadimerenkov.autasker.core.domain.Time
+import vadimerenkov.autasker.core.presentation.components.SecondaryButton
 import java.time.YearMonth
 import java.time.format.TextStyle
 import java.util.Locale

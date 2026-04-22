@@ -27,15 +27,15 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
-import autasker.common.generated.resources.Res
-import autasker.common.generated.resources.remind_before
+import autasker.core.presentation.generated.resources.Res
+import autasker.core.presentation.generated.resources.remind_before
 import org.jetbrains.compose.resources.stringResource
-import vadimerenkov.autasker.common.domain.Period
-import vadimerenkov.autasker.common.domain.reminders.Reminder
-import vadimerenkov.autasker.common.presentation.components.ButtonsRow
-import vadimerenkov.autasker.common.presentation.components.IntNumberInputField
-import vadimerenkov.autasker.common.presentation.task_edit.TaskEditAction
-import vadimerenkov.autasker.common.presentation.util.ComposableDateFormatter
+import vadimerenkov.autasker.core.domain.Period
+import vadimerenkov.autasker.core.domain.reminders.Reminder
+import vadimerenkov.autasker.core.presentation.components.ButtonsRow
+import vadimerenkov.autasker.core.presentation.components.IntNumberInputField
+import vadimerenkov.autasker.core.presentation.task_edit.TaskEditAction
+import vadimerenkov.autasker.core.presentation.util.ComposableDateFormatter
 import java.time.LocalTime
 
 @OptIn(ExperimentalMaterial3Api::class)

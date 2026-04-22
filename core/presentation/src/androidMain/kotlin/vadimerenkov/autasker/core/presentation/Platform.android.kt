@@ -1,3 +1,5 @@
 package vadimerenkov.autasker.core.presentation
 
-actual fun platform() = "Android"
+actual fun getPlatform(): Platform {
+	return Platform.ANDROID
+}

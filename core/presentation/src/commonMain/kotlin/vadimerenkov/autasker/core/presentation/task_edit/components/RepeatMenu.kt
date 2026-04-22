@@ -30,16 +30,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.koinInject
-import vadimerenkov.autasker.common.domain.Period
-import vadimerenkov.autasker.common.domain.RepeatMode
-import vadimerenkov.autasker.common.domain.getWordEvery
-import vadimerenkov.autasker.common.domain.toLocalizedString
-import vadimerenkov.autasker.common.presentation.components.IntNumberInputField
-import vadimerenkov.autasker.common.presentation.task_edit.TaskEditAction
-import vadimerenkov.autasker.common.presentation.task_edit.calendar.DateTimeState
-import vadimerenkov.autasker.common.settings.Settings
+import vadimerenkov.autasker.core.domain.Period
+import vadimerenkov.autasker.core.domain.RepeatMode
+import vadimerenkov.autasker.core.domain.settings.Settings
+import vadimerenkov.autasker.core.presentation.components.IntNumberInputField
+import vadimerenkov.autasker.core.presentation.extensions.description
+import vadimerenkov.autasker.core.presentation.extensions.getWordEvery
+import vadimerenkov.autasker.core.presentation.extensions.title
+import vadimerenkov.autasker.core.presentation.extensions.toLocalizedString
+import vadimerenkov.autasker.core.presentation.task_edit.TaskEditAction
+import vadimerenkov.autasker.core.presentation.task_edit.calendar.DateTimeState
 import java.time.DayOfWeek
 import java.time.format.TextStyle
 import java.util.Locale
@@ -100,8 +103,8 @@ fun RepeatMenu(
 				modifier = Modifier
 					.fillMaxWidth()
 			) {
-				val settings = koinInject<Settings>()
-				val o = settings.state.firstDayOfWeek.ordinal
+				val settings by koinInject<Settings>().state.collectAsStateWithLifecycle()
+				val o = settings.firstDayOfWeek.ordinal
 				val firstPart = DayOfWeek.entries.subList(
 					fromIndex = o,
 					toIndex = DayOfWeek.entries.lastIndex + 1

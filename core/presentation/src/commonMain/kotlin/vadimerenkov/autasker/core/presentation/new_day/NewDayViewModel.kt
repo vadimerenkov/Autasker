@@ -7,13 +7,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.joinAll
 import kotlinx.coroutines.launch
-import vadimerenkov.autasker.common.domain.RepeatMode
-import vadimerenkov.autasker.common.domain.Task
-import vadimerenkov.autasker.common.domain.TasksRepository
-import vadimerenkov.autasker.common.domain.Time
-import vadimerenkov.autasker.common.domain.minusReminder
-import vadimerenkov.autasker.common.domain.reminders.ReminderService
-import vadimerenkov.autasker.common.settings.Settings
+import vadimerenkov.autasker.core.domain.RepeatMode
+import vadimerenkov.autasker.core.domain.Task
+import vadimerenkov.autasker.core.domain.TasksRepository
+import vadimerenkov.autasker.core.domain.Time
+import vadimerenkov.autasker.core.domain.minusReminder
+import vadimerenkov.autasker.core.domain.reminders.ReminderService
+import vadimerenkov.autasker.core.domain.settings.Settings
 import java.time.ZoneId
 
 class NewDayViewModel(
@@ -141,7 +141,7 @@ class NewDayViewModel(
 						RepeatMode.ON_COMPLETION, RepeatMode.ON_EXACT -> {
 							if (task.isCompleted) {
 								updatedTasks.add(task.copy(
-									dueDate = task.calculateNewDate(settings.state.firstDayOfWeek),
+									dueDate = task.calculateNewDate(settings.state.value.firstDayOfWeek),
 									isCompleted = false,
 									completedDate = null
 								))

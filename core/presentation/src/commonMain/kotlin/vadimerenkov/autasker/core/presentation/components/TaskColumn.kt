@@ -54,21 +54,22 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import autasker.common.generated.resources.Res
-import autasker.common.generated.resources.add_title
-import autasker.common.generated.resources.hide_completed
-import autasker.common.generated.resources.show_completed
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import autasker.core.presentation.generated.resources.Res
+import autasker.core.presentation.generated.resources.add_title
+import autasker.core.presentation.generated.resources.hide_completed
+import autasker.core.presentation.generated.resources.show_completed
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.koinInject
 import sh.calvin.reorderable.ReorderableItem
 import sh.calvin.reorderable.rememberReorderableLazyListState
-import vadimerenkov.autasker.common.domain.Sorting
-import vadimerenkov.autasker.common.domain.TaskCategory
-import vadimerenkov.autasker.common.presentation.components.context_menu.ColumnContextMenu
-import vadimerenkov.autasker.common.presentation.main.MainAction
-import vadimerenkov.autasker.common.settings.Settings
-import vadimerenkov.autasker.common.settings.SettingsState
-import vadimerenkov.autasker.common.settings.enums.DateFormat
+import vadimerenkov.autasker.core.domain.Sorting
+import vadimerenkov.autasker.core.domain.TaskCategory
+import vadimerenkov.autasker.core.domain.settings.Settings
+import vadimerenkov.autasker.core.domain.settings.SettingsState
+import vadimerenkov.autasker.core.domain.settings.enums.DateFormat
+import vadimerenkov.autasker.core.presentation.components.context_menu.ColumnContextMenu
+import vadimerenkov.autasker.core.presentation.main.MainAction
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
@@ -195,7 +196,7 @@ fun TaskColumn(
 		}
 
 		date?.let {
-			val settings: SettingsState = koinInject<Settings>().state
+			val settings: SettingsState by koinInject<Settings>().state.collectAsStateWithLifecycle()
 			val pattern = when (settings.dateFormat) {
 				DateFormat.YYYYMMDD -> "EEEE, d MMM"
 				DateFormat.DDMMYYYY -> "EEEE, d MMMM"

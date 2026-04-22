@@ -15,12 +15,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import autasker.common.generated.resources.Res
-import autasker.common.generated.resources.clear_bin
-import autasker.common.generated.resources.no_items_bin
+import autasker.core.presentation.generated.resources.Res
+import autasker.core.presentation.generated.resources.clear_bin
+import autasker.core.presentation.generated.resources.no_items_bin
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
-import vadimerenkov.autasker.common.presentation.components.TaskColumn
+import vadimerenkov.autasker.core.presentation.components.TaskColumn
+import vadimerenkov.autasker.core.presentation.main.MainAction
 
 @Composable
 fun BinScreen(
@@ -40,7 +41,7 @@ fun BinScreen(
 private fun BinScreenRoot(
 	state: BinState,
 	onAction: (BinAction) -> Unit,
-	onTaskAction: (vadimerenkov.autasker.common.presentation.main.MainAction) -> Unit,
+	onTaskAction: (MainAction) -> Unit,
 	modifier: Modifier = Modifier,
 ) {
 	AnimatedVisibility(

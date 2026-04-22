@@ -6,16 +6,16 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import autasker.common.generated.resources.Res
-import autasker.common.generated.resources.clear_date
-import autasker.common.generated.resources.delete_task
-import autasker.common.generated.resources.edit_task
-import autasker.common.generated.resources.move_to
-import autasker.common.generated.resources.set_for_today
-import autasker.common.generated.resources.set_for_tomorrow
+import autasker.core.presentation.generated.resources.Res
+import autasker.core.presentation.generated.resources.clear_date
+import autasker.core.presentation.generated.resources.delete_task
+import autasker.core.presentation.generated.resources.edit_task
+import autasker.core.presentation.generated.resources.move_to
+import autasker.core.presentation.generated.resources.set_for_today
+import autasker.core.presentation.generated.resources.set_for_tomorrow
 import org.jetbrains.compose.resources.stringResource
-import vadimerenkov.autasker.common.domain.Task
-import vadimerenkov.autasker.common.presentation.main.MainAction
+import vadimerenkov.autasker.core.domain.Task
+import vadimerenkov.autasker.core.presentation.main.MainAction
 
 @Composable
 fun DefaultContextMenu(

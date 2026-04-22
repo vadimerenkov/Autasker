@@ -17,17 +17,17 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import autasker.common.generated.resources.Res
-import autasker.common.generated.resources.finish
-import autasker.common.generated.resources.next
-import autasker.common.generated.resources.previous
-import autasker.common.generated.resources.start_new_day
+import autasker.core.presentation.generated.resources.Res
+import autasker.core.presentation.generated.resources.finish
+import autasker.core.presentation.generated.resources.next
+import autasker.core.presentation.generated.resources.previous
+import autasker.core.presentation.generated.resources.start_new_day
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
-import vadimerenkov.autasker.common.domain.Task
-import vadimerenkov.autasker.common.presentation.components.PrimaryButton
-import vadimerenkov.autasker.common.presentation.components.SecondaryButton
-import vadimerenkov.autasker.common.presentation.theme.AutaskerTheme
+import vadimerenkov.autasker.core.domain.Task
+import vadimerenkov.autasker.core.presentation.components.PrimaryButton
+import vadimerenkov.autasker.core.presentation.components.SecondaryButton
+import vadimerenkov.autasker.core.presentation.theme.AutaskerTheme
 
 @Composable
 fun NewDayScreen(

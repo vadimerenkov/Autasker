@@ -1,9 +1,9 @@
 package vadimerenkov.autasker.core.presentation.main
 
-import vadimerenkov.autasker.common.domain.Page
-import vadimerenkov.autasker.common.domain.Sorting
-import vadimerenkov.autasker.common.domain.Task
-import vadimerenkov.autasker.common.domain.TaskCategory
+import vadimerenkov.autasker.core.domain.Page
+import vadimerenkov.autasker.core.domain.Sorting
+import vadimerenkov.autasker.core.domain.Task
+import vadimerenkov.autasker.core.domain.TaskCategory
 
 
 data class MainState(

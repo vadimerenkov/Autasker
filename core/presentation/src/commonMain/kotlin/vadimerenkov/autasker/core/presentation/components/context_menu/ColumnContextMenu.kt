@@ -12,16 +12,16 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import autasker.common.generated.resources.Res
-import autasker.common.generated.resources.delete_column
-import autasker.common.generated.resources.move_to
-import autasker.common.generated.resources.set_default
-import autasker.common.generated.resources.sort_by
+import autasker.core.presentation.generated.resources.Res
+import autasker.core.presentation.generated.resources.delete_column
+import autasker.core.presentation.generated.resources.move_to
+import autasker.core.presentation.generated.resources.set_default
+import autasker.core.presentation.generated.resources.sort_by
 import org.jetbrains.compose.resources.stringResource
-import vadimerenkov.autasker.common.domain.Sorting
-import vadimerenkov.autasker.common.domain.TaskCategory
-import vadimerenkov.autasker.common.domain.toUiText
-import vadimerenkov.autasker.common.presentation.main.MainAction
+import vadimerenkov.autasker.core.domain.Sorting
+import vadimerenkov.autasker.core.domain.TaskCategory
+import vadimerenkov.autasker.core.presentation.extensions.toUiText
+import vadimerenkov.autasker.core.presentation.main.MainAction
 
 @Composable
 fun ColumnContextMenu(

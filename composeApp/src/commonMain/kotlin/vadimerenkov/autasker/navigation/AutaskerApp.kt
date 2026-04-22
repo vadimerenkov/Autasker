@@ -4,16 +4,15 @@ import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.staticCompositionLocalOf
-import vadimerenkov.autasker.common.presentation.theme.AutaskerTheme
 import vadimerenkov.autasker.core.domain.settings.Settings
 import vadimerenkov.autasker.core.domain.settings.enums.DateFormat
 import vadimerenkov.autasker.core.domain.settings.enums.Language
 import vadimerenkov.autasker.core.domain.settings.enums.Theme
 import vadimerenkov.autasker.core.domain.settings.enums.TimeFormat
+import vadimerenkov.autasker.core.presentation.theme.AutaskerTheme
 import java.util.Locale
 
 @Composable
@@ -21,6 +20,7 @@ fun AutaskerApp(
 	settings: Settings,
 	content: @Composable () -> Unit
 ) {
+	val settingsState by settings.state.collectAsState()
 	LaunchedEffect(true) {
 		val savedLocale = settings.getLocale()
 		if (savedLocale == null) {
@@ -40,19 +40,19 @@ fun AutaskerApp(
 			}
 		}
 	}
-	val language by remember { derivedStateOf { settings.state.language } }
+	val language = settingsState.language
 	val locale: Locale? = if (language == null) {
 		Locale.getDefault()
 	} else {
-		Locale.forLanguageTag(language!!.code)
+		Locale.forLanguageTag(language.code)
 	}
 	Locale.setDefault(locale)
 	val LocalLanguage = staticCompositionLocalOf { locale }
 
-	val theme by remember { derivedStateOf { settings.state.theme } }
+	val theme = settingsState.theme
 	val isDarkTheme = if (theme == Theme.DEVICE) isSystemInDarkTheme() else theme == Theme.DARK
 
-	val color by remember { derivedStateOf { settings.state.themeColor} }
+	val color = settingsState.themeColor
 
 	AutaskerTheme(
 		themeColor = color,

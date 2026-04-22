@@ -5,12 +5,12 @@ import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import autasker.common.generated.resources.Res
-import autasker.common.generated.resources.delete_task_forever
-import autasker.common.generated.resources.restore_task
+import autasker.core.presentation.generated.resources.Res
+import autasker.core.presentation.generated.resources.delete_task_forever
+import autasker.core.presentation.generated.resources.restore_task
 import org.jetbrains.compose.resources.stringResource
-import vadimerenkov.autasker.common.domain.Task
-import vadimerenkov.autasker.common.presentation.main.MainAction
+import vadimerenkov.autasker.core.domain.Task
+import vadimerenkov.autasker.core.presentation.main.MainAction
 
 @Composable
 fun DeletedContextMenu(

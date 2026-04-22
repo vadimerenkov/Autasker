@@ -3,7 +3,22 @@ package vadimerenkov.autasker.core.presentation.settings
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
-import sun.util.locale.provider.CalendarDataUtility.FIRST_DAY_OF_WEEK
+import vadimerenkov.autasker.core.domain.settings.AUTODELETE_COMPLETED
+import vadimerenkov.autasker.core.domain.settings.AUTODELETE_FROM_TRASH
+import vadimerenkov.autasker.core.domain.settings.AUTOLAUNCH
+import vadimerenkov.autasker.core.domain.settings.AutoLaunch
+import vadimerenkov.autasker.core.domain.settings.DATE_FORMAT
+import vadimerenkov.autasker.core.domain.settings.DELETE_COMPLETED_DAYS
+import vadimerenkov.autasker.core.domain.settings.DELETE_FROM_TRASH_DAYS
+import vadimerenkov.autasker.core.domain.settings.END_OF_DAY_TIME
+import vadimerenkov.autasker.core.domain.settings.FIRST_DAY_OF_WEEK
+import vadimerenkov.autasker.core.domain.settings.LANGUAGE
+import vadimerenkov.autasker.core.domain.settings.PLAY_SOUND
+import vadimerenkov.autasker.core.domain.settings.Settings
+import vadimerenkov.autasker.core.domain.settings.THEME
+import vadimerenkov.autasker.core.domain.settings.THEME_COLOR
+import vadimerenkov.autasker.core.domain.settings.TIME_FORMAT
+import vadimerenkov.autasker.core.domain.settings.TRAY
 
 class SettingsViewModel(
 	val settings: Settings

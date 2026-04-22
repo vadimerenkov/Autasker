@@ -10,6 +10,7 @@ import vadimerenkov.autasker.core.database.dao.RemindersDao
 import vadimerenkov.autasker.core.database.dao.SubtasksDao
 import vadimerenkov.autasker.core.database.dao.TasksDao
 import vadimerenkov.autasker.core.database.mappers.toData
+import vadimerenkov.autasker.core.database.mappers.toJob
 import vadimerenkov.autasker.core.database.mappers.toPage
 import vadimerenkov.autasker.core.database.mappers.toReminder
 import vadimerenkov.autasker.core.database.mappers.toSubtask
@@ -63,15 +64,15 @@ class RoomLocalRepository(
 	}
 
 	override suspend fun getAllJobs(): List<ReminderJob> {
-		return jobsDao.getAllJobs()
+		return jobsDao.getAllJobs().map { it.toJob() }
 	}
 
 	override suspend fun saveJob(job: ReminderJob) {
-		jobsDao.saveJob(job)
+		jobsDao.saveJob(job.toData())
 	}
 
 	override suspend fun getJobsForTask(id: Long): List<ReminderJob> {
-		return jobsDao.getJobsForTask(id)
+		return jobsDao.getJobsForTask(id).map { it.toJob() }
 	}
 
 	override suspend fun deleteJob(jobKey: String) {
