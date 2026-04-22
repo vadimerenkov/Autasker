@@ -22,5 +22,5 @@ dependencies {
 	debugImplementation(libs.compose.ui.tooling)
 
 	implementation(projects.composeApp)
-	implementation(projects.common)
+//	implementation(projects.common)
 }

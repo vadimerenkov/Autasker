@@ -4,7 +4,7 @@ import org.koin.android.ext.koin.androidContext
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.bind
 import org.koin.dsl.module
-import vadimerenkov.autasker.common.data.AppDatabase
+import vadimerenkov.autasker.core.database.AppDatabase
 import vadimerenkov.autasker.common.domain.reminders.AlarmManager
 import vadimerenkov.autasker.common.domain.reminders.AlarmReceiver
 import vadimerenkov.autasker.common.domain.reminders.ReminderService

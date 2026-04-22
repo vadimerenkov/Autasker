@@ -56,22 +56,21 @@ import autasker.common.generated.resources.tomorrow
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
-import vadimerenkov.autasker.common.domain.TaskCategory
-import vadimerenkov.autasker.common.domain.Time
-import vadimerenkov.autasker.common.presentation.components.TaskColumn
-import vadimerenkov.autasker.common.presentation.main.MainAction
-import vadimerenkov.autasker.common.presentation.main.MainState
-import vadimerenkov.autasker.common.presentation.main.MainViewModel
-import vadimerenkov.autasker.common.presentation.main.components.EditTabsDialog
-import vadimerenkov.autasker.common.presentation.main.components.MovingColumnDialog
-import vadimerenkov.autasker.common.presentation.main.components.MovingTaskDialog
-import vadimerenkov.autasker.common.presentation.main.components.PageTab
+import vadimerenkov.autasker.core.domain.TaskCategory
+import vadimerenkov.autasker.core.domain.Time
+import vadimerenkov.autasker.core.presentation.components.TaskColumn
+import vadimerenkov.autasker.core.presentation.main.MainAction
+import vadimerenkov.autasker.core.presentation.main.MainState
+import vadimerenkov.autasker.core.presentation.main.components.EditTabsDialog
+import vadimerenkov.autasker.core.presentation.main.components.MovingColumnDialog
+import vadimerenkov.autasker.core.presentation.main.components.MovingTaskDialog
+import vadimerenkov.autasker.core.presentation.main.components.PageTab
 
 @Composable
 fun MainPager(
 	onNewTaskClick: (Long) -> Unit,
 	modifier: Modifier = Modifier,
-	viewModel: MainViewModel = koinViewModel()
+	viewModel: vadimerenkov.autasker.core.presentation.main.MainViewModel = koinViewModel()
 ) {
 	var showMovingTaskDialog by remember { mutableStateOf(false) }
 	var showMovingCategoryDialog by remember { mutableStateOf(false) }

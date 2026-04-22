@@ -24,6 +24,8 @@ class KmpLibraryConventionPlugin: Plugin<Project> {
 					namespace = pathToPackageName()
 					experimentalProperties["android.experimental.kmp.enableAndroidResources"] = true
 				}
+				jvm()
+				jvmToolchain(21)
 			}
 		}
 	}

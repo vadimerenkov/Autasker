@@ -9,11 +9,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.staticCompositionLocalOf
 import vadimerenkov.autasker.common.presentation.theme.AutaskerTheme
-import vadimerenkov.autasker.common.settings.Settings
-import vadimerenkov.autasker.common.settings.enums.DateFormat
-import vadimerenkov.autasker.common.settings.enums.Language
-import vadimerenkov.autasker.common.settings.enums.Theme
-import vadimerenkov.autasker.common.settings.enums.TimeFormat
+import vadimerenkov.autasker.core.domain.settings.Settings
+import vadimerenkov.autasker.core.domain.settings.enums.DateFormat
+import vadimerenkov.autasker.core.domain.settings.enums.Language
+import vadimerenkov.autasker.core.domain.settings.enums.Theme
+import vadimerenkov.autasker.core.domain.settings.enums.TimeFormat
 import java.util.Locale
 
 @Composable

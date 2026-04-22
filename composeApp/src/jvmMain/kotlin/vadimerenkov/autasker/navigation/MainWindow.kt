@@ -13,9 +13,9 @@ import autasker.common.generated.resources.app_name
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
-import vadimerenkov.autasker.common.settings.Settings
-import vadimerenkov.autasker.common.settings.restoreWindowState
-import vadimerenkov.autasker.common.settings.saveWindowState
+import vadimerenkov.autasker.core.domain.settings.Settings
+import vadimerenkov.autasker.core.presentation.settings.restoreWindowState
+import vadimerenkov.autasker.core.presentation.settings.saveWindowState
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable

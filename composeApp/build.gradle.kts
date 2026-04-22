@@ -10,11 +10,6 @@ plugins {
 }
 
 kotlin {
-
-	jvmToolchain(21)
-    
-    jvm()
-
     sourceSets {
         androidMain.dependencies {
             implementation(libs.androidx.activity.compose)
@@ -39,8 +34,10 @@ kotlin {
 	        implementation(libs.androidx.datastore.preferences)
 	        implementation(libs.material3.adaptive)
 
-	        implementation(projects.common)
 	        implementation(projects.calendar)
+	        implementation(projects.core.database)
+	        implementation(projects.core.domain)
+	        implementation(projects.core.presentation)
         }
         jvmMain.dependencies {
             implementation(compose.desktop.currentOs)

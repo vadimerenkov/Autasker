@@ -19,9 +19,9 @@ import kotlinx.coroutines.withContext
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.koin.core.context.GlobalContext.get
-import vadimerenkov.autasker.common.domain.reminders.QuartzScheduler
 import vadimerenkov.autasker.common.presentation.util.SuspendDateFormatter
-import vadimerenkov.autasker.common.settings.Settings
+import vadimerenkov.autasker.core.domain.reminders.QuartzScheduler
+import vadimerenkov.autasker.core.domain.settings.Settings
 import vadimerenkov.autasker.di.initKoin
 import vadimerenkov.autasker.navigation.AutaskerApp
 import vadimerenkov.autasker.navigation.MainWindow

@@ -29,7 +29,8 @@ kotlin {
 				implementation(libs.compose.components.resources)
 				implementation(libs.material3.adaptive)
 
-				implementation(projects.common)
+				implementation(projects.core.domain)
+				implementation(projects.core.presentation)
 			}
 		}
 	}

@@ -43,7 +43,7 @@ import vadimerenkov.autasker.common.presentation.new_day.NewDayViewModel
 import vadimerenkov.autasker.common.presentation.task_edit.TaskEditScreen
 import vadimerenkov.autasker.common.presentation.task_edit.TaskEditViewModel
 import vadimerenkov.autasker.common.presentation.task_edit.calendar.DateTimeScreen
-import vadimerenkov.autasker.common.settings.SettingsScreen
+import vadimerenkov.autasker.core.presentation.settings.SettingsScreen
 
 @Composable
 fun RootNavDisplay() {

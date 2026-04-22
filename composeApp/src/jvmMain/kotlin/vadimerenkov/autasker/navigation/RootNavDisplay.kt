@@ -65,8 +65,6 @@ import org.koin.core.parameter.parametersOf
 import vadimerenkov.autasker.calendar.CalendarScreen
 import vadimerenkov.autasker.common.presentation.about.AboutScreen
 import vadimerenkov.autasker.common.presentation.bin.BinScreen
-import vadimerenkov.autasker.common.presentation.components.MenuAction
-import vadimerenkov.autasker.common.presentation.components.TitleBar
 import vadimerenkov.autasker.common.presentation.main.MainScreen
 import vadimerenkov.autasker.common.presentation.main.MainViewModel
 import vadimerenkov.autasker.common.presentation.new_day.NewDayScreen
@@ -74,9 +72,11 @@ import vadimerenkov.autasker.common.presentation.new_day.NewDayViewModel
 import vadimerenkov.autasker.common.presentation.task_edit.TaskEditScreen
 import vadimerenkov.autasker.common.presentation.task_edit.TaskEditViewModel
 import vadimerenkov.autasker.common.presentation.task_edit.calendar.DateTimeScreen
-import vadimerenkov.autasker.common.presentation.windows.CommonWindow
-import vadimerenkov.autasker.common.settings.Settings
-import vadimerenkov.autasker.common.settings.SettingsScreen
+import vadimerenkov.autasker.core.domain.settings.Settings
+import vadimerenkov.autasker.core.presentation.components.MenuAction
+import vadimerenkov.autasker.core.presentation.components.TitleBar
+import vadimerenkov.autasker.core.presentation.settings.SettingsScreen
+import vadimerenkov.autasker.core.presentation.windows.CommonWindow
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
