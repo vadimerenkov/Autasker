@@ -1,4 +1,4 @@
-package vadimerenkov.autasker.core.domain.reminders
+package vadimerenkov.autasker.core.presentation.reminders
 
 import android.app.Notification
 import android.app.NotificationManager
@@ -8,9 +8,9 @@ import android.content.Intent
 import android.graphics.drawable.Icon
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-import vadimerenkov.autasker.common.R
-import vadimerenkov.autasker.common.domain.TasksRepository
-import vadimerenkov.autasker.common.presentation.util.SuspendDateFormatter
+import vadimerenkov.autasker.core.domain.TasksRepository
+import vadimerenkov.autasker.core.presentation.R
+import vadimerenkov.autasker.core.presentation.util.SuspendDateFormatter
 
 class AlarmReceiver: BroadcastReceiver() {
 	val repository: TasksRepository = get().get()

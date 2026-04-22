@@ -1,4 +1,4 @@
-package vadimerenkov.autasker.core.domain.reminders
+package vadimerenkov.autasker.core.presentation.reminders
 
 import android.annotation.SuppressLint
 import android.app.AlarmManager
@@ -12,6 +12,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import vadimerenkov.autasker.common.data.JobData
 import vadimerenkov.autasker.common.domain.TasksRepository
+import vadimerenkov.autasker.core.domain.reminders.ReminderService
 import java.time.ZonedDateTime
 import java.util.UUID
 

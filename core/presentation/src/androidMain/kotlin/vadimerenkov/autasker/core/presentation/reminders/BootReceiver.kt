@@ -1,9 +1,10 @@
-package vadimerenkov.autasker.core.domain.reminders
+package vadimerenkov.autasker.core.presentation.reminders
 
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.util.Log
+import vadimerenkov.autasker.core.domain.reminders.ReminderService
 
 class BootReceiver: BroadcastReceiver() {
 
