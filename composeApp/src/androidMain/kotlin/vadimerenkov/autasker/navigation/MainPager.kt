@@ -44,15 +44,15 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import autasker.common.generated.resources.Res
-import autasker.common.generated.resources.all_completed
-import autasker.common.generated.resources.edit_tabs
-import autasker.common.generated.resources.new_column
-import autasker.common.generated.resources.new_tab
-import autasker.common.generated.resources.new_task
-import autasker.common.generated.resources.no_tasks
-import autasker.common.generated.resources.today
-import autasker.common.generated.resources.tomorrow
+import autasker.core.presentation.generated.resources.Res
+import autasker.core.presentation.generated.resources.all_completed
+import autasker.core.presentation.generated.resources.edit_tabs
+import autasker.core.presentation.generated.resources.new_column
+import autasker.core.presentation.generated.resources.new_tab
+import autasker.core.presentation.generated.resources.new_task
+import autasker.core.presentation.generated.resources.no_tasks
+import autasker.core.presentation.generated.resources.today
+import autasker.core.presentation.generated.resources.tomorrow
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
@@ -69,6 +69,7 @@ import vadimerenkov.autasker.core.presentation.main.components.PageTab
 @Composable
 fun MainPager(
 	onNewTaskClick: (Long) -> Unit,
+	onTaskClick: (Long) -> Unit,
 	modifier: Modifier = Modifier,
 	viewModel: vadimerenkov.autasker.core.presentation.main.MainViewModel = koinViewModel()
 ) {
@@ -92,6 +93,9 @@ fun MainPager(
 				}
 				is MainAction.NewTaskClick -> {
 					onNewTaskClick(action.categoryId)
+				}
+				is MainAction.OnTaskClick -> {
+					onTaskClick(action.id)
 				}
 				else -> Unit
 			}

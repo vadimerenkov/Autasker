@@ -8,6 +8,7 @@ import android.content.Intent
 import android.graphics.drawable.Icon
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
+import org.koin.core.context.GlobalContext.get
 import vadimerenkov.autasker.core.domain.TasksRepository
 import vadimerenkov.autasker.core.presentation.R
 import vadimerenkov.autasker.core.presentation.util.SuspendDateFormatter

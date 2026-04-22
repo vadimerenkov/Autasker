@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.util.Log
+import org.koin.core.context.GlobalContext.get
 import vadimerenkov.autasker.core.domain.reminders.ReminderService
 
 class BootReceiver: BroadcastReceiver() {

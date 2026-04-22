@@ -15,14 +15,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.ImeAction
-import autasker.common.generated.resources.Res
-import autasker.common.generated.resources.delete_tab
-import autasker.common.generated.resources.new_tab
-import autasker.common.generated.resources.rename_tab
+import autasker.core.presentation.generated.resources.Res
+import autasker.core.presentation.generated.resources.delete_tab
+import autasker.core.presentation.generated.resources.new_tab
+import autasker.core.presentation.generated.resources.rename_tab
 import org.jetbrains.compose.resources.stringResource
-import vadimerenkov.autasker.common.domain.Page
-import vadimerenkov.autasker.common.presentation.main.MainAction
-import vadimerenkov.autasker.common.presentation.main.MainState
+import vadimerenkov.autasker.core.domain.Page
+import vadimerenkov.autasker.core.presentation.main.MainAction
+import vadimerenkov.autasker.core.presentation.main.MainState
 
 @Composable
 actual fun PageTab(
