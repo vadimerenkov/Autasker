@@ -13,6 +13,7 @@ import autasker.core.presentation.generated.resources.edit_task
 import autasker.core.presentation.generated.resources.move_to
 import autasker.core.presentation.generated.resources.set_for_today
 import autasker.core.presentation.generated.resources.set_for_tomorrow
+import autasker.core.presentation.generated.resources.skip
 import org.jetbrains.compose.resources.stringResource
 import vadimerenkov.autasker.core.domain.Task
 import vadimerenkov.autasker.core.presentation.main.MainAction
@@ -40,6 +41,7 @@ fun DefaultContextMenu(
 				onAction(MainAction.OnTaskClick(task.id))
 			}
 		)
+		HorizontalDivider()
 		DropdownMenuItem(
 			text = {
 				Text(
@@ -69,6 +71,17 @@ fun DefaultContextMenu(
 			},
 			onClick = {
 				onAction(MainAction.ClearDate(task.id))
+			}
+		)
+		DropdownMenuItem(
+			enabled = task.repeatState.isRepeating,
+			text = {
+				Text(
+					text = stringResource(Res.string.skip)
+				)
+			},
+			onClick = {
+				onAction(MainAction.SkipTask(task.id))
 			}
 		)
 		HorizontalDivider()

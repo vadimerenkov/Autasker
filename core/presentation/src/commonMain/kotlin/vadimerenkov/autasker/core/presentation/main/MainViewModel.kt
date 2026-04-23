@@ -338,6 +338,12 @@ class MainViewModel(
 					}
 				}
 			}
+			is MainAction.SkipTask -> {
+				val task = findTask(action.id)
+				viewModelScope.launch {
+					repository.saveTask(task.copy(dueDate = task.calculateNewDate(settings.state.value.firstDayOfWeek)))
+				}
+			}
 			else -> Unit
 		}
 	}

@@ -26,7 +26,7 @@ class Settings(
 	val dataStore: DataStore<Preferences>,
 	private val applicationScope: CoroutineScope
 ) {
-	val _state = MutableStateFlow(SettingsState())
+	private val _state = MutableStateFlow(SettingsState())
 	val state = _state.asStateFlow()
 
 	init {

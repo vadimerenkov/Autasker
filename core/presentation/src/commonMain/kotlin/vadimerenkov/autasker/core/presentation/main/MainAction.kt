@@ -45,4 +45,5 @@ sealed interface MainAction {
 	data class DeleteTabClick(val id: Long): MainAction
 	data class TabRename(val id: Long, val title: String?): MainAction
 	data class SavePages(val list: List<Page>): MainAction
+	data class SkipTask(val id: Long): MainAction
 }
