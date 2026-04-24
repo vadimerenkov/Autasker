@@ -42,6 +42,7 @@ internal fun CheckboxSetting(
 			Text(
 				text = title,
 				style = MaterialTheme.typography.bodyLarge,
+				color = MaterialTheme.colorScheme.onBackground,
 				modifier = Modifier
 					.weight(1f)
 			)

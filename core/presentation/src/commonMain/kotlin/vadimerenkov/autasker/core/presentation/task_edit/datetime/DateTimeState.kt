@@ -1,4 +1,4 @@
-package vadimerenkov.autasker.core.presentation.task_edit.calendar
+package vadimerenkov.autasker.core.presentation.task_edit.datetime
 
 import vadimerenkov.autasker.core.domain.Period
 import vadimerenkov.autasker.core.domain.RepeatMode

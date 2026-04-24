@@ -41,11 +41,13 @@ fun AboutScreen(
 	) {
 		Text(
 			text = "Autasker v.1.0.0",
-			fontSize = 16.sp
+			fontSize = 16.sp,
+			color = MaterialTheme.colorScheme.onBackground
 		)
 		Text(
 			text = "Vadim Erenkov © $year",
-			fontSize = 16.sp
+			fontSize = 16.sp,
+			color = MaterialTheme.colorScheme.onBackground
 		)
 		val handler = LocalUriHandler.current
 		val sourceCodeLink = "https://github.com/vadimerenkov/Autasker"

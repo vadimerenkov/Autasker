@@ -15,7 +15,7 @@ import vadimerenkov.autasker.core.domain.Time
 import vadimerenkov.autasker.core.domain.minusReminder
 import vadimerenkov.autasker.core.domain.reminders.Reminder
 import vadimerenkov.autasker.core.domain.reminders.ReminderService
-import vadimerenkov.autasker.core.presentation.task_edit.calendar.DateTimeState
+import vadimerenkov.autasker.core.presentation.task_edit.datetime.DateTimeState
 import java.time.LocalDate
 import java.time.LocalTime
 import java.time.ZoneId

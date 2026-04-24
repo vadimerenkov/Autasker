@@ -42,7 +42,7 @@ import vadimerenkov.autasker.core.presentation.extensions.getWordEvery
 import vadimerenkov.autasker.core.presentation.extensions.title
 import vadimerenkov.autasker.core.presentation.extensions.toLocalizedString
 import vadimerenkov.autasker.core.presentation.task_edit.TaskEditAction
-import vadimerenkov.autasker.core.presentation.task_edit.calendar.DateTimeState
+import vadimerenkov.autasker.core.presentation.task_edit.datetime.DateTimeState
 import java.time.DayOfWeek
 import java.time.format.TextStyle
 import java.util.Locale

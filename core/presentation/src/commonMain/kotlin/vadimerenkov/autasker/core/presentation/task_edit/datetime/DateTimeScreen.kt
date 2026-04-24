@@ -1,4 +1,4 @@
-package vadimerenkov.autasker.core.presentation.task_edit.calendar
+package vadimerenkov.autasker.core.presentation.task_edit.datetime
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.ScrollState
@@ -16,6 +16,7 @@ import androidx.compose.material3.DatePicker
 import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TimePicker
@@ -84,7 +85,8 @@ fun DateTimeScreen(
 				}
 			)
 			Text(
-				text = stringResource(Res.string.date)
+				text = stringResource(Res.string.date),
+				color = MaterialTheme.colorScheme.onBackground
 			)
 			HorizontalDivider(
 				thickness = 2.dp,
@@ -113,7 +115,8 @@ fun DateTimeScreen(
 				enabled = dateTimeState.hasDate
 			)
 			Text(
-				text = stringResource(Res.string.time)
+				text = stringResource(Res.string.time),
+				color = MaterialTheme.colorScheme.onBackground
 			)
 			HorizontalDivider(
 				thickness = 2.dp,
@@ -142,7 +145,8 @@ fun DateTimeScreen(
 				}
 			)
 			Text(
-				text = stringResource(Res.string.repeat)
+				text = stringResource(Res.string.repeat),
+				color = MaterialTheme.colorScheme.onBackground
 			)
 			HorizontalDivider(
 				thickness = 2.dp,
@@ -166,7 +170,8 @@ fun DateTimeScreen(
 					.width(16.dp)
 			)
 			Text(
-				text = stringResource(Res.string.reminders)
+				text = stringResource(Res.string.reminders),
+				color = MaterialTheme.colorScheme.onBackground
 			)
 			HorizontalDivider(
 				thickness = 2.dp,
@@ -203,7 +208,8 @@ fun DateTimeScreen(
 						}
 					)
 					Text(
-						text = ComposableDateFormatter.formatDate(dateTimeState.dateTime.minusReminder(reminder), false)
+						text = ComposableDateFormatter.formatDate(dateTimeState.dateTime.minusReminder(reminder), false),
+						color = MaterialTheme.colorScheme.onBackground
 					)
 				}
 			}

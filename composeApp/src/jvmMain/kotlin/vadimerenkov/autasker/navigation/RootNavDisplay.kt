@@ -75,7 +75,7 @@ import vadimerenkov.autasker.core.presentation.new_day.NewDayViewModel
 import vadimerenkov.autasker.core.presentation.settings.SettingsScreen
 import vadimerenkov.autasker.core.presentation.task_edit.TaskEditScreen
 import vadimerenkov.autasker.core.presentation.task_edit.TaskEditViewModel
-import vadimerenkov.autasker.core.presentation.task_edit.calendar.DateTimeScreen
+import vadimerenkov.autasker.core.presentation.task_edit.datetime.DateTimeScreen
 import vadimerenkov.autasker.core.presentation.windows.CommonWindow
 
 @OptIn(ExperimentalComposeUiApi::class)

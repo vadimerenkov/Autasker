@@ -71,7 +71,8 @@ fun ReminderDialog(
 				horizontalArrangement = Arrangement.spacedBy(16.dp),
 			) {
 				Text(
-					text = stringResource(Res.string.remind_before)
+					text = stringResource(Res.string.remind_before),
+					color = MaterialTheme.colorScheme.onBackground
 				)
 				IntNumberInputField(
 					value = number,

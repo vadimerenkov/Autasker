@@ -49,6 +49,7 @@ import autasker.core.presentation.generated.resources.after_deletion
 import autasker.core.presentation.generated.resources.auto_delete_completed
 import autasker.core.presentation.generated.resources.auto_delete_from_trash
 import autasker.core.presentation.generated.resources.auto_launch
+import autasker.core.presentation.generated.resources.choose_time
 import autasker.core.presentation.generated.resources.close_to_tray
 import autasker.core.presentation.generated.resources.date_format
 import autasker.core.presentation.generated.resources.end_of_day_time
@@ -56,6 +57,7 @@ import autasker.core.presentation.generated.resources.first_day_of_week
 import autasker.core.presentation.generated.resources.language
 import autasker.core.presentation.generated.resources.period_in
 import autasker.core.presentation.generated.resources.play_sound
+import autasker.core.presentation.generated.resources.save
 import autasker.core.presentation.generated.resources.theme
 import autasker.core.presentation.generated.resources.time_format
 import kotlinx.coroutines.launch
@@ -147,11 +149,13 @@ private fun SettingsScreenRoot(
 									isTimePickerOpen = false
 								}
 							) {
-								Text(text = "confirm")
+								Text(text = stringResource(Res.string.save))
 							}
 						},
 						title = {
-							Text("Choose time")
+							Text(
+								text = stringResource(Res.string.choose_time)
+							)
 						}
 					) {
 						TimePicker(
