@@ -81,6 +81,7 @@
     <string name="play_sound">Play a sound when completing the task</string>
     <string name="colors">Colors</string>
     <string name="skip">Skip</string>
+    <string name="habits">Habits</string>
 
     <string name="language">Language</string>
     <string name="english">English</string>

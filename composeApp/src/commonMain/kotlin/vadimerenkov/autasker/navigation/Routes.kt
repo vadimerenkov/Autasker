@@ -30,3 +30,6 @@ data object SettingsRoute: NavKey
 data object AboutRoute: NavKey
 @Serializable
 data object NewDayRoute: NavKey
+
+@Serializable
+data object HabitsRoute: NavKey

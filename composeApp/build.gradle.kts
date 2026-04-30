@@ -4,8 +4,6 @@ plugins {
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.composeHotReload)
-	alias(libs.plugins.room)
-	alias(libs.plugins.ksp)
 	alias(libs.plugins.convention.kmp.library)
 }
 
@@ -38,6 +36,9 @@ kotlin {
 	        implementation(projects.core.database)
 	        implementation(projects.core.domain)
 	        implementation(projects.core.presentation)
+	        implementation(projects.habits.domain)
+	        implementation(projects.habits.data)
+	        implementation(projects.habits.presentation)
         }
         jvmMain.dependencies {
             implementation(compose.desktop.currentOs)
@@ -57,12 +58,7 @@ kotlin {
     }
 }
 
-room {
-	schemaDirectory("$projectDir/schemas")
-}
-
 dependencies {
-	ksp(libs.androidx.room.compiler)
 	androidRuntimeClasspath(libs.compose.ui.tooling)
 }
 
