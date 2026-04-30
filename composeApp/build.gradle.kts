@@ -38,6 +38,9 @@ kotlin {
 	        implementation(projects.core.database)
 	        implementation(projects.core.domain)
 	        implementation(projects.core.presentation)
+	        implementation(projects.habits.domain)
+	        implementation(projects.habits.data)
+	        implementation(projects.habits.presentation)
 	        implementation(projects.updateChecker)
         }
         jvmMain.dependencies {

@@ -1,5 +1,6 @@
 package vadimerenkov.autasker.core.database
 
+import androidx.room.AutoMigration
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.RoomDatabaseConstructor
@@ -10,6 +11,8 @@ import vadimerenkov.autasker.core.database.dao.PagesDao
 import vadimerenkov.autasker.core.database.dao.RemindersDao
 import vadimerenkov.autasker.core.database.dao.SubtasksDao
 import vadimerenkov.autasker.core.database.dao.TasksDao
+import vadimerenkov.autasker.core.database.habits.HabitData
+import vadimerenkov.autasker.core.database.habits.HabitsDao
 import vadimerenkov.autasker.core.database.mappers.Converters
 
 @Database(
@@ -19,9 +22,14 @@ import vadimerenkov.autasker.core.database.mappers.Converters
 		SubtaskData::class,
 		ReminderData::class,
 		JobData::class,
-		PageData::class
+		PageData::class,
+		HabitData::class
 	],
-	version = 1
+	version = 2,
+	autoMigrations = [
+		AutoMigration(1, 2)
+	],
+	exportSchema = true
 )
 @TypeConverters(Converters::class)
 abstract class TasksDatabase: RoomDatabase() {
@@ -32,6 +40,7 @@ abstract class TasksDatabase: RoomDatabase() {
 	abstract fun categoriesDao(): CategoriesDao
 	abstract fun jobsDao(): JobsDao
 	abstract fun pagesDao(): PagesDao
+	abstract fun habitsDao(): HabitsDao
 }
 
 expect class AppDatabase : RoomDatabaseConstructor<TasksDatabase> {

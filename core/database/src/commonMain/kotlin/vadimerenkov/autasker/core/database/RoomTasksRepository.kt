@@ -28,7 +28,7 @@ import vadimerenkov.autasker.core.domain.reminders.Reminder
 import vadimerenkov.autasker.core.domain.roundToMinutes
 import java.time.ZonedDateTime
 
-class RoomLocalRepository(
+class RoomTasksRepository(
 	private val tasksDao: TasksDao,
 	private val subtasksDao: SubtasksDao,
 	private val remindersDao: RemindersDao,
