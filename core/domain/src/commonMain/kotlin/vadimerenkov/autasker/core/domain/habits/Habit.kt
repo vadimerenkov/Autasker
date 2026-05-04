@@ -8,5 +8,6 @@ data class Habit(
 	val period: Period = Period.DAY,
 	val times: Int = 1,
 	val type: HabitType = HabitType.SINGLE,
-	val customQuantifier: String? = null
+	val customQuantifier: String? = null,
+	val completions: List<HabitCompletion> = emptyList()
 )

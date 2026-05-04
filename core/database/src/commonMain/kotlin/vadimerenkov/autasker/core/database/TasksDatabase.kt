@@ -11,6 +11,7 @@ import vadimerenkov.autasker.core.database.dao.PagesDao
 import vadimerenkov.autasker.core.database.dao.RemindersDao
 import vadimerenkov.autasker.core.database.dao.SubtasksDao
 import vadimerenkov.autasker.core.database.dao.TasksDao
+import vadimerenkov.autasker.core.database.habits.HabitCompletionData
 import vadimerenkov.autasker.core.database.habits.HabitData
 import vadimerenkov.autasker.core.database.habits.HabitsDao
 import vadimerenkov.autasker.core.database.mappers.Converters
@@ -23,7 +24,8 @@ import vadimerenkov.autasker.core.database.mappers.Converters
 		ReminderData::class,
 		JobData::class,
 		PageData::class,
-		HabitData::class
+		HabitData::class,
+		HabitCompletionData::class
 	],
 	version = 2,
 	autoMigrations = [

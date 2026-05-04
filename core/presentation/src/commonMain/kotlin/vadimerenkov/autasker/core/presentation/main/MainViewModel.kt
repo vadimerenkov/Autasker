@@ -44,6 +44,10 @@ class MainViewModel(
 	private var changeTitleJob: Job? = null
 
 	init {
+		println("Today start is ${Time.todayStart()}")
+		println("Today end is ${Time.todayEnd()}")
+		println("Tomorrow start is ${Time.tomorrowStart()}")
+		println("Tomorrow end is ${Time.tomorrowEnd()}")
 		if (settings.state.value.autoDeleteFromTrash) {
 			val tasksToDelete = mutableListOf<Task>()
 			val subtasksToDelete = mutableListOf<Subtask>()
