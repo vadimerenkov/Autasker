@@ -20,6 +20,7 @@ actual class AppDatabase : RoomDatabaseConstructor<TasksDatabase> {
 		return Room.databaseBuilder<TasksDatabase>(file.absolutePath)
 			.setDriver(BundledSQLiteDriver())
 			.setQueryCoroutineContext(Dispatchers.IO)
+			.fallbackToDestructiveMigrationOnDowngrade(true)
 			.build()
 	}
 }

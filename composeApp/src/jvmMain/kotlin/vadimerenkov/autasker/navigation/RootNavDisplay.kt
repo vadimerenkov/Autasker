@@ -111,12 +111,12 @@ fun RootNavDisplay(
 					text = stringResource(Res.string.support_developer)
 				) {
 					uriHandler.openUri(link)
+				},
+				MenuAction(
+					text = "Start new day"
+				) {
+					backstack.add(NewDayRoute)
 				}
-//				MenuAction(
-//					text = "New day (hack)"
-//				) {
-//					backstack.add(NewDayRoute)
-//				}
 			),
 			modifier = Modifier
 				.background(MaterialTheme.colorScheme.secondaryContainer)

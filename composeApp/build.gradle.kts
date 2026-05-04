@@ -27,9 +27,9 @@ kotlin {
             implementation(libs.androidx.lifecycle.runtimeCompose)
 	        implementation(libs.kotlinx.serialization.json)
 	        implementation(libs.kotlinx.serialization.core)
-	        implementation(libs.bundles.navigation3)
 	        implementation(libs.androidx.datastore)
 	        implementation(libs.androidx.datastore.preferences)
+	        implementation(libs.bundles.navigation3)
 	        implementation(libs.material3.adaptive)
 
 	        implementation(projects.calendar)

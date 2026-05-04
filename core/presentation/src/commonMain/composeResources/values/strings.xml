@@ -82,6 +82,8 @@
     <string name="colors">Colors</string>
     <string name="skip">Skip</string>
     <string name="habits">Habits</string>
+    <string name="previous_month">Previous month</string>
+    <string name="next_month">Next month</string>
 
     <string name="language">Language</string>
     <string name="english">English</string>

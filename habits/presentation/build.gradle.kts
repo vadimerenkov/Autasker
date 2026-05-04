@@ -29,6 +29,8 @@ kotlin {
 				implementation(libs.androidx.lifecycle.runtimeCompose)
 				implementation(libs.calendar)
 				implementation(libs.bundles.koin)
+				implementation(libs.bundles.navigation3)
+				implementation(libs.material3.adaptive)
 
 				implementation(projects.core.domain)
 				implementation(projects.habits.domain)
