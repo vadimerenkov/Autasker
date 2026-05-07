@@ -11,6 +11,7 @@ import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.filled.Task
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -33,6 +34,7 @@ import androidx.navigation3.runtime.NavKey
 import autasker.core.presentation.generated.resources.Res
 import autasker.core.presentation.generated.resources.about
 import autasker.core.presentation.generated.resources.calendar
+import autasker.core.presentation.generated.resources.habits
 import autasker.core.presentation.generated.resources.settings
 import autasker.core.presentation.generated.resources.tasks
 import autasker.core.presentation.generated.resources.trash
@@ -123,6 +125,28 @@ fun FoldedNavigationDrawer(
 						onClick = {
 							coroutineScope.launch {
 								backstack.add(CalendarRoute)
+								drawerState.close()
+							}
+						}
+					)
+					NavigationDrawerItem(
+						shape = RectangleShape,
+						label = {
+							Text(
+								text = stringResource(Res.string.habits),
+								fontSize = 18.sp
+							)
+						},
+						icon = {
+							Icon(
+								imageVector = Icons.Default.Task,
+								contentDescription = null
+							)
+						},
+						selected = backstack.last() == HabitsRoute,
+						onClick = {
+							coroutineScope.launch {
+								backstack.add(HabitsRoute)
 								drawerState.close()
 							}
 						}

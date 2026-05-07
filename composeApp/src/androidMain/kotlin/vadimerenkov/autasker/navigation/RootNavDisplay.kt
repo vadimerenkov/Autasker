@@ -44,6 +44,7 @@ import vadimerenkov.autasker.core.presentation.settings.SettingsScreen
 import vadimerenkov.autasker.core.presentation.task_edit.TaskEditScreen
 import vadimerenkov.autasker.core.presentation.task_edit.TaskEditViewModel
 import vadimerenkov.autasker.core.presentation.task_edit.datetime.DateTimeScreen
+import vadimerenkov.autasker.habits.presentation.HabitsScreen
 
 @Composable
 fun RootNavDisplay() {
@@ -126,6 +127,9 @@ private fun NavigationRailNavDisplay(
 						}
 					)
 				}
+				entry<HabitsRoute> {
+					HabitsScreen()
+				}
 				entry<SettingsRoute> {
 					SettingsScreen(
 						modifier = Modifier
@@ -184,6 +188,9 @@ private fun FoldedDrawerNavDisplay(
 						    mainBackStack.add(EditGraph(it))
 					    }
 				    )
+			    }
+			    entry<HabitsRoute> {
+				    HabitsScreen()
 			    }
 			    entry<SettingsRoute> {
 				    SettingsScreen(
