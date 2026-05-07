@@ -1,14 +1,19 @@
 package vadimerenkov.autasker.habits.presentation
 
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.Button
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.viewmodel.navigation3.rememberViewModelStoreNavEntryDecorator
+import androidx.navigation3.runtime.NavKey
+import androidx.navigation3.runtime.entryProvider
+import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
+import androidx.navigation3.ui.NavDisplay
 import org.koin.compose.viewmodel.koinViewModel
+import vadimerenkov.autasker.habits.presentation.navigation.HabitDetailRoute
+import vadimerenkov.autasker.habits.presentation.navigation.HabitListRoute
+import vadimerenkov.autasker.habits.presentation.navigation.ListDetailScene
+import vadimerenkov.autasker.habits.presentation.navigation.rememberListDetailSceneStrategy
 
 @Composable
 fun HabitsScreen(
@@ -28,45 +33,40 @@ private fun HabitsScreenRoot(
 	onAction: (HabitsAction) -> Unit,
 	modifier: Modifier = Modifier
 ) {
-	Row(
-		modifier = Modifier
-			.fillMaxSize()
-	) {
-		LazyColumn(
-			modifier = Modifier
-				.weight(1f)
-		) {
-			items(
-				items = state.habits,
-				key = { it.id }
-			) { habit ->
-				HabitItem(
-					habit = habit,
-					onClick = {
-						onAction(HabitsAction.OnHabitClick(it))
+	val backstack = remember { mutableStateListOf<NavKey>(HabitListRoute) }
+	NavDisplay(
+		backStack = backstack,
+		sceneStrategies = listOf(rememberListDetailSceneStrategy()),
+		entryDecorators = listOf(
+			rememberSaveableStateHolderNavEntryDecorator(),
+			rememberViewModelStoreNavEntryDecorator()
+		),
+		entryProvider = entryProvider {
+			entry<HabitListRoute>(
+				metadata = ListDetailScene.list()
+			) {
+				HabitListScreen(
+					state = state,
+					onAction = { action ->
+						onAction(action)
+						when (action) {
+							is HabitsAction.OnHabitClick -> {
+								backstack.add(HabitDetailRoute)
+							}
+							else -> Unit
+						}
 					}
 				)
 			}
-			item {
-				Button(
-					onClick = {
-						onAction(HabitsAction.NewHabitClick)
-					}
-				) {
-					Text(
-						text = "+"
-					)
-				}
+			entry<HabitDetailRoute>(
+				metadata = ListDetailScene.detail()
+			) {
+				HabitDetailsScreen(
+					habit = state.selectedHabit!!,
+					completions = state.completions.filter { it.habitId == state.selectedHabit.id },
+					onAction = onAction
+				)
 			}
 		}
-		state.selectedHabit?.let { habit ->
-			HabitDetailsScreen(
-				habit = habit,
-				completions = state.completions.filter { it.habitId == habit.id },
-				onAction = onAction,
-				modifier = Modifier
-					.weight(1f)
-			)
-		}
-	}
+	)
 }
