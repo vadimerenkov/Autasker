@@ -44,6 +44,13 @@ kotlin {
 			}
 		}
 
+		jvmMain {
+			dependencies {
+				implementation(compose.desktop.currentOs)
+				implementation(libs.kotlinx.coroutinesSwing)
+			}
+		}
+
 		androidMain {
 			dependencies {
 				// Add Android-specific dependencies here. Note that this source set depends on

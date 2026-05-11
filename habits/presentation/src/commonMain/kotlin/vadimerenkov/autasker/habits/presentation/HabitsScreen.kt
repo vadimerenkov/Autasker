@@ -8,9 +8,15 @@ import androidx.lifecycle.viewmodel.navigation3.rememberViewModelStoreNavEntryDe
 import androidx.navigation3.runtime.NavKey
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
+import androidx.navigation3.scene.DialogSceneStrategy
+import androidx.navigation3.scene.DialogSceneStrategy.Companion.dialog
 import androidx.navigation3.ui.NavDisplay
 import org.koin.compose.viewmodel.koinViewModel
+import org.koin.core.parameter.parametersOf
+import vadimerenkov.autasker.habits.presentation.edit.HabitEditDialog
+import vadimerenkov.autasker.habits.presentation.edit.HabitEditViewModel
 import vadimerenkov.autasker.habits.presentation.navigation.HabitDetailRoute
+import vadimerenkov.autasker.habits.presentation.navigation.HabitEditRoute
 import vadimerenkov.autasker.habits.presentation.navigation.HabitListRoute
 import vadimerenkov.autasker.habits.presentation.navigation.ListDetailScene
 import vadimerenkov.autasker.habits.presentation.navigation.rememberListDetailSceneStrategy
@@ -34,9 +40,10 @@ private fun HabitsScreenRoot(
 	modifier: Modifier = Modifier
 ) {
 	val backstack = remember { mutableStateListOf<NavKey>(HabitListRoute) }
+
 	NavDisplay(
 		backStack = backstack,
-		sceneStrategies = listOf(rememberListDetailSceneStrategy()),
+		sceneStrategies = listOf(rememberListDetailSceneStrategy(), DialogSceneStrategy()),
 		entryDecorators = listOf(
 			rememberSaveableStateHolderNavEntryDecorator(),
 			rememberViewModelStoreNavEntryDecorator()
@@ -53,6 +60,9 @@ private fun HabitsScreenRoot(
 							is HabitsAction.OnHabitClick -> {
 								backstack.add(HabitDetailRoute)
 							}
+							is HabitsAction.EditHabitClick -> {
+								backstack.add(HabitEditRoute(action.id))
+							}
 							else -> Unit
 						}
 					}
@@ -65,6 +75,15 @@ private fun HabitsScreenRoot(
 					habit = state.selectedHabit!!,
 					completions = state.completions.filter { it.habitId == state.selectedHabit.id },
 					onAction = onAction
+				)
+			}
+			entry<HabitEditRoute>(
+				metadata = dialog()
+			) { route ->
+				val viewModel = koinViewModel<HabitEditViewModel> { parametersOf(route.id) }
+				HabitEditDialog(
+					state = viewModel.state,
+					onAction = viewModel::onAction
 				)
 			}
 		}

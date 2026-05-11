@@ -8,6 +8,7 @@ import vadimerenkov.autasker.core.domain.habits.HabitCompletion
 interface HabitsRepository {
 
 	fun getAllHabits(): Flow<List<Habit>>
+	suspend fun getHabit(id: Long): Habit
 	fun getAllCompletions(): Flow<List<HabitCompletion>>
 	suspend fun saveHabit(habit: Habit)
 	suspend fun saveCompletion(completion: HabitCompletion)

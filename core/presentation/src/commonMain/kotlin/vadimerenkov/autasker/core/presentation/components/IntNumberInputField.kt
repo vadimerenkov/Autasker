@@ -29,9 +29,9 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun IntNumberInputField(
+	value: Int?,
 	onValueChange: (Int?) -> Unit,
 	modifier: Modifier = Modifier,
-	value: Int? = 0,
 	isError: Boolean = false,
 	enabled: Boolean = true,
 	minNumber: Int = Int.MIN_VALUE,
