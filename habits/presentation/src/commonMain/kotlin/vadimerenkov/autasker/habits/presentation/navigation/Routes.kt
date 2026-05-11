@@ -11,5 +11,5 @@ data object HabitDetailRoute: NavKey
 
 @Serializable
 data class HabitEditRoute(
-	val id: Long
+	val id: Long?
 ): NavKey

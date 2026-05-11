@@ -22,6 +22,7 @@ fun HabitListScreen(
 		) { habit ->
 			HabitItem(
 				habit = habit,
+				isSelected = habit.id == state.selectedHabit?.id,
 				onAction = onAction
 			)
 		}

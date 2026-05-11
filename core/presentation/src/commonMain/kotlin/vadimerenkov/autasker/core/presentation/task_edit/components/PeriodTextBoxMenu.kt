@@ -20,12 +20,12 @@ fun PeriodTextBoxMenu(
 	period: Period?,
 	onPeriodChange: (Period) -> Unit,
 	times: Int,
+	isExpanded: Boolean,
+	onExpandedChange: (Boolean) -> Unit,
 	modifier: Modifier = Modifier,
 	areHourAndMinuteEnabled: Boolean = true,
 	isError: Boolean = false,
-	isEnabled: Boolean = true,
-	isExpanded: Boolean = false,
-	onExpandedChange: (Boolean) -> Unit
+	isEnabled: Boolean = true
 ) {
 	ExposedDropdownMenuBox(
 		expanded = isExpanded,
