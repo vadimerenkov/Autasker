@@ -56,14 +56,7 @@ class HabitsViewModel(
 					repository.deleteCompletion(action.completionId)
 				}
 			}
-			is HabitsAction.OnHabitTitleChange -> {
-				viewModelScope.launch {
-					val habit = state.habits.find { it.id == action.id }
-					habit?.let {
-						repository.saveHabit(it.copy(title = action.title))
-					}
-				}
-			}
+			else -> Unit
 		}
 	}
 }

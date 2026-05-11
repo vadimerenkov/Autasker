@@ -35,7 +35,9 @@ fun HabitItem(
 		)
 		Spacer(modifier = Modifier.weight(1f))
 		IconButton(
-			onClick = {}
+			onClick = {
+				onAction(HabitsAction.EditHabitClick(habit.id))
+			}
 		) {
 			Icon(
 				imageVector = Icons.Default.Edit,

@@ -12,6 +12,9 @@ interface HabitsDao {
 	@Query("SELECT * FROM habitdata")
 	fun getAllHabits(): Flow<List<HabitData>>
 
+	@Query("SELECT * FROM habitdata WHERE id = :id")
+	suspend fun getHabit(id: Long): HabitData
+
 	@Query("SELECT * FROM habitcompletiondata WHERE habitId = :habitId")
 	fun getCompletionsForHabit(habitId: Long): Flow<List<HabitCompletionData>>
 
