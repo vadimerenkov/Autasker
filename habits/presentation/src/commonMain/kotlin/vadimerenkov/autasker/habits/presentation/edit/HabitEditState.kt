@@ -9,4 +9,7 @@ data class HabitEditState(
 	val period: Period = Period.DAY,
 	val type: HabitType = HabitType.SINGLE,
 	val customQuantifier: String = ""
-)
+) {
+	val isValid
+		get() = (title.isNotBlank() && times != null) && !(type == HabitType.CUSTOM && customQuantifier.isBlank())
+}

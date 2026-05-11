@@ -8,7 +8,6 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
-import vadimerenkov.autasker.core.domain.habits.Habit
 import vadimerenkov.autasker.core.domain.habits.HabitCompletion
 import vadimerenkov.autasker.habits.domain.HabitsRepository
 import java.time.ZoneId
@@ -34,11 +33,6 @@ class HabitsViewModel(
 
 	fun onAction(action: HabitsAction) {
 		when (action) {
-			is HabitsAction.NewHabitClick -> {
-				viewModelScope.launch {
-					repository.saveHabit(Habit(title = "ASDF"))
-				}
-			}
 			is HabitsAction.OnHabitClick -> {
 				state = state.copy(selectedHabit = state.habits.find { it.id == action.id })
 			}

@@ -63,6 +63,9 @@ private fun HabitsScreenRoot(
 							is HabitsAction.EditHabitClick -> {
 								backstack.add(HabitEditRoute(action.id))
 							}
+							is HabitsAction.NewHabitClick -> {
+								backstack.add(HabitEditRoute(null))
+							}
 							else -> Unit
 						}
 					}
@@ -83,7 +86,10 @@ private fun HabitsScreenRoot(
 				val viewModel = koinViewModel<HabitEditViewModel> { parametersOf(route.id) }
 				HabitEditDialog(
 					state = viewModel.state,
-					onAction = viewModel::onAction
+					onAction = viewModel::onAction,
+					onDismissRequest = {
+						backstack.removeLastOrNull()
+					}
 				)
 			}
 		}
