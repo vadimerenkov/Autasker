@@ -50,6 +50,21 @@ class HabitsViewModel(
 					repository.deleteCompletion(action.completionId)
 				}
 			}
+			is HabitsAction.DeleteHabitClick -> {
+				val habit = state.habits.find { it.id == action.id }
+				state = state.copy(isDeleteDialogOpen = true, deletingHabit = habit)
+			}
+			is HabitsAction.DismissDeleteDialogClick -> {
+				state = state.copy(isDeleteDialogOpen = false, deletingHabit = null)
+			}
+			is HabitsAction.ConfirmDeletion -> {
+				viewModelScope.launch {
+					state.deletingHabit?.let {
+						repository.deleteHabit(it.id)
+					}
+				}
+				state = state.copy(isDeleteDialogOpen = false, deletingHabit = null)
+			}
 			else -> Unit
 		}
 	}

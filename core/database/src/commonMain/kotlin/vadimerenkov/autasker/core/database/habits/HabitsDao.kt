@@ -24,6 +24,9 @@ interface HabitsDao {
 	@Upsert
 	suspend fun saveHabit(habit: HabitData)
 
+	@Query("DELETE FROM habitdata WHERE id = :id")
+	suspend fun deleteHabit(id: Long)
+
 	@Upsert
 	suspend fun saveCompletion(completion: HabitCompletionData)
 

@@ -6,5 +6,7 @@ import vadimerenkov.autasker.core.domain.habits.HabitCompletion
 data class HabitsState(
 	val habits: List<Habit> = emptyList(),
 	val completions: List<HabitCompletion> = emptyList(),
-	val selectedHabit: Habit? = null
+	val selectedHabit: Habit? = null,
+	val isDeleteDialogOpen: Boolean = false,
+	val deletingHabit: Habit? = null,
 )
