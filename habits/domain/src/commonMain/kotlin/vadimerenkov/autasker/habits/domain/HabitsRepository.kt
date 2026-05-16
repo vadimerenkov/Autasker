@@ -11,6 +11,7 @@ interface HabitsRepository {
 	suspend fun getHabit(id: Long): Habit
 	fun getAllCompletions(): Flow<List<HabitCompletion>>
 	suspend fun saveHabit(habit: Habit)
+	suspend fun deleteHabit(id: Long)
 	suspend fun saveCompletion(completion: HabitCompletion)
 	suspend fun deleteCompletion(id: Long)
 

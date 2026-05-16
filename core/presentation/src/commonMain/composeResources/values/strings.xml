@@ -86,6 +86,7 @@
     <string name="next_month">Next month</string>
     <string name="edit_habit">Edit habit</string>
     <string name="delete_habit">Delete habit</string>
+    <string name="delete_habit_confirmation">Are you sure you want to delete habit</string>
 
     <string name="language">Language</string>
     <string name="english">English</string>
