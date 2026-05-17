@@ -22,7 +22,7 @@ interface HabitsDao {
 	fun getAllCompletions(): Flow<List<HabitCompletionData>>
 
 	@Upsert
-	suspend fun saveHabit(habit: HabitData)
+	suspend fun saveHabit(habit: HabitData): Long
 
 	@Query("DELETE FROM habitdata WHERE id = :id")
 	suspend fun deleteHabit(id: Long)
@@ -32,5 +32,8 @@ interface HabitsDao {
 
 	@Query("DELETE FROM habitcompletiondata WHERE id = :id")
 	suspend fun deleteCompletion(id: Long)
+
+	@Query("DELETE FROM habitcompletiondata WHERE habitId = :id")
+	suspend fun deleteCompletionsForHabit(id: Long)
 }
 

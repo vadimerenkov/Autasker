@@ -19,5 +19,6 @@ data class TaskData(
 	val deletedDateEpochSeconds: Long? = null,
 	val completedDateEpochSeconds: Long? = null,
 	val isAllDay: Boolean = true,
-	val importance: Int = 0
+	val importance: Int = 0,
+	val habitId: Long? = null
 )

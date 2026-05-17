@@ -18,6 +18,7 @@ interface TasksRepository {
 	suspend fun getCompletedTasks(): List<Task>
 	suspend fun getYesterdayUncompletedTasks(): List<Task>
 	suspend fun getUncompletedDatelessTasks(): List<Task>
+	suspend fun getTasksForHabit(id: Long): List<Task>
 	fun getDeletedTasks(): Flow<List<Task>>
 	fun getAllCategories(): Flow<List<TaskCategory>>
 	suspend fun getCategory(id: Long): TaskCategory

@@ -61,6 +61,7 @@ class HabitsViewModel(
 				viewModelScope.launch {
 					state.deletingHabit?.let {
 						repository.deleteHabit(it.id)
+						repository.deleteCompletionsForHabit(it.id)
 					}
 				}
 				state = state.copy(isDeleteDialogOpen = false, deletingHabit = null)

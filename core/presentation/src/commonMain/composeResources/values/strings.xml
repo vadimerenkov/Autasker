@@ -84,9 +84,14 @@
     <string name="habits">Habits</string>
     <string name="previous_month">Previous month</string>
     <string name="next_month">Next month</string>
+    <string name="new_habit">New habit</string>
     <string name="edit_habit">Edit habit</string>
     <string name="delete_habit">Delete habit</string>
     <string name="delete_habit_confirmation">Are you sure you want to delete habit</string>
+    <string name="times_per">times</string>
+    <string name="minutes">minutes</string>
+    <string name="per">per</string>
+    <string name="custom">custom</string>
 
     <string name="language">Language</string>
     <string name="english">English</string>
