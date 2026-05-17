@@ -1,5 +1,9 @@
 package vadimerenkov.autasker.habits.presentation
 
+import androidx.compose.animation.ExitTransition
+import androidx.compose.animation.SharedTransitionLayout
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -83,60 +87,68 @@ private fun HabitsScreenRoot(
 		}
 	}
 
-	NavDisplay(
-		backStack = backstack,
-		sceneStrategies = listOf(rememberListDetailSceneStrategy(), DialogSceneStrategy()),
-		entryDecorators = listOf(
-			rememberSaveableStateHolderNavEntryDecorator(),
-			rememberViewModelStoreNavEntryDecorator()
-		),
-		modifier = modifier
-			.fillMaxSize()
-			.background(MaterialTheme.colorScheme.background),
-		entryProvider = entryProvider {
-			entry<HabitListRoute>(
-				metadata = ListDetailScene.list()
-			) {
-				HabitListScreen(
-					state = state,
-					onAction = { action ->
-						onAction(action)
-						when (action) {
-							is HabitsAction.OnHabitClick -> {
-								backstack.add(HabitDetailRoute)
+	SharedTransitionLayout {
+		NavDisplay(
+			backStack = backstack,
+			sceneStrategies = listOf(rememberListDetailSceneStrategy(), DialogSceneStrategy()),
+			entryDecorators = listOf(
+				rememberSaveableStateHolderNavEntryDecorator(),
+				rememberViewModelStoreNavEntryDecorator()
+			),
+			transitionSpec = {
+				slideInHorizontally { it } togetherWith ExitTransition.KeepUntilTransitionsFinished
+			},
+			sharedTransitionScope = this,
+			modifier = modifier
+				.fillMaxSize()
+				.background(MaterialTheme.colorScheme.background),
+			entryProvider = entryProvider {
+				entry<HabitListRoute>(
+					metadata = ListDetailScene.list()
+				) {
+					HabitListScreen(
+						state = state,
+						onAction = { action ->
+							onAction(action)
+							when (action) {
+								is HabitsAction.OnHabitClick -> {
+									backstack.add(HabitDetailRoute)
+								}
+								is HabitsAction.EditHabitClick -> {
+									backstack.add(HabitEditRoute(action.id))
+								}
+								is HabitsAction.NewHabitClick -> {
+									backstack.add(HabitEditRoute(null))
+								}
+								else -> Unit
 							}
-							is HabitsAction.EditHabitClick -> {
-								backstack.add(HabitEditRoute(action.id))
-							}
-							is HabitsAction.NewHabitClick -> {
-								backstack.add(HabitEditRoute(null))
-							}
-							else -> Unit
 						}
-					}
-				)
+					)
+				}
+				entry<HabitDetailRoute>(
+					metadata = ListDetailScene.detail()
+				) {
+					HabitDetailsScreen(
+						habit = state.selectedHabit!!,
+						completions = state.completions.filter { it.habitId == state.selectedHabit.id },
+						onAction = onAction
+					)
+				}
+				entry<HabitEditRoute>(
+					metadata = dialog()
+				) { route ->
+					val viewModel = koinViewModel<HabitEditViewModel> { parametersOf(route.id) }
+					HabitEditDialog(
+						state = viewModel.state,
+						onAction = viewModel::onAction,
+						onDismissRequest = {
+							backstack.removeLastOrNull()
+						}
+					)
+				}
 			}
-			entry<HabitDetailRoute>(
-				metadata = ListDetailScene.detail()
-			) {
-				HabitDetailsScreen(
-					habit = state.selectedHabit!!,
-					completions = state.completions.filter { it.habitId == state.selectedHabit.id },
-					onAction = onAction
-				)
-			}
-			entry<HabitEditRoute>(
-				metadata = dialog()
-			) { route ->
-				val viewModel = koinViewModel<HabitEditViewModel> { parametersOf(route.id) }
-				HabitEditDialog(
-					state = viewModel.state,
-					onAction = viewModel::onAction,
-					onDismissRequest = {
-						backstack.removeLastOrNull()
-					}
-				)
-			}
-		}
-	)
+		)
+
+	}
+
 }
