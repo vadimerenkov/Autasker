@@ -375,6 +375,13 @@ class MainViewModel(
 
 	private fun completeTask(task: Task) {
 		viewModelScope.launch {
+			task.habitId?.let {
+				state = state.copy(
+					showHabitCompletionDialog = true,
+					dialogHabit = habitsRepository.getHabit(it)
+				)
+			}
+
 			if (task.repeatState.isRepeating
 				&& task.calculateNewDate(settings.state.value.firstDayOfWeek)?.isBefore(Time.todayEnd()) == true) {
 					val newTask = task.copy(
@@ -388,12 +395,7 @@ class MainViewModel(
 				reminderService.cancelRemindersForTask(task.id)
 			}
 
-			task.habitId?.let {
-				state = state.copy(
-					showHabitCompletionDialog = true,
-					dialogHabit = habitsRepository.getHabit(it)
-				)
-			}
+
 		}
 
 		if (settings.state.value.playSound) {
