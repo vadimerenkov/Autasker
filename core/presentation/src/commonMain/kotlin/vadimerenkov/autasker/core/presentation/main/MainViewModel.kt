@@ -21,6 +21,8 @@ import vadimerenkov.autasker.core.domain.Task
 import vadimerenkov.autasker.core.domain.TaskCategory
 import vadimerenkov.autasker.core.domain.TasksRepository
 import vadimerenkov.autasker.core.domain.Time
+import vadimerenkov.autasker.core.domain.habits.HabitCompletion
+import vadimerenkov.autasker.core.domain.habits.HabitsRepository
 import vadimerenkov.autasker.core.domain.minusReminder
 import vadimerenkov.autasker.core.domain.reminders.Reminder
 import vadimerenkov.autasker.core.domain.reminders.ReminderService
@@ -32,7 +34,8 @@ import java.time.ZoneId
 import java.time.ZonedDateTime
 
 class MainViewModel(
-	private val repository: TasksRepository,
+	private val tasksRepository: TasksRepository,
+	private val habitsRepository: HabitsRepository,
 	private val reminderService: ReminderService,
 	private val audioPlayer: AudioPlayer,
 	private val settings: Settings
@@ -52,7 +55,7 @@ class MainViewModel(
 			val tasksToDelete = mutableListOf<Task>()
 			val subtasksToDelete = mutableListOf<Subtask>()
 			viewModelScope.launch {
-				repository.getDeletedTasks()
+				tasksRepository.getDeletedTasks()
 					.first()
 					.forEach { task ->
 						val deletedDate = task.deletedDate
@@ -63,10 +66,10 @@ class MainViewModel(
 					}
 				println("Deleting overdue tasks: $tasksToDelete")
 				launch {
-					repository.deleteTasks(tasksToDelete)
+					tasksRepository.deleteTasks(tasksToDelete)
 				}
 				launch {
-					repository.deleteSubtasks(subtasksToDelete)
+					tasksRepository.deleteSubtasks(subtasksToDelete)
 				}
 			}
 		}
@@ -74,7 +77,7 @@ class MainViewModel(
 		if (settings.state.value.autoDeleteCompleted) {
 			val tasksToDelete = mutableListOf<Task>()
 			viewModelScope.launch {
-				repository.getCompletedTasks()
+				tasksRepository.getCompletedTasks()
 					.forEach { task ->
 						if (task.completedDate?.isBefore(settings.state.value.completedCutoffDate) == true) {
 							tasksToDelete.add(
@@ -86,20 +89,20 @@ class MainViewModel(
 						}
 					}
 				println("Deleting completed tasks: $tasksToDelete")
-				repository.saveTasks(tasksToDelete)
+				tasksRepository.saveTasks(tasksToDelete)
 			}
 		}
 
-		repository.getAllPages()
+		tasksRepository.getAllPages()
 			.onEach { list ->
 				if (list.isEmpty()) {
 					val main = getString(Res.string.main)
-					repository.savePage(Page(title = main))
+					tasksRepository.savePage(Page(title = main))
 				}
 				state = state.copy(pages = list)
 			}.launchIn(viewModelScope)
 
-		repository
+		tasksRepository
 			.getAllCategories()
 			.onStart {
 				val todaySorting = settings.getTodaySorting()
@@ -115,7 +118,7 @@ class MainViewModel(
 			}
 			.onEach { list ->
 				if (list.isEmpty()) {
-					repository.saveCategory(
+					tasksRepository.saveCategory(
 						TaskCategory(
 							id = 1,
 							index = 3,
@@ -156,7 +159,7 @@ class MainViewModel(
 			}
 			MainAction.NewColumnClick -> {
 				viewModelScope.launch {
-					repository.saveCategory(
+					tasksRepository.saveCategory(
 						TaskCategory(
 							index = state.categories.size + 3,
 							pageId = state.pages[state.selectedTabIndex].id
@@ -167,12 +170,12 @@ class MainViewModel(
 			is MainAction.DeleteColumn -> {
 				val category = state.categories.first { it.id == action.id }
 				viewModelScope.launch {
-					if (repository.getTaskCountForCategory(category.id) == 0) {
-						repository.deleteCategory(action.id)
+					if (tasksRepository.getTaskCountForCategory(category.id) == 0) {
+						tasksRepository.deleteCategory(action.id)
 					} else {
 						launch {
-							repository.saveTasks(category.tasks.map { task ->
-								repository.deleteRemindersForTask(task.id)
+							tasksRepository.saveTasks(category.tasks.map { task ->
+								tasksRepository.deleteRemindersForTask(task.id)
 								task.copy(
 									isDeleted = true,
 									deletedDate = ZonedDateTime.now()
@@ -180,7 +183,7 @@ class MainViewModel(
 							})
 						}
 						launch {
-							repository.saveCategory(category.copy(isDeleted = true))
+							tasksRepository.saveCategory(category.copy(isDeleted = true))
 						}
 					}
 				}
@@ -190,10 +193,10 @@ class MainViewModel(
 				val defaultCategory = state.categories.first { it.isDefault }
 				viewModelScope.launch {
 					launch {
-						repository.saveCategory(category.copy(isDefault = true))
+						tasksRepository.saveCategory(category.copy(isDefault = true))
 					}
 					launch {
-						repository.saveCategory(defaultCategory.copy(isDefault = false))
+						tasksRepository.saveCategory(defaultCategory.copy(isDefault = false))
 					}
 				}
 			}
@@ -203,12 +206,12 @@ class MainViewModel(
 					delay(500L)
 					val category = state.categories.first { it.id == action.id }
 					val title = action.title.ifBlank { null }
-					repository.saveCategory(category.copy(title = title))
+					tasksRepository.saveCategory(category.copy(title = title))
 				}
 			}
 			is MainAction.DeleteTask -> {
 				viewModelScope.launch {
-					repository.saveTask(findTask(action.id).copy(isDeleted = true, deletedDate = Time.now()))
+					tasksRepository.saveTask(findTask(action.id).copy(isDeleted = true, deletedDate = Time.now()))
 					reminderService.cancelRemindersForTask(action.id)
 				}
 			}
@@ -219,7 +222,7 @@ class MainViewModel(
 				}
 				viewModelScope.launch {
 					launch {
-						repository.saveSubtasks(subtasks)
+						tasksRepository.saveSubtasks(subtasks)
 					}
 					launch {
 						if (subtasks.count { it.isCompleted } == subtasks.size) {
@@ -230,7 +233,7 @@ class MainViewModel(
 			}
 			is MainAction.MoveTaskCategoryChosen -> {
 				viewModelScope.launch {
-					repository.saveTask(findTask(action.taskId).copy(categoryId = action.categoryId))
+					tasksRepository.saveTask(findTask(action.taskId).copy(categoryId = action.categoryId))
 				}
 			}
 			is MainAction.SetForToday -> {
@@ -248,14 +251,14 @@ class MainViewModel(
 			is MainAction.ClearDate -> {
 				viewModelScope.launch {
 					val task = findTask(action.id)
-					repository.saveTask(task.copy(dueDate = null))
+					tasksRepository.saveTask(task.copy(dueDate = null))
 					reminderService.cancelRemindersForTask(task.id)
-					repository.deleteRemindersForTask(task.id)
+					tasksRepository.deleteRemindersForTask(task.id)
 				}
 			}
 			is MainAction.ReorderTasks -> {
 				viewModelScope.launch {
-					repository.saveTasks(action.tasks)
+					tasksRepository.saveTasks(action.tasks)
 				}
 			}
 			is MainAction.ChangeColumnSorting -> {
@@ -271,7 +274,7 @@ class MainViewModel(
 						}
 						else -> {
 							val category = state.categories.first { it.id == action.id }
-							repository.saveCategory(category.copy(sorting = action.sorting))
+							tasksRepository.saveCategory(category.copy(sorting = action.sorting))
 						}
 					}
 				}
@@ -289,19 +292,19 @@ class MainViewModel(
 						}
 						else -> {
 							val category = state.categories.first { it.id == action.id }
-							repository.saveCategory(category.copy(completedOpen = action.isShowing))
+							tasksRepository.saveCategory(category.copy(completedOpen = action.isShowing))
 						}
 					}
 				}
 			}
 			is MainAction.ChangeColumnsIndices -> {
 				viewModelScope.launch {
-					repository.saveCategories(action.categories)
+					tasksRepository.saveCategories(action.categories)
 				}
 			}
 			is MainAction.NewTabClick -> {
 				viewModelScope.launch {
-					repository.savePage(Page(index = state.pages.size + 1))
+					tasksRepository.savePage(Page(index = state.pages.size + 1))
 				}
 			}
 			is MainAction.OnTabClick -> {
@@ -318,35 +321,53 @@ class MainViewModel(
 					state = state.copy(selectedTabIndex = 0)
 				}
 				viewModelScope.launch {
-					repository.saveCategories(categories)
-					repository.deletePage(action.id)
+					tasksRepository.saveCategories(categories)
+					tasksRepository.deletePage(action.id)
 				}
 
 			}
 			is MainAction.TabRename -> {
 				val page = state.pages.first { it.id == action.id }
 				viewModelScope.launch {
-					repository.savePage(page.copy(title = action.title))
+					tasksRepository.savePage(page.copy(title = action.title))
 				}
 			}
 			is MainAction.MoveCategoryPageChosen -> {
 				viewModelScope.launch {
 					val category = state.categories.first { it.id == action.categoryId }
-					repository.saveCategory(category.copy(pageId = action.pageId))
+					tasksRepository.saveCategory(category.copy(pageId = action.pageId))
 				}
 			}
 			is MainAction.SavePages -> {
 				viewModelScope.launch {
 					action.list.forEach { page ->
-						repository.savePage(page)
+						tasksRepository.savePage(page)
 					}
 				}
 			}
 			is MainAction.SkipTask -> {
 				val task = findTask(action.id)
 				viewModelScope.launch {
-					repository.saveTask(task.copy(dueDate = task.calculateNewDate(settings.state.value.firstDayOfWeek)))
+					tasksRepository.saveTask(task.copy(dueDate = task.calculateNewDate(settings.state.value.firstDayOfWeek)))
 				}
+			}
+			is MainAction.SaveHabitCompletionClick -> {
+				val completion = HabitCompletion(
+					habitId = action.habitId,
+					date = Time.now(),
+					quantity = action.times
+				)
+				viewModelScope.launch {
+					habitsRepository.saveCompletion(completion)
+				}
+				state = state.copy(
+					showHabitCompletionDialog = false
+				)
+			}
+			MainAction.DismissHabitDialog -> {
+				state = state.copy(
+					showHabitCompletionDialog = false
+				)
 			}
 			else -> Unit
 		}
@@ -356,14 +377,21 @@ class MainViewModel(
 		viewModelScope.launch {
 			if (task.repeatState.isRepeating
 				&& task.calculateNewDate(settings.state.value.firstDayOfWeek)?.isBefore(Time.todayEnd()) == true) {
-						repository.saveTask(task.copy(
+						tasksRepository.saveTask(task.copy(
 							isCompleted = false,
 							dueDate = task.calculateNewDate(settings.state.value.firstDayOfWeek)
 						))
 						rescheduleRemindersForTask(task)
 			} else {
-				repository.saveTask(task.copy(isCompleted = true, completedDate = Time.now()))
+				tasksRepository.saveTask(task.copy(isCompleted = true, completedDate = Time.now()))
 				reminderService.cancelRemindersForTask(task.id)
+			}
+
+			task.habitId?.let {
+				state = state.copy(
+					showHabitCompletionDialog = true,
+					dialogHabit = habitsRepository.getHabit(it)
+				)
 			}
 		}
 
@@ -375,7 +403,7 @@ class MainViewModel(
 
 	private fun uncompleteTask(task: Task) {
 		viewModelScope.launch {
-			repository.saveTask(task.copy(isCompleted = false, completedDate = null))
+			tasksRepository.saveTask(task.copy(isCompleted = false, completedDate = null))
 			task.dueDate?.let {
 				rescheduleRemindersForTask(task)
 			}
@@ -384,7 +412,7 @@ class MainViewModel(
 
 	private suspend fun rescheduleRemindersForTask(task: Task) {
 		reminderService.cancelRemindersForTask(task.id)
-		repository
+		tasksRepository
 			.getRemindersForTask(task.id)
 			.forEach { reminder ->
 				if (task.dueDate?.minusReminder(reminder)?.isBefore(Time.now()) == false) {
@@ -398,13 +426,13 @@ class MainViewModel(
 		val time = task.dueDate?.toLocalTime() ?: LocalTime.NOON
 		val newDate = date.atTime(time).atZone(ZoneId.systemDefault())
 
-		val reminders = repository.getRemindersForTask(task.id).toMutableList()
+		val reminders = tasksRepository.getRemindersForTask(task.id).toMutableList()
 		if (reminders.isEmpty()) {
 			reminders.add(Reminder(parentTaskId = task.id))
 		}
-		repository.saveReminders(reminders)
+		tasksRepository.saveReminders(reminders)
 
-		repository.saveTask(task.copy(isAllDay = isAllDay, dueDate = newDate))
+		tasksRepository.saveTask(task.copy(isAllDay = isAllDay, dueDate = newDate))
 
 		rescheduleRemindersForTask(task)
 	}

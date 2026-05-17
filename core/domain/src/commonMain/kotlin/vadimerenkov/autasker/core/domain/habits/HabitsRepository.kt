@@ -1,9 +1,6 @@
-package vadimerenkov.autasker.habits.domain
+package vadimerenkov.autasker.core.domain.habits
 
 import kotlinx.coroutines.flow.Flow
-import vadimerenkov.autasker.core.domain.habits.Habit
-import vadimerenkov.autasker.core.domain.habits.HabitCompletion
-
 
 interface HabitsRepository {
 
