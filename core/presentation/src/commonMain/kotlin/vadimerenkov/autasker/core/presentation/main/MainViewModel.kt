@@ -355,8 +355,7 @@ class MainViewModel(
 	private fun completeTask(task: Task) {
 		viewModelScope.launch {
 			if (task.repeatState.isRepeating
-				&& (task.dueDate?.isBefore(Time.todayStart()) == true
-					|| task.calculateNewDate(settings.state.value.firstDayOfWeek)?.isBefore(Time.todayEnd()) == true)) {
+				&& task.calculateNewDate(settings.state.value.firstDayOfWeek)?.isBefore(Time.todayEnd()) == true) {
 						repository.saveTask(task.copy(
 							isCompleted = false,
 							dueDate = task.calculateNewDate(settings.state.value.firstDayOfWeek)
