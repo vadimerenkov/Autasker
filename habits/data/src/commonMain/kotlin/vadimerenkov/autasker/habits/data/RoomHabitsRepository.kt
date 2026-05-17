@@ -9,7 +9,7 @@ import vadimerenkov.autasker.core.database.habits.toData
 import vadimerenkov.autasker.core.database.habits.toHabit
 import vadimerenkov.autasker.core.domain.habits.Habit
 import vadimerenkov.autasker.core.domain.habits.HabitCompletion
-import vadimerenkov.autasker.habits.domain.HabitsRepository
+import vadimerenkov.autasker.core.domain.habits.HabitsRepository
 
 class RoomHabitsRepository(
 	private val dao: HabitsDao

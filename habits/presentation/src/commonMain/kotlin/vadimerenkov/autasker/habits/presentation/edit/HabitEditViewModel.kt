@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import vadimerenkov.autasker.core.domain.TasksRepository
 import vadimerenkov.autasker.core.domain.habits.Habit
-import vadimerenkov.autasker.habits.domain.HabitsRepository
+import vadimerenkov.autasker.core.domain.habits.HabitsRepository
 
 class HabitEditViewModel(
 	private val id: Long?,

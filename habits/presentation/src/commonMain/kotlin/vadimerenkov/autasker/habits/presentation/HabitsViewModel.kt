@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import vadimerenkov.autasker.core.domain.habits.HabitCompletion
-import vadimerenkov.autasker.habits.domain.HabitsRepository
+import vadimerenkov.autasker.core.domain.habits.HabitsRepository
 import java.time.ZoneId
 
 class HabitsViewModel(

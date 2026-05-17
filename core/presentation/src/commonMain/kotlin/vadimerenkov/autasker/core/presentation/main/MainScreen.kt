@@ -46,6 +46,7 @@ import vadimerenkov.autasker.core.domain.TaskCategory
 import vadimerenkov.autasker.core.domain.Time
 import vadimerenkov.autasker.core.presentation.components.TaskColumn
 import vadimerenkov.autasker.core.presentation.main.components.EditTabsDialog
+import vadimerenkov.autasker.core.presentation.main.components.HabitCompletionDialog
 import vadimerenkov.autasker.core.presentation.main.components.MovingColumnDialog
 import vadimerenkov.autasker.core.presentation.main.components.MovingTaskDialog
 import vadimerenkov.autasker.core.presentation.main.components.PageTab
@@ -162,6 +163,16 @@ private fun MainScreenRoot(
 			category.copy(index = index)
 		}
 		onTaskAction(MainAction.ChangeColumnsIndices(indexedCategories))
+	}
+
+	if (state.showHabitCompletionDialog) {
+		HabitCompletionDialog(
+			habit = state.dialogHabit!!,
+			onDismissRequest = {
+				onTaskAction(MainAction.DismissHabitDialog)
+			},
+			onAction = onTaskAction
+		)
 	}
 
 	Column {

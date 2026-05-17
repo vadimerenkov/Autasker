@@ -103,7 +103,7 @@ class MainViewModelTest: KoinTest {
 		)
 
 		viewModel = MainViewModel(
-			repository = repository,
+			tasksRepository = repository,
 			reminderService = reminderService,
 			settings = settings,
 			audioPlayer = FakeAudioPlayer()
