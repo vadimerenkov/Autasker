@@ -377,11 +377,12 @@ class MainViewModel(
 		viewModelScope.launch {
 			if (task.repeatState.isRepeating
 				&& task.calculateNewDate(settings.state.value.firstDayOfWeek)?.isBefore(Time.todayEnd()) == true) {
-						tasksRepository.saveTask(task.copy(
-							isCompleted = false,
-							dueDate = task.calculateNewDate(settings.state.value.firstDayOfWeek)
-						))
-						rescheduleRemindersForTask(task)
+					val newTask = task.copy(
+						isCompleted = false,
+						dueDate = task.calculateNewDate(settings.state.value.firstDayOfWeek)
+					)
+					tasksRepository.saveTask(newTask)
+					rescheduleRemindersForTask(newTask)
 			} else {
 				tasksRepository.saveTask(task.copy(isCompleted = true, completedDate = Time.now()))
 				reminderService.cancelRemindersForTask(task.id)
