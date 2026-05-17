@@ -30,7 +30,8 @@ fun Task.toData(): TaskData {
 		isAllDay = isAllDay,
 		deletedDateEpochSeconds = deletedDate?.toEpochSecond(),
 		completedDateEpochSeconds = completedDate?.toEpochSecond(),
-		importance = importance
+		importance = importance,
+		habitId = habitId
 	)
 }
 
@@ -48,7 +49,8 @@ fun TaskData.toTask(): Task {
 		isDeleted = isDeleted,
 		isAllDay = isAllDay,
 		importance = importance,
-		index = index
+		index = index,
+		habitId = habitId
 	)
 }
 
@@ -67,7 +69,8 @@ fun TaskData.toTask(subtasks: List<Subtask>): Task {
 		isDeleted = isDeleted,
 		isAllDay = isAllDay,
 		importance = importance,
-		index = index
+		index = index,
+		habitId = habitId
 	)
 }
 

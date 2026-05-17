@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 2,
-    "identityHash": "b661c32165799b20d98d79c26972a853",
+    "identityHash": "3c82ffcdaafd880476290e787e58decc",
     "entities": [
       {
         "tableName": "CategoryData",
@@ -65,7 +65,7 @@
       },
       {
         "tableName": "TaskData",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `categoryId` INTEGER NOT NULL, `index` INTEGER NOT NULL, `title` TEXT NOT NULL, `description` TEXT, `dueDateEpochSeconds` INTEGER, `isCompleted` INTEGER NOT NULL, `isDeleted` INTEGER NOT NULL, `deletedDateEpochSeconds` INTEGER, `completedDateEpochSeconds` INTEGER, `isAllDay` INTEGER NOT NULL, `importance` INTEGER NOT NULL, `isRepeating` INTEGER NOT NULL, `mode` TEXT NOT NULL, `period` TEXT NOT NULL, `times` INTEGER NOT NULL, `weekDays` TEXT NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `categoryId` INTEGER NOT NULL, `index` INTEGER NOT NULL, `title` TEXT NOT NULL, `description` TEXT, `dueDateEpochSeconds` INTEGER, `isCompleted` INTEGER NOT NULL, `isDeleted` INTEGER NOT NULL, `deletedDateEpochSeconds` INTEGER, `completedDateEpochSeconds` INTEGER, `isAllDay` INTEGER NOT NULL, `importance` INTEGER NOT NULL, `habitId` INTEGER, `isRepeating` INTEGER NOT NULL, `mode` TEXT NOT NULL, `period` TEXT NOT NULL, `times` INTEGER NOT NULL, `weekDays` TEXT NOT NULL)",
         "fields": [
           {
             "fieldPath": "id",
@@ -134,6 +134,11 @@
             "columnName": "importance",
             "affinity": "INTEGER",
             "notNull": true
+          },
+          {
+            "fieldPath": "habitId",
+            "columnName": "habitId",
+            "affinity": "INTEGER"
           },
           {
             "fieldPath": "repeatState.isRepeating",
@@ -408,7 +413,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'b661c32165799b20d98d79c26972a853')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '3c82ffcdaafd880476290e787e58decc')"
     ]
   }
 }

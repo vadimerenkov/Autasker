@@ -4,16 +4,19 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuAnchorType
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -28,6 +31,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import autasker.core.presentation.generated.resources.Res
+import autasker.core.presentation.generated.resources.minutes
+import autasker.core.presentation.generated.resources.per
+import autasker.core.presentation.generated.resources.times_per
+import autasker.core.presentation.generated.resources.title
+import org.jetbrains.compose.resources.stringResource
 import vadimerenkov.autasker.core.domain.habits.HabitType
 import vadimerenkov.autasker.core.presentation.components.ButtonsRow
 import vadimerenkov.autasker.core.presentation.components.IntNumberInputField
@@ -54,8 +63,11 @@ fun HabitEditDialog(
 			onValueChange = {
 				onAction(HabitEditAction.TitleChange(it))
 			},
-			modifier = Modifier
-				.align(Alignment.CenterHorizontally)
+			placeholder = {
+				Text(
+					text = stringResource(Res.string.title)
+				)
+			}
 		)
 		var expanded by remember { mutableStateOf(false) }
 		Row(
@@ -125,8 +137,16 @@ fun HabitEditDialog(
 				modifier = Modifier
 					.widthIn(max = 150.dp)
 			)
+			val per = stringResource(Res.string.per)
 			Text(
-				text = "times per"
+				text = when (state.type) {
+					HabitType.SINGLE -> "${stringResource(Res.string.times_per)} $per"
+					HabitType.TIME -> "${stringResource(Res.string.minutes)} $per"
+					HabitType.CUSTOM -> {
+
+						"${state.customQuantifier} $per"
+					}
+				}
 			)
 			var expanded by remember { mutableStateOf(false) }
 
@@ -143,6 +163,67 @@ fun HabitEditDialog(
 			)
 		}
 
+		state.tasks.forEach { task ->
+			Row(
+				horizontalArrangement = Arrangement.SpaceBetween,
+				modifier = Modifier
+					.fillMaxWidth()
+			) {
+				Text(
+					text = task.title
+				)
+				IconButton(
+					onClick = {
+						onAction(HabitEditAction.RemoveTaskClick(task))
+					}
+				) {
+					Icon(
+						imageVector = Icons.Default.Delete,
+						contentDescription = "Delete task"
+					)
+				}
+			}
+		}
+
+		var tasksExpanded by remember { mutableStateOf(false) }
+
+		ExposedDropdownMenuBox(
+			expanded = tasksExpanded,
+			onExpandedChange =  { tasksExpanded = it }
+		) {
+			TextField(
+				value = "Choose task...",
+				readOnly = true,
+				trailingIcon = {
+					Icon(
+						imageVector = Icons.Default.ArrowDropDown,
+						contentDescription = null
+					)
+				},
+				onValueChange = {},
+				modifier = Modifier
+					.menuAnchor(ExposedDropdownMenuAnchorType.PrimaryNotEditable)
+					.fillMaxWidth()
+			)
+			ExposedDropdownMenu(
+				expanded = tasksExpanded,
+				onDismissRequest = { tasksExpanded = false }
+			) {
+				state.allTasks.forEach { task ->
+					DropdownMenuItem(
+						text = {
+							Text(
+								text = task.title
+							)
+					    },
+						onClick = {
+							onAction(HabitEditAction.AddTaskClick(task))
+							tasksExpanded = false
+						}
+					)
+				}
+			}
+		}
 
 		ButtonsRow(
 			onPrimaryClick = {

@@ -1,6 +1,5 @@
 package vadimerenkov.autasker.habits.presentation
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -22,7 +21,9 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.graphics.StrokeCap
+import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.unit.dp
 import autasker.core.presentation.generated.resources.Res
 import autasker.core.presentation.generated.resources.next_month
@@ -106,27 +107,35 @@ fun HabitDetailsScreen(
 				}
 			},
 			dayContent = { day ->
-				val completion = completions.find { it.date.toLocalDate() == day.date.toJavaLocalDate() }
+				val dailyCompletions = completions.filter { it.date.toLocalDate() == day.date.toJavaLocalDate() }
+				val completedPercent = dailyCompletions.size / habit.times.toDouble()
+				val degrees = (completedPercent * 360f).toFloat()
+				val primaryColor = MaterialTheme.colorScheme.primary
 				Box(
 					contentAlignment = Alignment.Center,
 					modifier = Modifier
 						.clip(CircleShape)
 						.clickable {
-							if (completion == null) {
-								onAction(HabitsAction.OnCalendarDayClick(day.date.toJavaLocalDate(), habit.id))
-							} else {
-								onAction(HabitsAction.OnCalendarDayUnclick(completion.id))
-							}
+
 						}
-						.background(
-							color = if (completion != null) MaterialTheme.colorScheme.primary else Color.Transparent
-						)
+						.drawBehind {
+							drawArc(
+								color = primaryColor,
+								startAngle = -90f,
+								sweepAngle = degrees,
+								useCenter = false,
+								style = Stroke(
+									width = 10f,
+									cap = StrokeCap.Round
+								)
+							)
+						}
 						.size(48.dp)
 						.padding(8.dp)
 				) {
 					Text(
 						text = day.date.day.toString(),
-						color = if (completion != null) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onBackground
+						color = MaterialTheme.colorScheme.onBackground
 					)
 				}
 			}

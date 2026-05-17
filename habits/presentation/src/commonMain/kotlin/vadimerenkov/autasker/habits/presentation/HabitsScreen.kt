@@ -3,6 +3,7 @@ package vadimerenkov.autasker.habits.presentation
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
@@ -89,7 +90,9 @@ private fun HabitsScreenRoot(
 			rememberSaveableStateHolderNavEntryDecorator(),
 			rememberViewModelStoreNavEntryDecorator()
 		),
-		modifier = modifier,
+		modifier = modifier
+			.fillMaxSize()
+			.background(MaterialTheme.colorScheme.background),
 		entryProvider = entryProvider {
 			entry<HabitListRoute>(
 				metadata = ListDetailScene.list()

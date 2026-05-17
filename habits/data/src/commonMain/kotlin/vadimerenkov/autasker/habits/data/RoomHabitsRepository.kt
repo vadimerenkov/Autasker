@@ -38,8 +38,8 @@ class RoomHabitsRepository(
 		return dao.getAllCompletions().map { it.map { it.toCompletion() } }
 	}
 
-	override suspend fun saveHabit(habit: Habit) {
-		dao.saveHabit(habit.toData())
+	override suspend fun saveHabit(habit: Habit): Long {
+		return dao.saveHabit(habit.toData())
 	}
 
 	override suspend fun deleteHabit(id: Long) {
@@ -52,6 +52,10 @@ class RoomHabitsRepository(
 
 	override suspend fun deleteCompletion(id: Long) {
 		dao.deleteCompletion(id)
+	}
+
+	override suspend fun deleteCompletionsForHabit(id: Long) {
+		dao.deleteCompletionsForHabit(id)
 	}
 
 }
