@@ -346,7 +346,7 @@ fun TaskColumn(
 								task = task,
 								onAction = onTaskAction,
 								modifier = Modifier
-//							.width(width)
+									.width(width)
 							)
 						}
 					}

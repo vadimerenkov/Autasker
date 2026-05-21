@@ -40,7 +40,7 @@ fun AboutScreen(
 		modifier = modifier
 	) {
 		Text(
-			text = "Autasker v.1.0.1",
+			text = "Autasker v.1.0.2",
 			fontSize = 16.sp,
 			color = MaterialTheme.colorScheme.onBackground
 		)
