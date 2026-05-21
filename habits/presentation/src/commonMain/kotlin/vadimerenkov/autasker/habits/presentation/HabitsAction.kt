@@ -10,5 +10,5 @@ sealed interface HabitsAction {
 	data object DismissDeleteDialogClick: HabitsAction
 	data object ConfirmDeletion: HabitsAction
 	data class OnCalendarDayClick(val date: LocalDate, val id: Long): HabitsAction
-	data class OnCalendarDayUnclick(val completionId: Long): HabitsAction
+	data object DayDialogDismiss: HabitsAction
 }

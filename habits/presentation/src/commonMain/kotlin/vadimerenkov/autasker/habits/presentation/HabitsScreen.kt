@@ -87,6 +87,8 @@ private fun HabitsScreenRoot(
 		}
 	}
 
+
+
 	SharedTransitionLayout {
 		NavDisplay(
 			backStack = backstack,
@@ -129,8 +131,7 @@ private fun HabitsScreenRoot(
 					metadata = ListDetailScene.detail()
 				) {
 					HabitDetailsScreen(
-						habit = state.selectedHabit!!,
-						completions = state.completions.filter { it.habitId == state.selectedHabit.id },
+						state = state,
 						onAction = onAction
 					)
 				}

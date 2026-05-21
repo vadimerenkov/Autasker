@@ -8,9 +8,7 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
-import vadimerenkov.autasker.core.domain.habits.HabitCompletion
 import vadimerenkov.autasker.core.domain.habits.HabitsRepository
-import java.time.ZoneId
 
 class HabitsViewModel(
 	private val repository: HabitsRepository
@@ -37,18 +35,10 @@ class HabitsViewModel(
 				state = state.copy(selectedHabit = state.habits.find { it.id == action.id })
 			}
 			is HabitsAction.OnCalendarDayClick -> {
-				viewModelScope.launch {
-					repository.saveCompletion(HabitCompletion(
-						habitId = action.id,
-						date = action.date.atStartOfDay(ZoneId.systemDefault()),
-						quantity = 1
-					))
-				}
+				state = state.copy(openedCalendarDay = action.date)
 			}
-			is HabitsAction.OnCalendarDayUnclick -> {
-				viewModelScope.launch {
-					repository.deleteCompletion(action.completionId)
-				}
+			is HabitsAction.DayDialogDismiss -> {
+				state = state.copy(openedCalendarDay = null)
 			}
 			is HabitsAction.DeleteHabitClick -> {
 				val habit = state.habits.find { it.id == action.id }
