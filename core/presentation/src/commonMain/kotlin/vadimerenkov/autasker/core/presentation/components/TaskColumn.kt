@@ -275,6 +275,7 @@ fun TaskColumn(
 										onTaskAction(MainAction.ReorderTasks(notCompleted))
 									}
 								)
+								.width(width)
 						)
 					}
 				}

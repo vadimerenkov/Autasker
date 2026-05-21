@@ -8,6 +8,7 @@ import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationRail
 import androidx.compose.material3.NavigationRailItem
 import androidx.compose.material3.Text
@@ -26,7 +27,9 @@ import org.jetbrains.compose.resources.stringResource
 fun MainNavigationRail(
 	backstack: MutableList<NavKey>,
 ) {
-	NavigationRail() {
+	NavigationRail(
+		containerColor = MaterialTheme.colorScheme.secondaryContainer
+	) {
 		NavigationRailItem(
 			selected = backstack.lastOrNull() == MainScreenRoute,
 			onClick = {

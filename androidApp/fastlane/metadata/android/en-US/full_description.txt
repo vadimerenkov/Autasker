@@ -1,0 +1,12 @@
+<p><i>Autasker</i> is a free and open-source to-do list application. It's a simple but robust task manager designed to be as comfortable to use as possible and neurodivergent-friendly.</p>
+
+<p><b>Highlights:</b></p>
+
+<li>Create tasks and sort them by categories and tabs</li>
+<li>The day ends when you say it ends - just change the time in the settings!</li>
+<li>A powerful system of repeating tasks - fine-tune the way each task repeats individually</li>
+<li>No yelling at you for missing or skipping the tasks - you control the app, not the other way around</li>
+<li>A smart system for planning your day every morning: just open the app and it will suggest some tasks to do today</li>
+<li>Supported on Windows, Linux and Android</li>
+<li>Fully offline - no need to create an account, your data stays with you</li>
+<li>In active development: new features soon to come</li>

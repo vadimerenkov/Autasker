@@ -1,0 +1,3 @@
+Maintenance release; getting ready for F-Droid submission
+
+Minor visual fixes and polish
