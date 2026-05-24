@@ -33,6 +33,8 @@ import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.parameter.parametersOf
 import vadimerenkov.autasker.core.presentation.components.ButtonsRow
+import vadimerenkov.autasker.habits.presentation.details.HabitDetailsScreen
+import vadimerenkov.autasker.habits.presentation.details.HabitDetailsViewModel
 import vadimerenkov.autasker.habits.presentation.edit.HabitEditDialog
 import vadimerenkov.autasker.habits.presentation.edit.HabitEditViewModel
 import vadimerenkov.autasker.habits.presentation.navigation.HabitDetailRoute
@@ -114,7 +116,7 @@ private fun HabitsScreenRoot(
 							onAction(action)
 							when (action) {
 								is HabitsAction.OnHabitClick -> {
-									backstack.add(HabitDetailRoute)
+									backstack.add(HabitDetailRoute(action.id))
 								}
 								is HabitsAction.EditHabitClick -> {
 									backstack.add(HabitEditRoute(action.id))
@@ -130,9 +132,10 @@ private fun HabitsScreenRoot(
 				entry<HabitDetailRoute>(
 					metadata = ListDetailScene.detail()
 				) {
+					val viewModel: HabitDetailsViewModel = koinViewModel { parametersOf(it.id) }
 					HabitDetailsScreen(
-						state = state,
-						onAction = onAction
+						state = viewModel.state,
+						onAction = viewModel::onAction
 					)
 				}
 				entry<HabitEditRoute>(

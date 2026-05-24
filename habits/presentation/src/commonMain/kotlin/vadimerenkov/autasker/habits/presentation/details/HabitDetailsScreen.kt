@@ -1,4 +1,4 @@
-package vadimerenkov.autasker.habits.presentation
+package vadimerenkov.autasker.habits.presentation.details
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -9,6 +9,8 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -55,12 +57,11 @@ import java.util.Locale
 
 @Composable
 fun HabitDetailsScreen(
-	state: HabitsState,
-	onAction: (HabitsAction) -> Unit,
+	state: HabitDetailsState,
+	onAction: (HabitDetailsAction) -> Unit,
 	modifier: Modifier = Modifier
 ) {
-	val habit = state.selectedHabit!!
-	val completions = state.completions.filter { it.habitId == state.selectedHabit.id }
+	val completions = state.completions.filter { it.habitId == state.habit.id }
 	val scope = rememberCoroutineScope()
 	val calendarState = rememberCalendarState(
 		startMonth = YearMonth.now().minusYears(50),
@@ -71,7 +72,7 @@ fun HabitDetailsScreen(
 	state.openedCalendarDay?.let { day ->
 		Dialog(
 			onDismissRequest = {
-				onAction(HabitsAction.DayDialogDismiss)
+				onAction(HabitDetailsAction.DayDialogDismiss)
 			}
 		) {
 			Column(
@@ -83,7 +84,7 @@ fun HabitDetailsScreen(
 				Text(
 					text = day.toString()
 				)
-				var dailyCompletions = remember { completions.filter { it.date.toLocalDate() == day }.toMutableStateList() }
+				val dailyCompletions = remember { completions.filter { it.date.toLocalDate() == day }.toMutableStateList() }
 				val totalQuantity = dailyCompletions.sumOf { it.quantity }
 				Text(
 					text = "Total: $totalQuantity"
@@ -91,6 +92,7 @@ fun HabitDetailsScreen(
 				dailyCompletions.forEachIndexed { index, completion ->
 					IntNumberInputField(
 						value = completion.quantity,
+						minNumber = 1,
 						onValueChange = { quantity ->
 							dailyCompletions.removeAt(index)
 							dailyCompletions.add(index, completion.copy(quantity = quantity ?: 0))
@@ -101,7 +103,7 @@ fun HabitDetailsScreen(
 					onClick = {
 						dailyCompletions.add(
 							HabitCompletion(
-								habitId = habit.id,
+								habitId = state.habit.id,
 								date = day.atStartOfDay(ZoneId.systemDefault()),
 								quantity = 1
 							)
@@ -114,9 +116,12 @@ fun HabitDetailsScreen(
 					)
 				}
 				ButtonsRow(
-					onPrimaryClick = {},
+					onPrimaryClick = {
+						onAction(HabitDetailsAction.DayDialogSave(dailyCompletions.toList()))
+						onAction(HabitDetailsAction.DayDialogDismiss)
+					},
 					onSecondaryClick = {
-						onAction(HabitsAction.DayDialogDismiss)
+						onAction(HabitDetailsAction.DayDialogDismiss)
 					}
 				)
 
@@ -129,7 +134,7 @@ fun HabitDetailsScreen(
 		modifier = modifier
 	) {
 		Text(
-			text = habit.title
+			text = state.habit.title
 		)
 		HorizontalCalendar(
 			state = calendarState,
@@ -174,7 +179,7 @@ fun HabitDetailsScreen(
 			},
 			dayContent = { day ->
 				val dailyCompletions = completions.filter { it.date.toLocalDate() == day.date.toJavaLocalDate() }
-				val completedPercent = if (habit.period == Period.DAY) dailyCompletions.size / habit.times.toDouble() else dailyCompletions.size.toDouble()
+				val completedPercent = if (state.habit.period == Period.DAY) dailyCompletions.size / state.habit.times.toDouble() else dailyCompletions.size.toDouble()
 				val degrees = (completedPercent * 360f)
 					.toFloat()
 					.coerceAtMost(360f)
@@ -184,7 +189,7 @@ fun HabitDetailsScreen(
 					modifier = Modifier
 						.clip(CircleShape)
 						.clickable {
-							onAction(HabitsAction.OnCalendarDayClick(day.date.toJavaLocalDate(), habit.id))
+							onAction(HabitDetailsAction.OnCalendarDayClick(day.date.toJavaLocalDate()))
 						}
 						.drawBehind {
 							drawArc(
@@ -208,5 +213,22 @@ fun HabitDetailsScreen(
 				}
 			}
 		)
+		LazyColumn {
+			item {
+				Text(
+					text = "Current streak is ${state.currentStreak}"
+				)
+			}
+			item {
+				Text(
+					text = "Total completions: ${state.totalCompletions}"
+				)
+			}
+			items(
+				items = state.dates
+			) { period ->
+				Text(text = period.toString())
+			}
+		}
 	}
 }

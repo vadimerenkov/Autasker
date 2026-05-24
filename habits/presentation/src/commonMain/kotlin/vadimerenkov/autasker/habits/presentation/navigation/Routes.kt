@@ -7,7 +7,9 @@ import kotlinx.serialization.Serializable
 data object HabitListRoute: NavKey
 
 @Serializable
-data object HabitDetailRoute: NavKey
+data class HabitDetailRoute(
+	val id: Long
+): NavKey
 
 @Serializable
 data class HabitEditRoute(

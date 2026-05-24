@@ -143,7 +143,6 @@ fun HabitEditDialog(
 					HabitType.SINGLE -> "${stringResource(Res.string.times_per)} $per"
 					HabitType.TIME -> "${stringResource(Res.string.minutes)} $per"
 					HabitType.CUSTOM -> {
-
 						"${state.customQuantifier} $per"
 					}
 				}
