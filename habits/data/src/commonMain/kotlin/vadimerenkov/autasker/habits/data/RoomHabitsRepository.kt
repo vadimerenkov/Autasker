@@ -38,6 +38,10 @@ class RoomHabitsRepository(
 		return dao.getAllCompletions().map { it.map { it.toCompletion() } }
 	}
 
+	override fun getCompletionsForHabit(id: Long): Flow<List<HabitCompletion>> {
+		return dao.getCompletionsForHabit(id).map { it.map { it.toCompletion() } }
+	}
+
 	override suspend fun saveHabit(habit: Habit): Long {
 		return dao.saveHabit(habit.toData())
 	}

@@ -22,24 +22,11 @@ class HabitsViewModel(
 			.onEach { list ->
 				state = state.copy(habits = list)
 			}.launchIn(viewModelScope)
-
-		repository.getAllCompletions()
-			.onEach {
-				state = state.copy(completions = it)
-			}.launchIn(viewModelScope)
 	}
 
 	fun onAction(action: HabitsAction) {
 		when (action) {
-			is HabitsAction.OnHabitClick -> {
-				state = state.copy(selectedHabit = state.habits.find { it.id == action.id })
-			}
-			is HabitsAction.OnCalendarDayClick -> {
-				state = state.copy(openedCalendarDay = action.date)
-			}
-			is HabitsAction.DayDialogDismiss -> {
-				state = state.copy(openedCalendarDay = null)
-			}
+
 			is HabitsAction.DeleteHabitClick -> {
 				val habit = state.habits.find { it.id == action.id }
 				state = state.copy(isDeleteDialogOpen = true, deletingHabit = habit)
