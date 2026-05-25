@@ -92,6 +92,11 @@
     <string name="minutes">минут</string>
     <string name="per">в</string>
     <string name="custom">свое</string>
+    <string name="current_streak">Нынешняя полоса:</string>
+    <string name="monthly_completions">Сделано в месяц:</string>
+    <string name="total_completions">Всего сделано:</string>
+    <string name="count_as">Считать:</string>
+    <string name="choose_task">Выберите задачу...</string>
 
     <string name="theme">Тема</string>
     <string name="light_theme">Светлая</string>

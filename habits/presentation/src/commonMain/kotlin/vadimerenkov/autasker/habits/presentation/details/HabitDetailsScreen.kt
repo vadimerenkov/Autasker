@@ -27,10 +27,13 @@ import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import autasker.core.presentation.generated.resources.Res
+import autasker.core.presentation.generated.resources.current_streak
 import autasker.core.presentation.generated.resources.minutes
+import autasker.core.presentation.generated.resources.monthly_completions
 import autasker.core.presentation.generated.resources.next_month
 import autasker.core.presentation.generated.resources.previous_month
 import autasker.core.presentation.generated.resources.times_per
+import autasker.core.presentation.generated.resources.total_completions
 import com.kizitonwose.calendar.compose.HorizontalCalendar
 import com.kizitonwose.calendar.compose.rememberCalendarState
 import com.kizitonwose.calendar.core.CalendarDay
@@ -139,8 +142,9 @@ fun HabitDetailsScreen(
 			HabitType.CUSTOM -> state.habit.customQuantifier ?: ""
 		}
 
+		val currentStreak = stringResource(Res.string.current_streak)
 		Text(
-			text = "Current streak: ${state.currentStreak} $quantifier",
+			text = "$currentStreak ${state.currentStreak} $quantifier",
 			fontSize = 24.sp
 		)
 
@@ -153,14 +157,16 @@ fun HabitDetailsScreen(
 			.completions
 			.filter { it.date.isIn(month) }
 			.sumOf { it.quantity }
+		val monthlyCompletionsText = stringResource(Res.string.monthly_completions)
 		Text(
-			text = "Monthly completions: $monthlyCompletions $quantifier",
+			text = "$monthlyCompletionsText $monthlyCompletions $quantifier",
 			fontSize = 24.sp
 		)
 
 		val totalCompletions = state.completions.sumOf { it.quantity }
+		val totalCompletionsText = stringResource(Res.string.total_completions)
 		Text(
-			text = "Total completions: $totalCompletions $quantifier",
+			text = "$totalCompletionsText $totalCompletions $quantifier",
 			fontSize = 24.sp
 		)
 
