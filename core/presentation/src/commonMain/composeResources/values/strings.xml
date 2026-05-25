@@ -92,10 +92,15 @@
     <string name="minutes">minutes</string>
     <string name="per">per</string>
     <string name="custom">custom</string>
+    <string name="current_streak">Current streak:</string>
+    <string name="monthly_completions">Monthly completions:</string>
+    <string name="total_completions">Total completions:</string>
+    <string name="count_as">Count:</string>
+    <string name="choose_task">Choose task...</string>
 
     <string name="language">Language</string>
-    <string name="english">English</string>
-    <string name="russian">Русский</string>
+    <string name="english" translatable="false">English</string>
+    <string name="russian" translatable="false">Русский</string>
 
     <string name="theme">Theme</string>
     <string name="light_theme">Light</string>

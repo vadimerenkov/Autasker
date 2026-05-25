@@ -4,8 +4,10 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -32,6 +34,9 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import autasker.core.presentation.generated.resources.Res
+import autasker.core.presentation.generated.resources.choose_task
+import autasker.core.presentation.generated.resources.count_as
+import autasker.core.presentation.generated.resources.delete_task
 import autasker.core.presentation.generated.resources.minutes
 import autasker.core.presentation.generated.resources.per
 import autasker.core.presentation.generated.resources.times_per
@@ -74,8 +79,9 @@ fun HabitEditDialog(
 			verticalAlignment = Alignment.CenterVertically
 		) {
 			Text(
-				text = "Count: "
+				text = stringResource(Res.string.count_as)
 			)
+			Spacer(modifier = Modifier.width(8.dp))
 			ExposedDropdownMenuBox(
 				expanded = expanded,
 				onExpandedChange = {
@@ -178,7 +184,7 @@ fun HabitEditDialog(
 				) {
 					Icon(
 						imageVector = Icons.Default.Delete,
-						contentDescription = "Delete task"
+						contentDescription = stringResource(Res.string.delete_task)
 					)
 				}
 			}
@@ -191,7 +197,7 @@ fun HabitEditDialog(
 			onExpandedChange =  { tasksExpanded = it }
 		) {
 			TextField(
-				value = "Choose task...",
+				value = stringResource(Res.string.choose_task),
 				readOnly = true,
 				trailingIcon = {
 					Icon(

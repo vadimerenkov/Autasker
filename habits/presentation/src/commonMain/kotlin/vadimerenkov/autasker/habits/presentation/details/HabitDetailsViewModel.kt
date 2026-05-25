@@ -57,6 +57,13 @@ class HabitDetailsViewModel(
 					}
 				}
 			}
+			is HabitDetailsAction.DeleteCompletions -> {
+				viewModelScope.launch {
+					action.completions.forEach { completion ->
+						repository.deleteCompletion(completion.id)
+					}
+				}
+			}
 		}
 	}
 
