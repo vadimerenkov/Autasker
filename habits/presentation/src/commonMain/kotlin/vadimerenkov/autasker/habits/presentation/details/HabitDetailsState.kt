@@ -10,6 +10,5 @@ data class HabitDetailsState(
 	val completions: List<HabitCompletion> = emptyList(),
 	val openedCalendarDay: LocalDate? = null,
 	val dates: List<DatePeriod> = emptyList(),
-	val currentStreak: Int = 0,
-	val totalCompletions: Int = 0
+	val currentStreak: Int = 0
 )
