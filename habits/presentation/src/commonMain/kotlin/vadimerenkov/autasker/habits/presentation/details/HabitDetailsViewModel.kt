@@ -34,12 +34,10 @@ class HabitDetailsViewModel(
 			.onEach { completions ->
 				val dates = calculateDatePeriods(completions)
 				val currentStreak = calculateCurrentStreak(completions, dates)
-				val totalCompletions = calculateTotalCompletions(completions)
 				state = state.copy(
 					completions = completions,
 					dates = dates,
-					currentStreak = currentStreak,
-					totalCompletions = totalCompletions
+					currentStreak = currentStreak
 				)
 			}.launchIn(viewModelScope)
 	}
@@ -112,9 +110,5 @@ class HabitDetailsViewModel(
 		}
 
 		return streak
-	}
-
-	fun calculateTotalCompletions(completions: List<HabitCompletion>): Int {
-		return completions.sumOf { it.quantity }
 	}
 }
