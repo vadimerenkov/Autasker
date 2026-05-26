@@ -26,6 +26,7 @@ import autasker.core.presentation.generated.resources.source_code
 import autasker.core.presentation.generated.resources.support_developer
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
+import vadimerenkov.autasker.BuildKonfig
 import vadimerenkov.autasker.core.presentation.theme.AutaskerTheme
 import java.time.Year
 
@@ -39,8 +40,9 @@ fun AboutScreen(
 		horizontalAlignment = Alignment.CenterHorizontally,
 		modifier = modifier
 	) {
+		val version = BuildKonfig.versionName
 		Text(
-			text = "Autasker v.1.0.2",
+			text = "Autasker v.$version",
 			fontSize = 16.sp,
 			color = MaterialTheme.colorScheme.onBackground
 		)

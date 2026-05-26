@@ -1,9 +1,12 @@
+import com.codingfeline.buildkonfig.compiler.FieldSpec
+
 plugins {
 	alias(libs.plugins.convention.kmp.library)
 	alias(libs.plugins.androidLint)
 	alias(libs.plugins.composeMultiplatform)
 	alias(libs.plugins.composeCompiler)
 	alias(libs.plugins.composeHotReload)
+	alias(libs.plugins.buildkonfig)
 }
 
 kotlin {
@@ -41,4 +44,12 @@ kotlin {
 
 compose.resources {
 	publicResClass = true
+}
+
+buildkonfig {
+	packageName = "vadimerenkov.autasker"
+
+	defaultConfigs {
+		buildConfigField(FieldSpec.Type.STRING, "versionName", libs.versions.version.name.get())
+	}
 }

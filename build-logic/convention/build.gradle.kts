@@ -11,6 +11,9 @@ dependencies {
 	compileOnly(libs.android.tools.common)
 	compileOnly(libs.kotlin.gradlePlugin)
 	compileOnly(libs.compose.gradlePlugin)
+
+	implementation(libs.buildkonfig.gradlePlugin)
+	implementation(libs.buildkonfig.compiler)
 }
 
 
