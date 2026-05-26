@@ -34,6 +34,7 @@ import androidx.window.core.layout.WindowSizeClass
 import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.parameter.parametersOf
 import vadimerenkov.autasker.calendar.CalendarScreen
+import vadimerenkov.autasker.core.domain.settings.Settings
 import vadimerenkov.autasker.core.presentation.about.AboutScreen
 import vadimerenkov.autasker.core.presentation.bin.BinScreen
 import vadimerenkov.autasker.core.presentation.main.MainScreen
@@ -47,9 +48,16 @@ import vadimerenkov.autasker.core.presentation.task_edit.datetime.DateTimeScreen
 import vadimerenkov.autasker.habits.presentation.HabitsScreen
 
 @Composable
-fun RootNavDisplay() {
+fun RootNavDisplay(
+	settings: Settings
+) {
 	val backstack = rememberNavBackStack(MainGraph)
-	println("Recomposed root display")
+
+	LaunchedEffect(true) {
+		if (settings.checkForNewDay()) {
+			backstack.add(NewDayRoute)
+		}
+	}
 
 	NavDisplay(
 		backStack = backstack,
