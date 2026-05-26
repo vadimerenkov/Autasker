@@ -141,7 +141,7 @@ fun HabitEditDialog(
 					onAction(HabitEditAction.TimesChange(it))
 				},
 				modifier = Modifier
-					.widthIn(max = 150.dp)
+					.widthIn(max = 100.dp)
 			)
 			val per = stringResource(Res.string.per)
 			Text(

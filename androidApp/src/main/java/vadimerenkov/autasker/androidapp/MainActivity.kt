@@ -23,7 +23,7 @@ class MainActivity : ComponentActivity() {
         setContent {
 	        settings = koinInject<Settings>()
 	        AutaskerApp(settings) {
-		        RootNavDisplay()
+		        RootNavDisplay(settings)
 	        }
         }
     }

@@ -83,6 +83,10 @@ class TasksRepositoryFake: TasksRepository {
 		return tasks.value.filter { it.dueDate == null && !it.isCompleted }
 	}
 
+	override suspend fun getTasksForHabit(id: Long): List<Task> {
+		return tasks.value.filter { it.habitId == id }
+	}
+
 	override fun getDeletedTasks(): Flow<List<Task>> {
 		return tasks.map { it.filter { it.isDeleted } }
 	}
