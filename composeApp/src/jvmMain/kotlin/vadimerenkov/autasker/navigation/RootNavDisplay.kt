@@ -52,6 +52,7 @@ import androidx.navigation3.ui.NavDisplay
 import autasker.core.presentation.generated.resources.Res
 import autasker.core.presentation.generated.resources.about
 import autasker.core.presentation.generated.resources.calendar
+import autasker.core.presentation.generated.resources.download_new_version
 import autasker.core.presentation.generated.resources.edit_task
 import autasker.core.presentation.generated.resources.kofi_link
 import autasker.core.presentation.generated.resources.settings
@@ -59,6 +60,7 @@ import autasker.core.presentation.generated.resources.support_developer
 import autasker.core.presentation.generated.resources.tasks
 import autasker.core.presentation.generated.resources.trash
 import kotlinx.coroutines.launch
+import org.jetbrains.compose.resources.getString
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.parameter.parametersOf
@@ -77,6 +79,7 @@ import vadimerenkov.autasker.core.presentation.task_edit.TaskEditScreen
 import vadimerenkov.autasker.core.presentation.task_edit.TaskEditViewModel
 import vadimerenkov.autasker.core.presentation.task_edit.datetime.DateTimeScreen
 import vadimerenkov.autasker.core.presentation.windows.CommonWindow
+import vadimerenkov.autasker.update_checker.UpdateChecker
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
@@ -84,37 +87,44 @@ fun RootNavDisplay(
 	settings: Settings
 ) {
 	val backstack = remember { mutableStateListOf<NavKey>(MainScreenRoute) }
+	val uriHandler = LocalUriHandler.current
+	val link = stringResource(Res.string.kofi_link)
+	val actions = mutableStateListOf(
+		MenuAction(
+			text = stringResource(Res.string.settings)
+		) {
+			backstack.add(SettingsRoute)
+		},
+		MenuAction(
+			text = stringResource(Res.string.about)
+		) {
+			backstack.add(AboutRoute)
+		},
+		MenuAction(
+			text = stringResource(Res.string.support_developer)
+		) {
+			uriHandler.openUri(link)
+		}
+	)
+
 	LaunchedEffect(true) {
 		if (settings.checkForNewDay()) {
 			backstack.add(NewDayRoute)
 		}
+		if (UpdateChecker.checkForUpdates()) {
+			actions.add(MenuAction(
+				text = getString(Res.string.download_new_version),
+				onClick = {
+					uriHandler.openUri("https://github.com/vadimerenkov/Autasker/releases/latest")
+				},
+				showIndicator = true
+			))
+		}
 	}
-	val uriHandler = LocalUriHandler.current
-	val link = stringResource(Res.string.kofi_link)
+
 	Column {
 		TitleBar(
-			actions = listOf(
-				MenuAction(
-					text = stringResource(Res.string.settings)
-				) {
-					backstack.add(SettingsRoute)
-				},
-				MenuAction(
-					text = stringResource(Res.string.about)
-				) {
-					backstack.add(AboutRoute)
-				},
-				MenuAction(
-					text = stringResource(Res.string.support_developer)
-				) {
-					uriHandler.openUri(link)
-				}
-//				MenuAction(
-//					text = "New day (hack)"
-//				) {
-//					backstack.add(NewDayRoute)
-//				}
-			),
+			actions = actions,
 			modifier = Modifier
 				.background(MaterialTheme.colorScheme.secondaryContainer)
 		)

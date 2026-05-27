@@ -38,6 +38,7 @@ kotlin {
 	        implementation(projects.core.database)
 	        implementation(projects.core.domain)
 	        implementation(projects.core.presentation)
+	        implementation(projects.updateChecker)
         }
         jvmMain.dependencies {
             implementation(compose.desktop.currentOs)

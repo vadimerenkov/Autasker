@@ -41,6 +41,8 @@ autoLaunch = "0.8.0"
 material = "1.14.0"
 adaptive = "1.2.0"
 calendar = "2.10.1"
+ktor = "3.5.0"
+buildkonfig = "0.21.2"
 
 [libraries]
 junit-jupiter = { module = "org.junit.jupiter:junit-jupiter" }
@@ -93,6 +95,12 @@ material = { group = "com.google.android.material", name = "material", version.r
 material3-adaptive = { module = "org.jetbrains.compose.material3.adaptive:adaptive", version.ref = "adaptive" }
 calendar = { module = "com.kizitonwose.calendar:compose-multiplatform", version.ref = "calendar" }
 kotlin-stdlib = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib", version.ref = "kotlin" }
+ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
+ktor-client-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "ktor" }
+ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
+ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
+buildkonfig-gradlePlugin = { group = "com.codingfeline.buildkonfig", name = "buildkonfig-gradle-plugin", version.ref = "buildkonfig" }
+buildkonfig-compiler = { group = "com.codingfeline.buildkonfig", name = "buildkonfig-compiler", version.ref = "buildkonfig" }
 
 android-gradlePlugin = { group = "com.android.tools.build", name = "gradle", version.ref = "agp" }
 android-tools-common = { group = "com.android.tools", name = "common", version.ref = "androidTools" }
@@ -113,6 +121,7 @@ room = { id = "androidx.room", version.ref = "room" }
 serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 androidKmpLibrary = { id = "com.android.kotlin.multiplatform.library", version.ref = "agp" }
 androidLint = { id = "com.android.lint", version.ref = "agp" }
+buildkonfig = { id = "com.codingfeline.buildkonfig", version.ref = "buildkonfig" }
 
 convention-android-application = { id = "vadimerenkov.autasker.convention.android.application" }
 convention-kmp-library = { id = "vadimerenkov.autasker.convention.kmp.library" }
@@ -120,3 +129,4 @@ convention-kmp-library = { id = "vadimerenkov.autasker.convention.kmp.library" }
 [bundles]
 koin = ["koin-compose", "koin-compose-navigation", "koin-compose-viewmodel", "koin-core"]
 navigation3 = ["navigation3-material3", "navigation3-ui", "navigation3-viewmodel"]
+ktor = ["ktor-client-core", "ktor-client-okhttp", "ktor-client-content-negotiation", "ktor-serialization-kotlinx-json"]
