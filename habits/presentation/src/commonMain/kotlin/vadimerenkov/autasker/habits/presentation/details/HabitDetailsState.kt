@@ -2,7 +2,7 @@ package vadimerenkov.autasker.habits.presentation.details
 
 import vadimerenkov.autasker.core.domain.habits.Habit
 import vadimerenkov.autasker.core.domain.habits.HabitCompletion
-import vadimerenkov.autasker.habits.domain.di.DatePeriod
+import vadimerenkov.autasker.habits.domain.DatePeriod
 import java.time.LocalDate
 
 data class HabitDetailsState(

@@ -1,4 +1,4 @@
-package vadimerenkov.autasker.habits.domain.di
+package vadimerenkov.autasker.habits.domain
 
 import java.time.ZonedDateTime
 
