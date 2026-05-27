@@ -52,6 +52,7 @@ import vadimerenkov.autasker.core.domain.Time
 import vadimerenkov.autasker.core.domain.habits.HabitType
 import vadimerenkov.autasker.habits.domain.DatePeriod
 import vadimerenkov.autasker.habits.domain.isIn
+import vadimerenkov.autasker.habits.presentation.calculateTimeString
 import java.time.ZoneId
 import java.time.format.TextStyle
 import java.util.Locale
@@ -144,7 +145,11 @@ fun HabitDetailsScreen(
 
 		val currentStreak = stringResource(Res.string.current_streak)
 		Text(
-			text = "$currentStreak ${state.currentStreak} $quantifier",
+			text = when(state.habit.type) {
+				HabitType.SINGLE,
+				HabitType.CUSTOM -> "$currentStreak ${state.currentStreak} $quantifier"
+				HabitType.TIME ->"$currentStreak ${calculateTimeString(state.currentStreak)}"
+			},
 			fontSize = 24.sp
 		)
 
@@ -159,14 +164,22 @@ fun HabitDetailsScreen(
 			.sumOf { it.quantity }
 		val monthlyCompletionsText = stringResource(Res.string.monthly_completions)
 		Text(
-			text = "$monthlyCompletionsText $monthlyCompletions $quantifier",
+			text = when (state.habit.type) {
+				HabitType.SINGLE,
+				HabitType.CUSTOM -> "$monthlyCompletionsText $monthlyCompletions $quantifier"
+				HabitType.TIME -> "$monthlyCompletionsText ${calculateTimeString(monthlyCompletions)}"
+			},
 			fontSize = 24.sp
 		)
 
 		val totalCompletions = state.completions.sumOf { it.quantity }
 		val totalCompletionsText = stringResource(Res.string.total_completions)
 		Text(
-			text = "$totalCompletionsText $totalCompletions $quantifier",
+			text = when (state.habit.type) {
+				HabitType.SINGLE,
+				HabitType.CUSTOM -> "$totalCompletionsText $totalCompletions $quantifier"
+				HabitType.TIME -> "$totalCompletionsText ${calculateTimeString(totalCompletions)}"
+			},
 			fontSize = 24.sp
 		)
 
@@ -192,7 +205,7 @@ private fun DayContent(
 	onAction: (HabitDetailsAction) -> Unit
 ) {
 	val dailyCompletions = state.completions.filter { it.date.toLocalDate() == day.date.toJavaLocalDate() }
-	val completedPercent = if (state.habit.period == Period.DAY) dailyCompletions.size / state.habit.times.toDouble() else dailyCompletions.size.toDouble()
+	val completedPercent = if (state.habit.period == Period.DAY) dailyCompletions.sumOf { it.quantity } / state.habit.times.toDouble() else dailyCompletions.size.toDouble()
 	val degrees = (completedPercent * 360f)
 		.toFloat()
 		.coerceAtMost(360f)
