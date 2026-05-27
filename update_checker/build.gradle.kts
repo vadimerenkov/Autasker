@@ -35,7 +35,7 @@ kotlin {
 }
 
 buildkonfig {
-	packageName = "vadimerenkov.autasker"
+	packageName = "vadimerenkov.autasker.updateChecker"
 
 	defaultConfigs {
 		buildConfigField(FieldSpec.Type.STRING, "versionName", libs.versions.version.name.get())

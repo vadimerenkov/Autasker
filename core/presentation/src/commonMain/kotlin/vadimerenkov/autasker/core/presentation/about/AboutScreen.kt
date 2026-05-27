@@ -26,7 +26,7 @@ import autasker.core.presentation.generated.resources.source_code
 import autasker.core.presentation.generated.resources.support_developer
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
-import vadimerenkov.autasker.BuildKonfig
+import vadimerenkov.autasker.core.presentation.BuildKonfig
 import vadimerenkov.autasker.core.presentation.theme.AutaskerTheme
 import java.time.Year
 

@@ -1,9 +1,6 @@
-import com.codingfeline.buildkonfig.compiler.FieldSpec
-
 plugins {
 	alias(libs.plugins.convention.kmp.library)
 	alias(libs.plugins.androidLint)
-	alias(libs.plugins.buildkonfig)
 }
 
 kotlin {
@@ -34,13 +31,5 @@ kotlin {
 			implementation(libs.autolaunch)
 			implementation(libs.quartz)
 		}
-	}
-}
-
-buildkonfig {
-	packageName = "vadimerenkov.autasker"
-
-	defaultConfigs {
-		buildConfigField(FieldSpec.Type.STRING, "versionName", libs.versions.version.name.get())
 	}
 }

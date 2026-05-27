@@ -5,7 +5,7 @@ import io.ktor.client.engine.okhttp.OkHttp
 import io.ktor.client.request.get
 import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.ensureActive
-import vadimerenkov.autasker.BuildKonfig
+import vadimerenkov.autasker.updateChecker.BuildKonfig
 
 object UpdateChecker {
 
