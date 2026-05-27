@@ -50,8 +50,8 @@ import org.jetbrains.compose.resources.stringResource
 import vadimerenkov.autasker.core.domain.Period
 import vadimerenkov.autasker.core.domain.Time
 import vadimerenkov.autasker.core.domain.habits.HabitType
-import vadimerenkov.autasker.habits.domain.di.DatePeriod
-import vadimerenkov.autasker.habits.domain.di.isIn
+import vadimerenkov.autasker.habits.domain.DatePeriod
+import vadimerenkov.autasker.habits.domain.isIn
 import java.time.ZoneId
 import java.time.format.TextStyle
 import java.util.Locale

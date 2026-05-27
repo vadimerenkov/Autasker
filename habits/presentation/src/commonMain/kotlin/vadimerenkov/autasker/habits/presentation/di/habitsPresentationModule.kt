@@ -11,7 +11,7 @@ val habitsPresentationModule = module {
 	viewModelOf(::HabitsViewModel)
 
 	viewModel<HabitDetailsViewModel> { params ->
-		HabitDetailsViewModel(params[0], get())
+		HabitDetailsViewModel(params[0], get(), get())
 	}
 
 	viewModel<HabitEditViewModel> { params ->

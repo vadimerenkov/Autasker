@@ -8,16 +8,13 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
-import vadimerenkov.autasker.core.domain.Period
-import vadimerenkov.autasker.core.domain.Time
-import vadimerenkov.autasker.core.domain.habits.HabitCompletion
 import vadimerenkov.autasker.core.domain.habits.HabitsRepository
-import vadimerenkov.autasker.habits.domain.di.DatePeriod
-import vadimerenkov.autasker.habits.domain.di.isIn
+import vadimerenkov.autasker.habits.domain.HabitTracker
 
 class HabitDetailsViewModel(
 	id: Long,
-	private val repository: HabitsRepository
+	private val repository: HabitsRepository,
+	private val habitTracker: HabitTracker
 ): ViewModel() {
 
 	var state by mutableStateOf(HabitDetailsState())
@@ -32,8 +29,8 @@ class HabitDetailsViewModel(
 		repository
 			.getCompletionsForHabit(id)
 			.onEach { completions ->
-				val dates = calculateDatePeriods(completions)
-				val currentStreak = calculateCurrentStreak(completions, dates)
+				val dates = habitTracker.calculateDatePeriods(state.habit, completions)
+				val currentStreak = habitTracker.calculateCurrentStreak(state.habit, completions, dates)
 				state = state.copy(
 					completions = completions,
 					dates = dates,
@@ -67,55 +64,4 @@ class HabitDetailsViewModel(
 		}
 	}
 
-	fun calculateDatePeriods(completions: List<HabitCompletion>): List<DatePeriod> {
-		if (completions.isEmpty()) return listOf()
-
-		val dates = mutableListOf<DatePeriod>()
-		var endingDate = Time.now()
-		var startingDate = when (state.habit.period) {
-			Period.MINUTE,
-			Period.HOUR -> throw IllegalStateException()
-			Period.DAY -> endingDate.minusDays(1)
-			Period.WEEK -> endingDate.minusWeeks(1)
-			Period.MONTH -> endingDate.minusMonths(1)
-			Period.YEAR -> endingDate.minusYears(1)
-		}
-
-		val lastDate = DatePeriod(startingDate = startingDate, endingDate = endingDate)
-		dates.add(lastDate)
-
-		while (completions.first().date.isBefore(startingDate)) {
-			endingDate = startingDate
-			startingDate = when (state.habit.period) {
-				Period.MINUTE,
-				Period.HOUR -> throw IllegalStateException()
-				Period.DAY -> endingDate.minusDays(1)
-				Period.WEEK -> endingDate.minusWeeks(1)
-				Period.MONTH -> endingDate.minusMonths(1)
-				Period.YEAR -> endingDate.minusYears(1)
-			}
-			val lastDate = DatePeriod(startingDate = startingDate, endingDate = endingDate)
-			dates.add(lastDate)
-		}
-
-		return dates.reversed()
-	}
-
-	fun calculateCurrentStreak(completions: List<HabitCompletion>, dates: List<DatePeriod>): Int {
-		var streak = 0
-
-		for (period in dates.reversed()) {
-			val datedCompletions = completions.filter { it.date.isIn(period) }
-			println("Dated completions size is ${datedCompletions.size}")
-			if (datedCompletions.sumOf { it.quantity } >= state.habit.times) {
-				streak += datedCompletions.sumOf { it.quantity }
-				println("sum of datedcompletions is ${datedCompletions.sumOf { it.quantity }}")
-			} else {
-				println("Breaking")
-				break
-			}
-		}
-
-		return streak
-	}
 }
