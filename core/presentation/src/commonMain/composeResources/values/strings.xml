@@ -97,6 +97,7 @@
     <string name="total_completions">Total completions:</string>
     <string name="count_as">Count:</string>
     <string name="choose_task">Choose task...</string>
+    <string name="complete_habit">Complete habit:</string>
 
     <string name="language">Language</string>
     <string name="english" translatable="false">English</string>
