@@ -4,8 +4,6 @@ plugins {
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.composeHotReload)
-	alias(libs.plugins.room)
-	alias(libs.plugins.ksp)
 	alias(libs.plugins.convention.kmp.library)
 }
 
@@ -61,12 +59,7 @@ kotlin {
     }
 }
 
-room {
-	schemaDirectory("$projectDir/schemas")
-}
-
 dependencies {
-	ksp(libs.androidx.room.compiler)
 	androidRuntimeClasspath(libs.compose.ui.tooling)
 }
 
