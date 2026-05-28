@@ -10,6 +10,7 @@ import vadimerenkov.autasker.core.database.TasksDatabase
 import vadimerenkov.autasker.core.domain.TasksRepository
 
 val coreDatabaseModule = module {
+	includes(platformCoreDatabaseModule)
 	singleOf(::RoomTasksRepository).bind<TasksRepository>()
 
 	single {
