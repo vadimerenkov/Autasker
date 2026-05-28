@@ -32,6 +32,7 @@ import vadimerenkov.autasker.core.presentation.main.MainViewModel
 import vadimerenkov.autasker.core.presentation.task_edit.TaskEditViewModel
 import vadimerenkov.autasker.fakes.FakeAudioPlayer
 import vadimerenkov.autasker.fakes.FakeReminderService
+import vadimerenkov.autasker.fakes.HabitsRepositoryFake
 import vadimerenkov.autasker.fakes.TasksRepositoryFake
 import java.io.File
 import java.time.ZonedDateTime
@@ -39,7 +40,8 @@ import java.time.ZonedDateTime
 @OptIn(ExperimentalCoroutinesApi::class)
 class InitializationTest {
 	private lateinit var viewModel: MainViewModel
-	private lateinit var repository: TasksRepositoryFake
+	private lateinit var tasksRepository: TasksRepositoryFake
+	private lateinit var habitsRepository: HabitsRepositoryFake
 	private lateinit var settings: Settings
 	private lateinit var dataStore: DataStore<Preferences>
 	private lateinit var testDispatcher: TestDispatcher
@@ -48,16 +50,17 @@ class InitializationTest {
 
 	fun initialize() {
 		viewModel =
-			MainViewModel(repository, reminderService, FakeAudioPlayer(), settings)
+			MainViewModel(tasksRepository, habitsRepository, reminderService, FakeAudioPlayer(), settings)
 	}
 
 	@Before
 	fun setUp() {
 		testDispatcher = StandardTestDispatcher()
 		Dispatchers.setMain(testDispatcher)
-		repository = TasksRepositoryFake()
+		tasksRepository = TasksRepositoryFake()
+		habitsRepository = HabitsRepositoryFake()
 		applicationScope = CoroutineScope(Dispatchers.Main + SupervisorJob())
-		reminderService = FakeReminderService(repository)
+		reminderService = FakeReminderService(tasksRepository)
 		dataStore = createDataStore {
 			val file = File(System.getProperty("java.io.tmpdir"), "test_datastore.preferences_pb")
 			file.absolutePath
@@ -86,12 +89,12 @@ class InitializationTest {
 			isDeleted = true,
 			deletedDate = ZonedDateTime.now().minusDays(35)
 		)
-		repository.saveTask(task)
-		assertThat(repository.tasks.value).contains(task)
+		tasksRepository.saveTask(task)
+		assertThat(tasksRepository.tasks.value).contains(task)
 		initialize()
 		testDispatcher.scheduler.advanceUntilIdle()
 
-		assertThat(repository.tasks.value).doesNotContain(task)
+		assertThat(tasksRepository.tasks.value).doesNotContain(task)
 	}
 
 	@Test
@@ -103,12 +106,12 @@ class InitializationTest {
 			isCompleted = true,
 			completedDate = ZonedDateTime.now().minusDays(8)
 		)
-		repository.saveTask(task)
-		assertThat(repository.tasks.value).contains(task)
+		tasksRepository.saveTask(task)
+		assertThat(tasksRepository.tasks.value).contains(task)
 		initialize()
 		testDispatcher.scheduler.advanceUntilIdle()
 
-		assertThat(repository.tasks.value).contains(task.copy(isDeleted = true, deletedDate = ZonedDateTime.now().roundToMinutes()))
+		assertThat(tasksRepository.tasks.value).contains(task.copy(isDeleted = true, deletedDate = ZonedDateTime.now().roundToMinutes()))
 	}
 
 	@Test
@@ -128,14 +131,14 @@ class InitializationTest {
 			isDefault = true,
 			index = 3
 		)
-		repository.saveCategory(category)
-		repository.saveTask(task)
-		repository.saveReminders(listOf(reminder))
+		tasksRepository.saveCategory(category)
+		tasksRepository.saveTask(task)
+		tasksRepository.saveReminders(listOf(reminder))
 		testDispatcher.scheduler.advanceUntilIdle()
 		val viewModel = TaskEditViewModel(
 			id = task.id,
 			categoryId = task.categoryId,
-			repository = repository,
+			repository = tasksRepository,
 			reminderService = reminderService
 		)
 		testDispatcher.scheduler.advanceUntilIdle()

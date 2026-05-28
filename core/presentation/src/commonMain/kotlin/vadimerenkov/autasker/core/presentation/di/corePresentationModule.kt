@@ -11,6 +11,7 @@ import vadimerenkov.autasker.core.presentation.settings.SettingsViewModel
 import vadimerenkov.autasker.core.presentation.task_edit.TaskEditViewModel
 
 val corePresentationModule = module {
+	includes(platformCorePresentationModule)
 	viewModelOf(::MainViewModel)
 	viewModelOf(::SettingsViewModel)
 	viewModelOf(::BinViewModel)
