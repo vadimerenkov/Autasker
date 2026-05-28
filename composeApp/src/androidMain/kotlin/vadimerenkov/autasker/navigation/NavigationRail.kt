@@ -3,11 +3,11 @@ package vadimerenkov.autasker.navigation
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CalendarMonth
+import androidx.compose.material.icons.filled.Checklist
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Settings
-import androidx.compose.material.icons.filled.Task
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationRail
@@ -77,7 +77,7 @@ fun MainNavigationRail(
 			},
 			icon = {
 				Icon(
-					imageVector = Icons.Default.Task,
+					imageVector = Icons.Default.Checklist,
 					contentDescription = null
 				)
 			},

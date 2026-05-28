@@ -84,6 +84,7 @@ fun HabitDetailsScreen(
 	) {
 		Text(
 			text = state.habit.title,
+			fontSize = 24.sp,
 			modifier = Modifier
 				.align(Alignment.CenterHorizontally)
 		)

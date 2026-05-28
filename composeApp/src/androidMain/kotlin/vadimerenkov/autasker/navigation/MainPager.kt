@@ -61,7 +61,9 @@ import vadimerenkov.autasker.core.domain.Time
 import vadimerenkov.autasker.core.presentation.components.TaskColumn
 import vadimerenkov.autasker.core.presentation.main.MainAction
 import vadimerenkov.autasker.core.presentation.main.MainState
+import vadimerenkov.autasker.core.presentation.main.MainViewModel
 import vadimerenkov.autasker.core.presentation.main.components.EditTabsDialog
+import vadimerenkov.autasker.core.presentation.main.components.HabitCompletionDialog
 import vadimerenkov.autasker.core.presentation.main.components.MovingColumnDialog
 import vadimerenkov.autasker.core.presentation.main.components.MovingTaskDialog
 import vadimerenkov.autasker.core.presentation.main.components.PageTab
@@ -71,7 +73,7 @@ fun MainPager(
 	onNewTaskClick: (Long) -> Unit,
 	onTaskClick: (Long) -> Unit,
 	modifier: Modifier = Modifier,
-	viewModel: vadimerenkov.autasker.core.presentation.main.MainViewModel = koinViewModel()
+	viewModel: MainViewModel = koinViewModel()
 ) {
 	var showMovingTaskDialog by remember { mutableStateOf(false) }
 	var showMovingCategoryDialog by remember { mutableStateOf(false) }
@@ -190,6 +192,15 @@ private fun MainPagerRoot(
 		}
 	}
 
+	if (state.showHabitCompletionDialog) {
+		HabitCompletionDialog(
+			habit = state.dialogHabit!!,
+			onDismissRequest = {
+				onAction(MainAction.DismissHabitDialog)
+			},
+			onAction = onAction
+		)
+	}
 
 	Scaffold(
 		floatingActionButton = {

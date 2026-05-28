@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -67,7 +68,9 @@ fun OpenCalendarDayDialog(
 						onValueChange = { quantity ->
 							dailyCompletions.removeAt(index)
 							dailyCompletions.add(index, completion.copy(quantity = quantity ?: 0))
-						}
+						},
+						modifier = Modifier
+							.widthIn(max = 100.dp)
 					)
 					IconButton(
 						onClick = {
