@@ -27,7 +27,7 @@ Powered by Kotlin Multiplatform and Jetpack Compose.
 
 - Calendar view ✅
 - Canvas view
-- Habit tracking
+- Habit tracking ✅
 
 ## Used libraries
 
