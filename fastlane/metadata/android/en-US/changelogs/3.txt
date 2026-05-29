@@ -1,0 +1,4 @@
+- Habit tracking feature: create habits, assign tasks to them and see the progress on the calendar
+- Automatic update checking for desktop
+- An option to skip a repeating task
+- Minor visual polish and fixes
