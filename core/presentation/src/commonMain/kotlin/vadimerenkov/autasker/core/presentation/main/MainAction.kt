@@ -46,4 +46,6 @@ sealed interface MainAction {
 	data class TabRename(val id: Long, val title: String?): MainAction
 	data class SavePages(val list: List<Page>): MainAction
 	data class SkipTask(val id: Long): MainAction
+	data class SaveHabitCompletionClick(val habitId: Long, val times: Int): MainAction
+	data object DismissHabitDialog: MainAction
 }

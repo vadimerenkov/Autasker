@@ -3,6 +3,7 @@ package vadimerenkov.autasker.navigation
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CalendarMonth
+import androidx.compose.material.icons.filled.Checklist
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Info
@@ -18,6 +19,7 @@ import androidx.navigation3.runtime.NavKey
 import autasker.core.presentation.generated.resources.Res
 import autasker.core.presentation.generated.resources.about
 import autasker.core.presentation.generated.resources.calendar
+import autasker.core.presentation.generated.resources.habits
 import autasker.core.presentation.generated.resources.settings
 import autasker.core.presentation.generated.resources.tasks
 import autasker.core.presentation.generated.resources.trash
@@ -63,6 +65,25 @@ fun MainNavigationRail(
 			label = {
 				Text(
 					text = stringResource(Res.string.calendar)
+				)
+			}
+		)
+		NavigationRailItem(
+			selected = backstack.lastOrNull() == HabitsRoute,
+			onClick = {
+				if (backstack.lastOrNull() != HabitsRoute) {
+					backstack.add(HabitsRoute)
+				}
+			},
+			icon = {
+				Icon(
+					imageVector = Icons.Default.Checklist,
+					contentDescription = null
+				)
+			},
+			label = {
+				Text(
+					text = stringResource(Res.string.habits)
 				)
 			}
 		)

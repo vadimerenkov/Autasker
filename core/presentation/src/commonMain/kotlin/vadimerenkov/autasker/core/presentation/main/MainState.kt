@@ -4,6 +4,7 @@ import vadimerenkov.autasker.core.domain.Page
 import vadimerenkov.autasker.core.domain.Sorting
 import vadimerenkov.autasker.core.domain.Task
 import vadimerenkov.autasker.core.domain.TaskCategory
+import vadimerenkov.autasker.core.domain.habits.Habit
 
 
 data class MainState(
@@ -17,6 +18,8 @@ data class MainState(
 	val tomorrowColumnSorting: Sorting = Sorting.BY_DATE_ASCENDING,
 	val todayShowCompleted: Boolean = true,
 	val tomorrowShowCompleted: Boolean = true,
+	val showHabitCompletionDialog: Boolean = false,
+	val dialogHabit: Habit? = null
 ) {
 	val allTasks: List<Task>
 		get() = todayTasks + tomorrowTasks + remainingTasks

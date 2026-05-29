@@ -81,11 +81,28 @@
     <string name="play_sound">Play a sound when completing the task</string>
     <string name="colors">Colors</string>
     <string name="skip">Skip</string>
+    <string name="habits">Habits</string>
+    <string name="previous_month">Previous month</string>
+    <string name="next_month">Next month</string>
+    <string name="new_habit">New habit</string>
+    <string name="edit_habit">Edit habit</string>
+    <string name="delete_habit">Delete habit</string>
+    <string name="delete_habit_confirmation">Are you sure you want to delete habit</string>
+    <string name="times_per">times</string>
+    <string name="minutes">minutes</string>
+    <string name="per">per</string>
+    <string name="custom">custom</string>
+    <string name="current_streak">Current streak:</string>
+    <string name="monthly_completions">Monthly completions:</string>
+    <string name="total_completions">Total completions:</string>
+    <string name="count_as">Count:</string>
+    <string name="choose_task">Choose task...</string>
+    <string name="complete_habit">Complete habit:</string>
     <string name="download_new_version">Download new version</string>
 
     <string name="language">Language</string>
-    <string name="english">English</string>
-    <string name="russian">Русский</string>
+    <string name="english" translatable="false">English</string>
+    <string name="russian" translatable="false">Русский</string>
 
     <string name="theme">Theme</string>
     <string name="light_theme">Light</string>

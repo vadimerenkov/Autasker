@@ -15,6 +15,7 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CalendarMonth
+import androidx.compose.material.icons.filled.Checklist
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material3.HorizontalDivider
@@ -54,6 +55,7 @@ import autasker.core.presentation.generated.resources.about
 import autasker.core.presentation.generated.resources.calendar
 import autasker.core.presentation.generated.resources.download_new_version
 import autasker.core.presentation.generated.resources.edit_task
+import autasker.core.presentation.generated.resources.habits
 import autasker.core.presentation.generated.resources.kofi_link
 import autasker.core.presentation.generated.resources.settings
 import autasker.core.presentation.generated.resources.support_developer
@@ -79,6 +81,7 @@ import vadimerenkov.autasker.core.presentation.task_edit.TaskEditScreen
 import vadimerenkov.autasker.core.presentation.task_edit.TaskEditViewModel
 import vadimerenkov.autasker.core.presentation.task_edit.datetime.DateTimeScreen
 import vadimerenkov.autasker.core.presentation.windows.CommonWindow
+import vadimerenkov.autasker.habits.presentation.HabitsScreen
 import vadimerenkov.autasker.update_checker.UpdateChecker
 
 @OptIn(ExperimentalComposeUiApi::class)
@@ -172,6 +175,25 @@ fun RootNavDisplay(
 						selected = backstack.lastOrNull() == CalendarRoute,
 						onClick = {
 							backstack.add(CalendarRoute)
+						}
+					)
+					NavigationDrawerItem(
+						shape = RectangleShape,
+						label = {
+							Text(
+								text = stringResource(Res.string.habits),
+								fontSize = 20.sp
+							)
+						},
+						icon = {
+							Icon(
+								imageVector = Icons.Default.Checklist,
+								contentDescription = null
+							)
+						},
+						selected = backstack.lastOrNull() == HabitsRoute,
+						onClick = {
+							backstack.add(HabitsRoute)
 						}
 					)
 					Spacer(modifier = Modifier.weight(1f))
@@ -291,6 +313,9 @@ fun RootNavDisplay(
 								.background(MaterialTheme.colorScheme.background)
 								.padding(16.dp)
 						)
+					}
+					entry<HabitsRoute> {
+						HabitsScreen()
 					}
 					entry<NewDayRoute>(metadata = dialog()) {
 						val windowState = WindowState(position = WindowPosition.Aligned(Alignment.Center))

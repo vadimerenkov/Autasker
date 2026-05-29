@@ -11,6 +11,7 @@ import org.koin.dsl.module
 import vadimerenkov.autasker.core.domain.settings.Settings
 
 val coreDomainModule = module {
+	includes(platformCoreDomainModule)
 	single {
 		CoroutineScope(Dispatchers.Default + SupervisorJob())
 	}

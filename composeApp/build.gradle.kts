@@ -4,8 +4,6 @@ plugins {
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.composeHotReload)
-	alias(libs.plugins.room)
-	alias(libs.plugins.ksp)
 	alias(libs.plugins.convention.kmp.library)
 }
 
@@ -29,15 +27,18 @@ kotlin {
             implementation(libs.androidx.lifecycle.runtimeCompose)
 	        implementation(libs.kotlinx.serialization.json)
 	        implementation(libs.kotlinx.serialization.core)
-	        implementation(libs.bundles.navigation3)
 	        implementation(libs.androidx.datastore)
 	        implementation(libs.androidx.datastore.preferences)
+	        implementation(libs.bundles.navigation3)
 	        implementation(libs.material3.adaptive)
 
 	        implementation(projects.calendar)
 	        implementation(projects.core.database)
 	        implementation(projects.core.domain)
 	        implementation(projects.core.presentation)
+	        implementation(projects.habits.domain)
+	        implementation(projects.habits.data)
+	        implementation(projects.habits.presentation)
 	        implementation(projects.updateChecker)
         }
         jvmMain.dependencies {
@@ -58,12 +59,7 @@ kotlin {
     }
 }
 
-room {
-	schemaDirectory("$projectDir/schemas")
-}
-
 dependencies {
-	ksp(libs.androidx.room.compiler)
 	androidRuntimeClasspath(libs.compose.ui.tooling)
 }
 

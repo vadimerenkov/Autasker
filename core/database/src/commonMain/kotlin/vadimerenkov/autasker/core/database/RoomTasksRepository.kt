@@ -2,6 +2,7 @@ package vadimerenkov.autasker.core.database
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import vadimerenkov.autasker.core.database.dao.CategoriesDao
 import vadimerenkov.autasker.core.database.dao.JobsDao
@@ -28,7 +29,7 @@ import vadimerenkov.autasker.core.domain.reminders.Reminder
 import vadimerenkov.autasker.core.domain.roundToMinutes
 import java.time.ZonedDateTime
 
-class RoomLocalRepository(
+class RoomTasksRepository(
 	private val tasksDao: TasksDao,
 	private val subtasksDao: SubtasksDao,
 	private val remindersDao: RemindersDao,
@@ -175,6 +176,13 @@ class RoomLocalRepository(
 			.getUncompletedTasks()
 			.map { it.toTask() }
 			.filter { it.dueDate == null }
+	}
+
+	override suspend fun getTasksForHabit(id: Long): List<Task> {
+		return tasksDao.getAllTasks()
+			.first()
+			.filter { it.habitId == id }
+			.map { it.toTask() }
 	}
 
 	override fun getDeletedTasks(): Flow<List<Task>> {

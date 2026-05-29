@@ -23,12 +23,11 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TemporaryFolder
-import org.koin.core.KoinApplication
+import org.koin.core.context.stopKoin
 import org.koin.test.KoinTest
 import org.koin.test.KoinTestRule
 import vadimerenkov.autasker.calendar.calendarModule
 import vadimerenkov.autasker.core.database.di.coreDatabaseModule
-import vadimerenkov.autasker.core.database.di.platformCoreDatabaseModule
 import vadimerenkov.autasker.core.domain.Page
 import vadimerenkov.autasker.core.domain.ReminderJob
 import vadimerenkov.autasker.core.domain.Subtask
@@ -36,16 +35,18 @@ import vadimerenkov.autasker.core.domain.Task
 import vadimerenkov.autasker.core.domain.TaskCategory
 import vadimerenkov.autasker.core.domain.Time
 import vadimerenkov.autasker.core.domain.di.coreDomainModule
-import vadimerenkov.autasker.core.domain.di.platformCoreDomainModule
 import vadimerenkov.autasker.core.domain.reminders.ReminderService
 import vadimerenkov.autasker.core.domain.settings.Settings
 import vadimerenkov.autasker.core.presentation.di.corePresentationModule
-import vadimerenkov.autasker.core.presentation.di.platformCorePresentationModule
 import vadimerenkov.autasker.core.presentation.main.MainAction
 import vadimerenkov.autasker.core.presentation.main.MainViewModel
 import vadimerenkov.autasker.fakes.FakeAudioPlayer
 import vadimerenkov.autasker.fakes.FakeReminderService
+import vadimerenkov.autasker.fakes.HabitsRepositoryFake
 import vadimerenkov.autasker.fakes.TasksRepositoryFake
+import vadimerenkov.autasker.habits.data.di.habitsDataModule
+import vadimerenkov.autasker.habits.domain.di.habitsDomainModule
+import vadimerenkov.autasker.habits.presentation.di.habitsPresentationModule
 import java.io.File
 import java.time.Instant
 import java.time.ZoneId
@@ -57,14 +58,14 @@ class MainViewModelTest: KoinTest {
 	@get:Rule
 	val koinTestRule = KoinTestRule.create {
 		// Your KoinApplication instance here
-		KoinApplication.init().modules(
+		modules(
 			coreDatabaseModule,
-			platformCoreDatabaseModule,
 			coreDomainModule,
-			platformCoreDomainModule,
 			corePresentationModule,
-			platformCorePresentationModule,
-			calendarModule
+			calendarModule,
+			habitsDomainModule,
+			habitsDataModule,
+			habitsPresentationModule
 		)
 	}
 
@@ -74,7 +75,8 @@ class MainViewModelTest: KoinTest {
 		.build()
 
 	private lateinit var viewModel: MainViewModel
-	private lateinit var repository: TasksRepositoryFake
+	private lateinit var tasksRepository: TasksRepositoryFake
+	private lateinit var habitsRepository: HabitsRepositoryFake
 	private lateinit var dataStore: DataStore<Preferences>
 	private lateinit var applicationScope: CoroutineScope
 	private lateinit var reminderService: ReminderService
@@ -87,8 +89,9 @@ class MainViewModelTest: KoinTest {
 		testDispatcher = StandardTestDispatcher()
 		Dispatchers.setMain(testDispatcher)
 		applicationScope = CoroutineScope(Dispatchers.Main + SupervisorJob())
-		repository = TasksRepositoryFake()
-		reminderService = FakeReminderService(repository)
+		tasksRepository = TasksRepositoryFake()
+		habitsRepository = HabitsRepositoryFake()
+		reminderService = FakeReminderService(tasksRepository)
 
 		dataStore = PreferenceDataStoreFactory.create(
 			scope = applicationScope,
@@ -103,10 +106,11 @@ class MainViewModelTest: KoinTest {
 		)
 
 		viewModel = MainViewModel(
-			repository = repository,
+			tasksRepository = tasksRepository,
 			reminderService = reminderService,
 			settings = settings,
-			audioPlayer = FakeAudioPlayer()
+			audioPlayer = FakeAudioPlayer(),
+			habitsRepository = habitsRepository
 		)
 	}
 
@@ -116,6 +120,7 @@ class MainViewModelTest: KoinTest {
 		testDispatcher.scheduler.advanceUntilIdle()
 		applicationScope.cancel()
 		Dispatchers.resetMain()
+		stopKoin()
 	}
 
 	@Test
@@ -125,12 +130,12 @@ class MainViewModelTest: KoinTest {
 			title = "TestTask",
 			categoryId = 1
 		)
-		repository.saveTask(task)
+		tasksRepository.saveTask(task)
 		testDispatcher.scheduler.advanceUntilIdle()
 
 		viewModel.onAction(MainAction.CheckmarkToggle(task.id, true))
 		testDispatcher.scheduler.advanceUntilIdle()
-		assertThat(repository.tasks.value.any { it.id == task.id && it.isCompleted }).isTrue()
+		assertThat(tasksRepository.tasks.value.any { it.id == task.id && it.isCompleted }).isTrue()
 	}
 
 	@Test
@@ -142,12 +147,12 @@ class MainViewModelTest: KoinTest {
 			completedDate = ZonedDateTime.now(),
 			categoryId = 1
 		)
-		repository.saveTask(task)
+		tasksRepository.saveTask(task)
 		testDispatcher.scheduler.advanceUntilIdle()
 
 		viewModel.onAction(MainAction.CheckmarkToggle(task.id, false))
 		testDispatcher.scheduler.advanceUntilIdle()
-		assertThat(repository.tasks.value.any { it.id == task.id && !it.isCompleted && it.completedDate == null }).isTrue()
+		assertThat(tasksRepository.tasks.value.any { it.id == task.id && !it.isCompleted && it.completedDate == null }).isTrue()
 	}
 
 	@Test
@@ -162,25 +167,25 @@ class MainViewModelTest: KoinTest {
 			parentTaskId = 123,
 			triggerDate = Instant.now()
 		)
-		repository.saveJob(job)
-		assertThat(repository.jobs.value).contains(job)
-		repository.saveTask(task)
+		tasksRepository.saveJob(job)
+		assertThat(tasksRepository.jobs.value).contains(job)
+		tasksRepository.saveTask(task)
 		testDispatcher.scheduler.advanceUntilIdle()
 
 		viewModel.onAction(MainAction.CheckmarkToggle(task.id, true))
 		testDispatcher.scheduler.advanceUntilIdle()
-		assertThat(repository.jobs.value).isEmpty()
+		assertThat(tasksRepository.jobs.value).isEmpty()
 	}
 
 	@Test
 	fun `New column button clicked, new category is added`() = runBlocking {
 		val page = Page(id = 123)
-		repository.savePage(page)
+		tasksRepository.savePage(page)
 		testDispatcher.scheduler.advanceUntilIdle()
-		assertThat(repository.categories.value.size).isEqualTo(1)
+		assertThat(tasksRepository.categories.value.size).isEqualTo(1)
 		viewModel.onAction(MainAction.NewColumnClick)
 		testDispatcher.scheduler.advanceUntilIdle()
-		assertThat(repository.categories.value.size).isEqualTo(2)
+		assertThat(tasksRepository.categories.value.size).isEqualTo(2)
 	}
 
 	@Test
@@ -190,11 +195,11 @@ class MainViewModelTest: KoinTest {
 			title = "test category",
 			index = 3
 		)
-		repository.saveCategory(category)
+		tasksRepository.saveCategory(category)
 		testDispatcher.scheduler.advanceUntilIdle()
 		viewModel.onAction(MainAction.SetColumnDefault(category.id))
 		testDispatcher.scheduler.advanceUntilIdle()
-		assertThat(repository.categories.value).contains(category.copy(isDefault = true))
+		assertThat(tasksRepository.categories.value).contains(category.copy(isDefault = true))
 	}
 
 	@Test
@@ -205,11 +210,11 @@ class MainViewModelTest: KoinTest {
 			index = 3
 		)
 		val newTitle = "new test title"
-		repository.saveCategory(category)
+		tasksRepository.saveCategory(category)
 		testDispatcher.scheduler.advanceUntilIdle()
 		viewModel.onAction(MainAction.ChangeColumnTitle(category.id, newTitle))
 		testDispatcher.scheduler.advanceUntilIdle()
-		assertThat(repository.categories.value).contains(category.copy(title = newTitle))
+		assertThat(tasksRepository.categories.value).contains(category.copy(title = newTitle))
 	}
 
 	@Test
@@ -219,11 +224,11 @@ class MainViewModelTest: KoinTest {
 			categoryId = 1,
 			title = "test title"
 		)
-		repository.saveTask(task)
+		tasksRepository.saveTask(task)
 		testDispatcher.scheduler.advanceUntilIdle()
 		viewModel.onAction(MainAction.DeleteTask(task.id))
 		testDispatcher.scheduler.advanceUntilIdle()
-		assertThat(repository.tasks.value.any { it.id == task.id && it.isDeleted }).isTrue()
+		assertThat(tasksRepository.tasks.value.any { it.id == task.id && it.isDeleted }).isTrue()
 	}
 
 	@Test
@@ -247,13 +252,13 @@ class MainViewModelTest: KoinTest {
 				index = 2
 			)
 		)
-		repository.saveTask(task)
-		repository.saveSubtasks(subtasks)
+		tasksRepository.saveTask(task)
+		tasksRepository.saveSubtasks(subtasks)
 		testDispatcher.scheduler.advanceUntilIdle()
 		viewModel.onAction(MainAction.SubtaskToggle(task.id, 1))
 		viewModel.onAction(MainAction.SubtaskToggle(task.id, 2))
 		testDispatcher.scheduler.advanceUntilIdle()
-		assertThat(repository.tasks.value.any { it.id == task.id && it.isCompleted }).isTrue()
+		assertThat(tasksRepository.tasks.value.any { it.id == task.id && it.isCompleted }).isTrue()
 	}
 
 	@Test
@@ -263,11 +268,11 @@ class MainViewModelTest: KoinTest {
 			categoryId = 1,
 			title = "test title"
 		)
-		repository.saveTask(task)
+		tasksRepository.saveTask(task)
 		testDispatcher.scheduler.advanceUntilIdle()
 		viewModel.onAction(MainAction.SetForToday(task.id))
 		testDispatcher.scheduler.advanceUntilIdle()
-		assertThat(repository.tasks.value).contains(task.copy(dueDate = Time.today().atTime(12, 0).atZone(ZoneId.systemDefault())))
+		assertThat(tasksRepository.tasks.value).contains(task.copy(dueDate = Time.today().atTime(12, 0).atZone(ZoneId.systemDefault())))
 	}
 
 	@Test
@@ -277,11 +282,11 @@ class MainViewModelTest: KoinTest {
 			categoryId = 1,
 			title = "test title"
 		)
-		repository.saveTask(task)
+		tasksRepository.saveTask(task)
 		testDispatcher.scheduler.advanceUntilIdle()
 		viewModel.onAction(MainAction.SetForTomorrow(task.id))
 		testDispatcher.scheduler.advanceUntilIdle()
-		assertThat(repository.tasks.value).contains(task.copy(dueDate = Time.tomorrow().atTime(12, 0).atZone(ZoneId.systemDefault())))
+		assertThat(tasksRepository.tasks.value).contains(task.copy(dueDate = Time.tomorrow().atTime(12, 0).atZone(ZoneId.systemDefault())))
 	}
 
 }

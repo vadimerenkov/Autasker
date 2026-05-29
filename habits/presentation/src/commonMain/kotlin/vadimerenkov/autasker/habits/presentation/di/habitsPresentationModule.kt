@@ -1,0 +1,20 @@
+package vadimerenkov.autasker.habits.presentation.di
+
+import org.koin.core.module.dsl.viewModel
+import org.koin.core.module.dsl.viewModelOf
+import org.koin.dsl.module
+import vadimerenkov.autasker.habits.presentation.HabitsViewModel
+import vadimerenkov.autasker.habits.presentation.details.HabitDetailsViewModel
+import vadimerenkov.autasker.habits.presentation.edit.HabitEditViewModel
+
+val habitsPresentationModule = module {
+	viewModelOf(::HabitsViewModel)
+
+	viewModel<HabitDetailsViewModel> { params ->
+		HabitDetailsViewModel(params[0], get(), get())
+	}
+
+	viewModel<HabitEditViewModel> { params ->
+		HabitEditViewModel(params[0], get(), get())
+	}
+}

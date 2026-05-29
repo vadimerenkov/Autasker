@@ -22,6 +22,7 @@ data class Task(
 	val importance: Int = 0,
 	val subtasks: List<Subtask> = emptyList(),
 	val reminders: List<Reminder> = emptyList(),
+	val habitId: Long? = null
 ) {
 	val timeRemaining: Duration?
 		get() {
