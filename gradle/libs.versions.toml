@@ -2,7 +2,7 @@
 version-code = "5"
 version-name = "1.1.0"
 
-agp = "9.1.0"
+agp = "9.2.1"
 android-compileSdk = "36"
 android-minSdk = "26"
 android-targetSdk = "36"
