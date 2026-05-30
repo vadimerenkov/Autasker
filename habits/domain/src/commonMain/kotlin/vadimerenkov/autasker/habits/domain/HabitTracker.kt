@@ -51,14 +51,15 @@ class HabitTracker {
 	): Int {
 		var streak = 0
 
-		for (period in dates.reversed()) {
+		val firstPeriod = dates.last()
+		val firstCompletions = completions.filter { it.date.isIn(firstPeriod) }
+		streak += firstCompletions.sumOf { it.quantity }
+
+		for (period in dates.reversed().drop(1)) {
 			val datedCompletions = completions.filter { it.date.isIn(period) }
-			println("Dated completions size is ${datedCompletions.size}")
 			if (datedCompletions.sumOf { it.quantity } >= habit.times) {
 				streak += datedCompletions.sumOf { it.quantity }
-				println("sum of datedcompletions is ${datedCompletions.sumOf { it.quantity }}")
 			} else {
-				println("Breaking")
 				break
 			}
 		}
