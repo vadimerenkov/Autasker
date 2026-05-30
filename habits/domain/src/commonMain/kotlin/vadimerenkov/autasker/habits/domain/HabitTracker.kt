@@ -51,9 +51,11 @@ class HabitTracker {
 	): Int {
 		var streak = 0
 
-		val firstPeriod = dates.last()
-		val firstCompletions = completions.filter { it.date.isIn(firstPeriod) }
-		streak += firstCompletions.sumOf { it.quantity }
+		val firstPeriod = dates.lastOrNull()
+		firstPeriod?.let { period ->
+			val firstCompletions = completions.filter { it.date.isIn(period) }
+			streak += firstCompletions.sumOf { it.quantity }
+		}
 
 		for (period in dates.reversed().drop(1)) {
 			val datedCompletions = completions.filter { it.date.isIn(period) }
