@@ -15,6 +15,8 @@ Powered by Kotlin Multiplatform and Jetpack Compose.
 
 <div align="center">
 
+[<img height="90" alt="Get it on F-Droid" src="https://f-droid.org/badge/get-it-on.png" />](https://f-droid.org/packages/vadimerenkov.autasker/)
+
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/M4M31PFBMQ)
 
 </div>
