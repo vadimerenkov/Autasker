@@ -50,10 +50,8 @@ import org.jetbrains.compose.resources.stringResource
 import vadimerenkov.autasker.core.domain.Period
 import vadimerenkov.autasker.core.domain.Time
 import vadimerenkov.autasker.core.domain.habits.HabitType
-import vadimerenkov.autasker.habits.domain.DatePeriod
-import vadimerenkov.autasker.habits.domain.isIn
 import vadimerenkov.autasker.habits.presentation.calculateTimeString
-import java.time.ZoneId
+import vadimerenkov.autasker.habits.presentation.toYearMonth
 import java.time.format.TextStyle
 import java.util.Locale
 
@@ -155,13 +153,9 @@ fun HabitDetailsScreen(
 		)
 
 		val currentMonth = calendarState.firstVisibleMonth.yearMonth.toJavaYearMonth()
-		val month = DatePeriod(
-			startingDate = currentMonth.atDay(1).atStartOfDay(ZoneId.systemDefault()),
-			endingDate = currentMonth.atEndOfMonth().atStartOfDay(ZoneId.systemDefault())
-		)
 		val monthlyCompletions = state
 			.completions
-			.filter { it.date.isIn(month) }
+			.filter { it.date.toYearMonth() == currentMonth }
 			.sumOf { it.quantity }
 		val monthlyCompletionsText = stringResource(Res.string.monthly_completions)
 		Text(
