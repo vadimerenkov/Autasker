@@ -154,8 +154,8 @@ class RoomTasksRepository(
 			}
 	}
 
-	override suspend fun getRepeatingTasks(): List<Task> {
-		return tasksDao.getRepeatingTasks().map { it.toTask() }
+	override suspend fun getCompletedRepeatingTasks(): List<Task> {
+		return tasksDao.getRepeatingCompletedTasks().map { it.toTask() }
 	}
 
 	override suspend fun getCompletedTasks(): List<Task> {

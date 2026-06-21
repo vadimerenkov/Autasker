@@ -29,9 +29,10 @@ interface TasksDao {
 	fun getAllTasks(): Flow<List<TaskData>>
 
 	@Query("SELECT * FROM taskdata WHERE isRepeating = 1" +
+			" AND isCompleted = 1" +
 			" AND dueDateEpochSeconds IS NOT NULL" +
 			" AND isDeleted = 0")
-	suspend fun getRepeatingTasks(): List<TaskData>
+	suspend fun getRepeatingCompletedTasks(): List<TaskData>
 
 	@Query("SELECT * FROM taskdata WHERE isCompleted = 1" +
 			" AND isDeleted = 0")

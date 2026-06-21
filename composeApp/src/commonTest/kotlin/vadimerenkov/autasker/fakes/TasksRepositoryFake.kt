@@ -67,7 +67,7 @@ class TasksRepositoryFake: TasksRepository {
 		return tasks
 	}
 
-	override suspend fun getRepeatingTasks(): List<Task> {
+	override suspend fun getCompletedRepeatingTasks(): List<Task> {
 		return tasks.value.filter { it.repeatState.isRepeating }
 	}
 

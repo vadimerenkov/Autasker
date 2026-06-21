@@ -14,7 +14,7 @@ interface TasksRepository {
 	suspend fun deleteSubtasksForTask(id: Long)
 	suspend fun deleteSubtasks(subtasks: List<Subtask>)
 	fun getAllTasks(): Flow<List<Task>>
-	suspend fun getRepeatingTasks(): List<Task>
+	suspend fun getCompletedRepeatingTasks(): List<Task>
 	suspend fun getCompletedTasks(): List<Task>
 	suspend fun getYesterdayUncompletedTasks(): List<Task>
 	suspend fun getUncompletedDatelessTasks(): List<Task>

@@ -5,7 +5,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.joinAll
 import kotlinx.coroutines.launch
 import vadimerenkov.autasker.core.domain.RepeatMode
 import vadimerenkov.autasker.core.domain.Task
@@ -122,65 +121,42 @@ class NewDayViewModel(
 		viewModelScope.launch {
 			tasks.forEach { task ->
 				task.dueDate?.let {
-					reminderService.cancelRemindersForTask(task.id)
-					task.reminders.forEach { reminder ->
-						val date = it.minusReminder(reminder)
-						reminderService.scheduleReminder(task.id, date)
+					if (task.reminders.isNotEmpty()) {
+						reminderService.cancelRemindersForTask(task.id)
+						task.reminders.forEach { reminder ->
+							val date = it.minusReminder(reminder)
+							reminderService.scheduleReminder(task.id, date)
+						}
 					}
 				}
 			}
 			repository.saveTasks(tasks)
 
-			val repeatingTasks = repository.getRepeatingTasks()
+			val repeatingTasks = repository.getCompletedRepeatingTasks()
 			println("There are ${repeatingTasks.size} repeating tasks")
 			val updatedTasks = mutableListOf<Task>()
 
-			val jobs = repeatingTasks.map { task ->
-				launch() {
-					when (task.repeatState.mode) {
-						RepeatMode.ON_COMPLETION, RepeatMode.ON_EXACT -> {
-							if (task.isCompleted) {
-								updatedTasks.add(task.copy(
-									dueDate = task.calculateNewDate(settings.state.value.firstDayOfWeek),
-									isCompleted = false,
-									completedDate = null
-								))
-							}
-						}
-						/*
-						RepeatMode.FORGIVING -> {
-							with (Dispatchers.Default) {
-								var count = 0
+			repeatingTasks.forEach { task ->
+				when (task.repeatState.mode) {
+					RepeatMode.ON_COMPLETION, RepeatMode.ON_EXACT -> {
+						updatedTasks.add(task.copy(
+							dueDate = task.calculateNewDate(settings.state.value.firstDayOfWeek),
+							isCompleted = false,
+							completedDate = null
+						))
+					}
+					/*
+					RepeatMode.FORGIVING -> {
+						with (Dispatchers.Default) {
+							var count = 0
 
-								var dateTime = task.dueDate
-								do {
-									dateTime = dateTime?.calculateNewDate(task.repeatState)
-									count++
-								} while (dateTime?.isBefore(Time.todayStart()) == true)
-
-								do {
-									updatedTasks.add(
-										task.copy(
-											id = UUID.randomUUID(),
-											dueDate = dateTime,
-											isCompleted = false
-										)
-									)
-									dateTime = dateTime?.calculateNewDate(task.repeatState)
-
-								} while (dateTime?.isAfter(Time.todayStart()) == true && dateTime.isBefore(Time.tomorrowEnd()))
-
-								if (count > 0) {
-									repository.deleteTasks(listOf(task))
-								}
-							}
-
-						}
-						RepeatMode.ALWAYS -> {
 							var dateTime = task.dueDate
 							do {
 								dateTime = dateTime?.calculateNewDate(task.repeatState)
+								count++
+							} while (dateTime?.isBefore(Time.todayStart()) == true)
 
+							do {
 								updatedTasks.add(
 									task.copy(
 										id = UUID.randomUUID(),
@@ -188,24 +164,44 @@ class NewDayViewModel(
 										isCompleted = false
 									)
 								)
+								dateTime = dateTime?.calculateNewDate(task.repeatState)
+
 							} while (dateTime?.isAfter(Time.todayStart()) == true && dateTime.isBefore(Time.tomorrowEnd()))
+
+							if (count > 0) {
+								repository.deleteTasks(listOf(task))
+							}
 						}
 
-						 */
 					}
+					RepeatMode.ALWAYS -> {
+						var dateTime = task.dueDate
+						do {
+							dateTime = dateTime?.calculateNewDate(task.repeatState)
+
+							updatedTasks.add(
+								task.copy(
+									id = UUID.randomUUID(),
+									dueDate = dateTime,
+									isCompleted = false
+								)
+							)
+						} while (dateTime?.isAfter(Time.todayStart()) == true && dateTime.isBefore(Time.tomorrowEnd()))
+					}
+
+					 */
 				}
 			}
+			val alreadyUpdatedTaskIds = tasks.map { it.id }
 
-			jobs.joinAll()
-			println("Finished updating tasks: $updatedTasks")
 			updatedTasks.forEach { task ->
 				task.dueDate?.let {
-					reminderService.cancelRemindersForTask(task.id)
-					println("Canceled previous reminders")
-					task.reminders.forEach { reminder ->
-						val date = it.minusReminder(reminder)
-						reminderService.scheduleReminder(task.id, date)
-						println("Scheduled reminder $reminder")
+					if (task.id !in alreadyUpdatedTaskIds) {
+						reminderService.cancelRemindersForTask(task.id)
+						task.reminders.forEach { reminder ->
+							val date = it.minusReminder(reminder)
+							reminderService.scheduleReminder(task.id, date)
+						}
 					}
 				}
 			}
