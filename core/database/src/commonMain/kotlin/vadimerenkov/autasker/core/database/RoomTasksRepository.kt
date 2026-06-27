@@ -155,7 +155,16 @@ class RoomTasksRepository(
 	}
 
 	override suspend fun getCompletedRepeatingTasks(): List<Task> {
-		return tasksDao.getRepeatingCompletedTasks().map { it.toTask() }
+		return tasksDao
+			.getRepeatingCompletedTasks()
+			.map { taskData ->
+				val reminders = remindersDao.getRemindersForTask(taskData.id).map { it.toReminder() }
+				val subtasks = subtasksDao.getSubtasksForTask(taskData.id).map { it.toSubtask() }
+				taskData.toTask().copy(
+					reminders = reminders,
+					subtasks = subtasks
+				)
+			}
 	}
 
 	override suspend fun getCompletedTasks(): List<Task> {
@@ -165,7 +174,14 @@ class RoomTasksRepository(
 	override suspend fun getYesterdayUncompletedTasks(): List<Task> {
 		return tasksDao
 			.getUncompletedTasks()
-			.map { it.toTask() }
+			.map { taskData ->
+				val reminders = remindersDao.getRemindersForTask(taskData.id).map { it.toReminder() }
+				val subtasks = subtasksDao.getSubtasksForTask(taskData.id).map { it.toSubtask() }
+				taskData.toTask().copy(
+					reminders = reminders,
+					subtasks = subtasks
+				)
+			}
 			.filter { task ->
 				task.dueDate?.toLocalDate()?.isEqual(Time.yesterday()) == true
 			}
@@ -174,7 +190,14 @@ class RoomTasksRepository(
 	override suspend fun getUncompletedDatelessTasks(): List<Task> {
 		return tasksDao
 			.getUncompletedTasks()
-			.map { it.toTask() }
+			.map { taskData ->
+				val reminders = remindersDao.getRemindersForTask(taskData.id).map { it.toReminder() }
+				val subtasks = subtasksDao.getSubtasksForTask(taskData.id).map { it.toSubtask() }
+				taskData.toTask().copy(
+					reminders = reminders,
+					subtasks = subtasks
+				)
+			}
 			.filter { it.dueDate == null }
 	}
 
