@@ -3,6 +3,7 @@ package vadimerenkov.autasker.di
 import org.koin.core.context.startKoin
 import org.koin.dsl.KoinAppDeclaration
 import vadimerenkov.autasker.calendar.calendarModule
+import vadimerenkov.autasker.canvas.di.canvasModule
 import vadimerenkov.autasker.core.database.di.coreDatabaseModule
 import vadimerenkov.autasker.core.domain.di.coreDomainModule
 import vadimerenkov.autasker.core.presentation.di.corePresentationModule
@@ -18,6 +19,7 @@ fun initKoin(config: KoinAppDeclaration? = null) {
 			coreDomainModule,
 			corePresentationModule,
 			calendarModule,
+			canvasModule,
 			habitsDomainModule,
 			habitsDataModule,
 			habitsPresentationModule

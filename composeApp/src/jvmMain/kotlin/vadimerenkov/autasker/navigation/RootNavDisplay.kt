@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.BrowseGallery
 import androidx.compose.material.icons.filled.CalendarMonth
 import androidx.compose.material.icons.filled.Checklist
 import androidx.compose.material.icons.filled.Delete
@@ -67,6 +68,7 @@ import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.parameter.parametersOf
 import vadimerenkov.autasker.calendar.CalendarScreen
+import vadimerenkov.autasker.canvas.CanvasScreen
 import vadimerenkov.autasker.core.domain.settings.Settings
 import vadimerenkov.autasker.core.presentation.about.AboutScreen
 import vadimerenkov.autasker.core.presentation.bin.BinScreen
@@ -196,6 +198,25 @@ fun RootNavDisplay(
 							backstack.add(HabitsRoute)
 						}
 					)
+					NavigationDrawerItem(
+						shape = RectangleShape,
+						label = {
+							Text(
+								text = "Canvas",
+								fontSize = 20.sp
+							)
+						},
+						icon = {
+							Icon(
+								imageVector = Icons.Default.BrowseGallery,
+								contentDescription = null
+							)
+						},
+						selected = backstack.lastOrNull() == CanvasRoute,
+						onClick = {
+							backstack.add(CanvasRoute)
+						}
+					)
 					Spacer(modifier = Modifier.weight(1f))
 					NavigationDrawerItem(
 						shape = RectangleShape,
@@ -316,6 +337,9 @@ fun RootNavDisplay(
 					}
 					entry<HabitsRoute> {
 						HabitsScreen()
+					}
+					entry<CanvasRoute> {
+						CanvasScreen()
 					}
 					entry<NewDayRoute>(metadata = dialog()) {
 						val windowState = WindowState(position = WindowPosition.Aligned(Alignment.Center))
