@@ -12,7 +12,8 @@ data class RepeatState(
 
 enum class RepeatMode {
 	ON_COMPLETION,
-	ON_EXACT
+	ON_EXACT,
+	ARBITRARY
 	/*
 	FORGIVING,
 	ALWAYS

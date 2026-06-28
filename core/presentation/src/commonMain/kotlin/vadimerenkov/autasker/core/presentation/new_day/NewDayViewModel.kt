@@ -138,7 +138,7 @@ class NewDayViewModel(
 
 			repeatingTasks.forEach { task ->
 				when (task.repeatState.mode) {
-					RepeatMode.ON_COMPLETION, RepeatMode.ON_EXACT -> {
+					RepeatMode.ON_COMPLETION, RepeatMode.ON_EXACT, RepeatMode.ARBITRARY -> {
 						updatedTasks.add(task.copy(
 							dueDate = task.calculateNewDate(settings.state.value.firstDayOfWeek),
 							isCompleted = false,

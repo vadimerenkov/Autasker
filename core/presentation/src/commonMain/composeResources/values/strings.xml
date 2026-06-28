@@ -139,6 +139,9 @@
     <string name="mode_always">Always</string>
     <string name="mode_always_desc">The next tasks will always be created regardless of the state of completion.</string>
 
+    <string name="mode_arbitrary">Arbitrary</string>
+    <string name="mode_arbitrary_desc">The next task will be created without a specific date.</string>
+
     <plurals name="every_minute">
         <item quantity="one">every %1$s minute</item>
         <item quantity="other">every %1$s minutes</item>
