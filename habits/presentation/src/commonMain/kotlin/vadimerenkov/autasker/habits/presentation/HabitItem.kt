@@ -45,6 +45,7 @@ fun HabitItem(
 	) {
 		Text(
 			text = habit.title,
+			color = MaterialTheme.colorScheme.onBackground,
 			modifier = Modifier
 				.padding(16.dp)
 		)
@@ -56,7 +57,8 @@ fun HabitItem(
 		) {
 			Icon(
 				imageVector = Icons.Default.Edit,
-				contentDescription = stringResource(Res.string.edit_habit)
+				contentDescription = stringResource(Res.string.edit_habit),
+				tint = MaterialTheme.colorScheme.onBackground
 			)
 		}
 		IconButton(
@@ -66,7 +68,8 @@ fun HabitItem(
 		) {
 			Icon(
 				imageVector = Icons.Default.Delete,
-				contentDescription = stringResource(Res.string.delete_habit)
+				contentDescription = stringResource(Res.string.delete_habit),
+				tint = MaterialTheme.colorScheme.onBackground
 			)
 		}
 	}
