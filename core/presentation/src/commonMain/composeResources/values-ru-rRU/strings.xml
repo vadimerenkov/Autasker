@@ -120,6 +120,9 @@
     <string name="mode_always">Всегда</string>
     <string name="mode_always_desc">Следующие задачи будут создаваться всегда, независимо от выполнения предыдущих.</string>
 
+    <string name="mode_arbitrary">Произвольно</string>
+    <string name="mode_arbitrary_desc">Следующая задача будет создана без определенной даты.</string>
+
     <plurals name="every_minute">
         <item quantity="one">каждую %1$s минуту</item>
         <item quantity="few">каждые %1$s минуты</item>

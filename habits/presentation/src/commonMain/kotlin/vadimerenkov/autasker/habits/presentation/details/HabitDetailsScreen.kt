@@ -8,7 +8,9 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
@@ -79,10 +81,12 @@ fun HabitDetailsScreen(
 	Column(
 		verticalArrangement = Arrangement.spacedBy(16.dp),
 		modifier = modifier
+			.verticalScroll(rememberScrollState())
 	) {
 		Text(
 			text = state.habit.title,
 			fontSize = 24.sp,
+			color = MaterialTheme.colorScheme.onBackground,
 			modifier = Modifier
 				.align(Alignment.CenterHorizontally)
 		)
@@ -106,11 +110,13 @@ fun HabitDetailsScreen(
 					) {
 						Icon(
 							imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-							contentDescription = stringResource(Res.string.previous_month)
+							contentDescription = stringResource(Res.string.previous_month),
+							tint = MaterialTheme.colorScheme.onBackground
 						)
 					}
 					Text(
-						text = "$month $year"
+						text = "$month $year",
+						color = MaterialTheme.colorScheme.onBackground,
 					)
 					IconButton(
 						onClick = {
@@ -122,7 +128,8 @@ fun HabitDetailsScreen(
 					) {
 						Icon(
 							imageVector = Icons.AutoMirrored.Filled.ArrowForward,
-							contentDescription = stringResource(Res.string.next_month)
+							contentDescription = stringResource(Res.string.next_month),
+							tint = MaterialTheme.colorScheme.onBackground
 						)
 					}
 				}
@@ -149,6 +156,7 @@ fun HabitDetailsScreen(
 				HabitType.CUSTOM -> "$currentStreak ${state.currentStreak} $quantifier"
 				HabitType.TIME ->"$currentStreak ${calculateTimeString(state.currentStreak)}"
 			},
+			color = MaterialTheme.colorScheme.onBackground,
 			fontSize = 24.sp
 		)
 
@@ -164,7 +172,8 @@ fun HabitDetailsScreen(
 				HabitType.CUSTOM -> "$monthlyCompletionsText $monthlyCompletions $quantifier"
 				HabitType.TIME -> "$monthlyCompletionsText ${calculateTimeString(monthlyCompletions)}"
 			},
-			fontSize = 24.sp
+			fontSize = 24.sp,
+			color = MaterialTheme.colorScheme.onBackground,
 		)
 
 		val totalCompletions = state.completions.sumOf { it.quantity }
@@ -175,7 +184,8 @@ fun HabitDetailsScreen(
 				HabitType.CUSTOM -> "$totalCompletionsText $totalCompletions $quantifier"
 				HabitType.TIME -> "$totalCompletionsText ${calculateTimeString(totalCompletions)}"
 			},
-			fontSize = 24.sp
+			fontSize = 24.sp,
+			color = MaterialTheme.colorScheme.onBackground,
 		)
 
 		/*

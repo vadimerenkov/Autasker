@@ -79,7 +79,8 @@ fun HabitEditDialog(
 			verticalAlignment = Alignment.CenterVertically
 		) {
 			Text(
-				text = stringResource(Res.string.count_as)
+				text = stringResource(Res.string.count_as),
+				color = MaterialTheme.colorScheme.onBackground
 			)
 			Spacer(modifier = Modifier.width(8.dp))
 			ExposedDropdownMenuBox(
@@ -151,7 +152,8 @@ fun HabitEditDialog(
 					HabitType.CUSTOM -> {
 						"${state.customQuantifier} $per"
 					}
-				}
+				},
+				color = MaterialTheme.colorScheme.onBackground
 			)
 			var expanded by remember { mutableStateOf(false) }
 

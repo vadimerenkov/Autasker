@@ -38,7 +38,8 @@ data class Task(
 	fun calculateNewDate(firstDayOfWeek: DayOfWeek): ZonedDateTime? {
 
 		val startingDate = when (repeatState.mode) {
-			RepeatMode.ON_COMPLETION -> completedDate ?: Time.now()
+			RepeatMode.ON_COMPLETION -> completedDate
+			RepeatMode.ARBITRARY -> null
 			else -> dueDate
 		}
 
