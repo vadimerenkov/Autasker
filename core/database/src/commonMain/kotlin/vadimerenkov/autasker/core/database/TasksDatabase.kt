@@ -27,9 +27,10 @@ import vadimerenkov.autasker.core.database.mappers.Converters
 		HabitData::class,
 		HabitCompletionData::class
 	],
-	version = 2,
+	version = 3,
 	autoMigrations = [
-		AutoMigration(1, 2)
+		AutoMigration(1, 2),
+		AutoMigration(2, 3)
 	],
 	exportSchema = true
 )
