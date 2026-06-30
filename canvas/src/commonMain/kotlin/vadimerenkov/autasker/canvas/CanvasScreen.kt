@@ -1,6 +1,7 @@
 package vadimerenkov.autasker.canvas
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -11,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.IntOffset
+import androidx.compose.ui.unit.dp
 import org.koin.compose.viewmodel.koinViewModel
 import vadimerenkov.autasker.core.presentation.components.TaskItem
 import vadimerenkov.autasker.core.presentation.main.MainAction
@@ -53,7 +55,9 @@ private fun CanvasRoot(
 			TaskItem(
 				task = task,
 				canOpenSubtasks = false,
-				onAction = onAction
+				onAction = onAction,
+				modifier = Modifier
+					.widthIn(max = 300.dp)
 			)
 		}
 	}

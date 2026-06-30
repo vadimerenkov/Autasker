@@ -1,6 +1,9 @@
 package vadimerenkov.autasker.navigation
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CalendarMonth
 import androidx.compose.material.icons.filled.Checklist
@@ -34,137 +37,142 @@ fun MainNavigationRail(
 	NavigationRail(
 		containerColor = MaterialTheme.colorScheme.secondaryContainer
 	) {
-		NavigationRailItem(
-			selected = backstack.lastOrNull() == MainScreenRoute,
-			onClick = {
-				backstack.removeAll { it != MainScreenRoute }
-			},
-			icon = {
-				Icon(
-					imageVector = Icons.Default.Home,
-					contentDescription = null
-				)
-			},
-			label = {
-				Text(
-					text = stringResource(Res.string.tasks)
-				)
-			}
-		)
-		NavigationRailItem(
-			selected = backstack.lastOrNull() == CalendarRoute,
-			onClick = {
-				if (backstack.lastOrNull() != CalendarRoute) {
-					backstack.add(CalendarRoute)
+		Column(
+			modifier = Modifier
+				.verticalScroll(rememberScrollState())
+		) {
+			NavigationRailItem(
+				selected = backstack.lastOrNull() == MainScreenRoute,
+				onClick = {
+					backstack.removeAll { it != MainScreenRoute }
+				},
+				icon = {
+					Icon(
+						imageVector = Icons.Default.Home,
+						contentDescription = null
+					)
+				},
+				label = {
+					Text(
+						text = stringResource(Res.string.tasks)
+					)
 				}
-			},
-			icon = {
-				Icon(
-					imageVector = Icons.Default.CalendarMonth,
-					contentDescription = null
-				)
-			},
-			label = {
-				Text(
-					text = stringResource(Res.string.calendar)
-				)
-			}
-		)
-		NavigationRailItem(
-			selected = backstack.lastOrNull() == HabitsRoute,
-			onClick = {
-				if (backstack.lastOrNull() != HabitsRoute) {
-					backstack.add(HabitsRoute)
+			)
+			NavigationRailItem(
+				selected = backstack.lastOrNull() == CalendarRoute,
+				onClick = {
+					if (backstack.lastOrNull() != CalendarRoute) {
+						backstack.add(CalendarRoute)
+					}
+				},
+				icon = {
+					Icon(
+						imageVector = Icons.Default.CalendarMonth,
+						contentDescription = null
+					)
+				},
+				label = {
+					Text(
+						text = stringResource(Res.string.calendar)
+					)
 				}
-			},
-			icon = {
-				Icon(
-					imageVector = Icons.Default.Checklist,
-					contentDescription = null
-				)
-			},
-			label = {
-				Text(
-					text = stringResource(Res.string.habits)
-				)
-			}
-		)
-		NavigationRailItem(
-			selected = backstack.lastOrNull() == CanvasRoute,
-			onClick = {
-				if (backstack.lastOrNull() != CanvasRoute) {
-					backstack.add(CanvasRoute)
+			)
+			NavigationRailItem(
+				selected = backstack.lastOrNull() == HabitsRoute,
+				onClick = {
+					if (backstack.lastOrNull() != HabitsRoute) {
+						backstack.add(HabitsRoute)
+					}
+				},
+				icon = {
+					Icon(
+						imageVector = Icons.Default.Checklist,
+						contentDescription = null
+					)
+				},
+				label = {
+					Text(
+						text = stringResource(Res.string.habits)
+					)
 				}
-			},
-			icon = {
-				Icon(
-					imageVector = Icons.Default.Dashboard,
-					contentDescription = null
-				)
-			},
-			label = {
-				Text(
-					text = stringResource(Res.string.canvas)
-				)
-			}
-		)
-		Spacer(modifier = Modifier.weight(1f))
-		NavigationRailItem(
-			selected = backstack.lastOrNull() == BinScreenRoute,
-			onClick = {
-				if (backstack.lastOrNull() != BinScreenRoute) {
-					backstack.add(BinScreenRoute)
+			)
+			NavigationRailItem(
+				selected = backstack.lastOrNull() == CanvasRoute,
+				onClick = {
+					if (backstack.lastOrNull() != CanvasRoute) {
+						backstack.add(CanvasRoute)
+					}
+				},
+				icon = {
+					Icon(
+						imageVector = Icons.Default.Dashboard,
+						contentDescription = null
+					)
+				},
+				label = {
+					Text(
+						text = stringResource(Res.string.canvas)
+					)
 				}
-			},
-			icon = {
-				Icon(
-					imageVector = Icons.Default.Delete,
-					contentDescription = null
-				)
-			},
-			label = {
-				Text(
-					text = stringResource(Res.string.trash)
-				)
-			}
-		)
-		NavigationRailItem(
-			selected = backstack.lastOrNull() == SettingsRoute,
-			onClick = {
-				if (backstack.lastOrNull() != SettingsRoute) {
-					backstack.add(SettingsRoute)
+			)
+			Spacer(modifier = Modifier.weight(1f))
+			NavigationRailItem(
+				selected = backstack.lastOrNull() == BinScreenRoute,
+				onClick = {
+					if (backstack.lastOrNull() != BinScreenRoute) {
+						backstack.add(BinScreenRoute)
+					}
+				},
+				icon = {
+					Icon(
+						imageVector = Icons.Default.Delete,
+						contentDescription = null
+					)
+				},
+				label = {
+					Text(
+						text = stringResource(Res.string.trash)
+					)
 				}
-			},
-			icon = {
-				Icon(
-					imageVector = Icons.Default.Settings,
-					contentDescription = null
-				)
-			},
-			label = {
-				Text(
-					text = stringResource(Res.string.settings)
-				)
-			}
-		)
-		NavigationRailItem(
-			selected = backstack.lastOrNull() == AboutRoute,
-			onClick = {
-				if (backstack.lastOrNull() != AboutRoute) {
-					backstack.add(AboutRoute)
+			)
+			NavigationRailItem(
+				selected = backstack.lastOrNull() == SettingsRoute,
+				onClick = {
+					if (backstack.lastOrNull() != SettingsRoute) {
+						backstack.add(SettingsRoute)
+					}
+				},
+				icon = {
+					Icon(
+						imageVector = Icons.Default.Settings,
+						contentDescription = null
+					)
+				},
+				label = {
+					Text(
+						text = stringResource(Res.string.settings)
+					)
 				}
-			},
-			icon = {
-				Icon(
-					imageVector = Icons.Default.Info,
-					contentDescription = null
-				)
-			},
-			label = {
-				Text(
-					text = stringResource(Res.string.about)
-				)
-			}
-		)
+			)
+			NavigationRailItem(
+				selected = backstack.lastOrNull() == AboutRoute,
+				onClick = {
+					if (backstack.lastOrNull() != AboutRoute) {
+						backstack.add(AboutRoute)
+					}
+				},
+				icon = {
+					Icon(
+						imageVector = Icons.Default.Info,
+						contentDescription = null
+					)
+				},
+				label = {
+					Text(
+						text = stringResource(Res.string.about)
+					)
+				}
+			)
+		}
 	}
 }
