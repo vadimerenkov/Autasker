@@ -98,6 +98,7 @@
     <string name="count_as">Считать:</string>
     <string name="choose_task">Выберите задачу...</string>
     <string name="complete_habit">Отметить привычку:</string>
+    <string name="canvas">Холст</string>
 
     <string name="theme">Тема</string>
     <string name="light_theme">Светлая</string>

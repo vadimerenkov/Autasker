@@ -8,9 +8,12 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import vadimerenkov.autasker.core.domain.TasksRepository
+import vadimerenkov.autasker.core.presentation.main.MainAction
+import vadimerenkov.autasker.core.presentation.main.MainViewModel
 
 class CanvasViewModel(
-	tasksRepository: TasksRepository
+	private val tasksRepository: TasksRepository,
+	private val mainViewModel: MainViewModel
 ): ViewModel() {
 
 	var state by mutableStateOf(CanvasState())
@@ -21,5 +24,9 @@ class CanvasViewModel(
 			.onEach { tasks ->
 				state = state.copy(tasks = tasks)
 			}.launchIn(viewModelScope)
+	}
+
+	fun onAction(action: MainAction) {
+		mainViewModel.onAction(action)
 	}
 }

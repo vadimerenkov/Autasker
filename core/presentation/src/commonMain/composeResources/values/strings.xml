@@ -99,6 +99,7 @@
     <string name="choose_task">Choose task...</string>
     <string name="complete_habit">Complete habit:</string>
     <string name="download_new_version">Download new version</string>
+    <string name="canvas">Canvas</string>
 
     <string name="language">Language</string>
     <string name="english" translatable="false">English</string>

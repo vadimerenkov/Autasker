@@ -34,6 +34,7 @@ import androidx.window.core.layout.WindowSizeClass
 import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.parameter.parametersOf
 import vadimerenkov.autasker.calendar.CalendarScreen
+import vadimerenkov.autasker.canvas.CanvasScreen
 import vadimerenkov.autasker.core.domain.settings.Settings
 import vadimerenkov.autasker.core.presentation.about.AboutScreen
 import vadimerenkov.autasker.core.presentation.bin.BinScreen
@@ -138,6 +139,13 @@ private fun NavigationRailNavDisplay(
 				entry<HabitsRoute> {
 					HabitsScreen()
 				}
+				entry<CanvasRoute> {
+					CanvasScreen(
+						onTaskClick = {
+							mainBackStack.add(EditGraph(it))
+						}
+					)
+				}
 				entry<SettingsRoute> {
 					SettingsScreen(
 						modifier = Modifier
@@ -199,6 +207,13 @@ private fun FoldedDrawerNavDisplay(
 			    }
 			    entry<HabitsRoute> {
 				    HabitsScreen()
+			    }
+			    entry<CanvasRoute> {
+				    CanvasScreen(
+					    onTaskClick = {
+						    mainBackStack.add(EditGraph(it))
+					    }
+				    )
 			    }
 			    entry<SettingsRoute> {
 				    SettingsScreen(

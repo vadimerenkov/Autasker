@@ -13,20 +13,30 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.IntOffset
 import org.koin.compose.viewmodel.koinViewModel
 import vadimerenkov.autasker.core.presentation.components.TaskItem
+import vadimerenkov.autasker.core.presentation.main.MainAction
 import java.util.Random
 
 @Composable
 fun CanvasScreen(
+	onTaskClick: (Long) -> Unit,
 	viewModel: CanvasViewModel = koinViewModel()
 ) {
 	CanvasRoot(
-		state = viewModel.state
+		state = viewModel.state,
+		onAction = { action ->
+			when (action) {
+				is MainAction.OnTaskClick -> onTaskClick(action.id)
+				else -> Unit
+			}
+			viewModel.onAction(action)
+		}
 	)
 }
 
 @Composable
 private fun CanvasRoot(
-	state: CanvasState
+	state: CanvasState,
+	onAction: (MainAction) -> Unit
 ) {
 	var offset by remember { mutableStateOf(IntOffset.Zero) }
 	MindMap(
@@ -42,7 +52,8 @@ private fun CanvasRoot(
 		state.tasks.forEach { task ->
 			TaskItem(
 				task = task,
-				onAction = {}
+				canOpenSubtasks = false,
+				onAction = onAction
 			)
 		}
 	}
