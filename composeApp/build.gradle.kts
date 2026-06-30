@@ -40,6 +40,7 @@ kotlin {
 	        implementation(projects.habits.data)
 	        implementation(projects.habits.presentation)
 	        implementation(projects.updateChecker)
+	        implementation(projects.canvas)
         }
         jvmMain.dependencies {
             implementation(compose.desktop.currentOs)

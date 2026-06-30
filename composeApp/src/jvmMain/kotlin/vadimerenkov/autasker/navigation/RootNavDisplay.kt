@@ -16,6 +16,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CalendarMonth
 import androidx.compose.material.icons.filled.Checklist
+import androidx.compose.material.icons.filled.Dashboard
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material3.HorizontalDivider
@@ -53,6 +54,7 @@ import androidx.navigation3.ui.NavDisplay
 import autasker.core.presentation.generated.resources.Res
 import autasker.core.presentation.generated.resources.about
 import autasker.core.presentation.generated.resources.calendar
+import autasker.core.presentation.generated.resources.canvas
 import autasker.core.presentation.generated.resources.download_new_version
 import autasker.core.presentation.generated.resources.edit_task
 import autasker.core.presentation.generated.resources.habits
@@ -67,6 +69,7 @@ import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.parameter.parametersOf
 import vadimerenkov.autasker.calendar.CalendarScreen
+import vadimerenkov.autasker.canvas.CanvasScreen
 import vadimerenkov.autasker.core.domain.settings.Settings
 import vadimerenkov.autasker.core.presentation.about.AboutScreen
 import vadimerenkov.autasker.core.presentation.bin.BinScreen
@@ -196,6 +199,25 @@ fun RootNavDisplay(
 							backstack.add(HabitsRoute)
 						}
 					)
+					NavigationDrawerItem(
+						shape = RectangleShape,
+						label = {
+							Text(
+								text = stringResource(Res.string.canvas),
+								fontSize = 20.sp
+							)
+						},
+						icon = {
+							Icon(
+								imageVector = Icons.Default.Dashboard,
+								contentDescription = null
+							)
+						},
+						selected = backstack.lastOrNull() == CanvasRoute,
+						onClick = {
+							backstack.add(CanvasRoute)
+						}
+					)
 					Spacer(modifier = Modifier.weight(1f))
 					NavigationDrawerItem(
 						shape = RectangleShape,
@@ -316,6 +338,13 @@ fun RootNavDisplay(
 					}
 					entry<HabitsRoute> {
 						HabitsScreen()
+					}
+					entry<CanvasRoute> {
+						CanvasScreen(
+							onTaskClick = {
+								backstack.add(EditGraph(it))
+							}
+						)
 					}
 					entry<NewDayRoute>(metadata = dialog()) {
 						val windowState = WindowState(position = WindowPosition.Aligned(Alignment.Center))

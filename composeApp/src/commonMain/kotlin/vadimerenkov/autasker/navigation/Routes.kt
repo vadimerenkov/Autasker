@@ -33,3 +33,5 @@ data object NewDayRoute: NavKey
 
 @Serializable
 data object HabitsRoute: NavKey
+@Serializable
+data object CanvasRoute: NavKey

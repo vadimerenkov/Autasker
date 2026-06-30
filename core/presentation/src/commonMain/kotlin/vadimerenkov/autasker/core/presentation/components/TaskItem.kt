@@ -11,5 +11,6 @@ import vadimerenkov.autasker.core.presentation.main.MainAction
 expect fun TaskItem(
 	task: Task,
 	onAction: (MainAction) -> Unit,
-	modifier: Modifier = Modifier
+	modifier: Modifier = Modifier,
+	canOpenSubtasks: Boolean = true
 )

@@ -54,7 +54,9 @@ import vadimerenkov.autasker.core.presentation.util.ComposableDateFormatter
 actual fun TaskItem(
 	task: Task,
 	onAction: (MainAction) -> Unit,
-	modifier: Modifier
+	modifier: Modifier,
+	canOpenSubtasks: Boolean
+
 ) {
 	var subtasksOpen by remember { mutableStateOf(false) }
 	var menuOpen by remember { mutableStateOf(false) }
@@ -66,7 +68,7 @@ actual fun TaskItem(
 			.animateContentSize()
 			.background(MaterialTheme.colorScheme.background)
 	) {
-		if (task.subtasks.isNotEmpty()) {
+		if (task.subtasks.isNotEmpty() && canOpenSubtasks) {
 			IconButton(
 				onClick = {
 					subtasksOpen = !subtasksOpen
