@@ -1,7 +1,6 @@
 package vadimerenkov.autasker.canvas
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -13,6 +12,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.IntOffset
 import org.koin.compose.viewmodel.koinViewModel
+import vadimerenkov.autasker.core.presentation.components.TaskItem
+import java.util.Random
 
 @Composable
 fun CanvasScreen(
@@ -28,15 +29,21 @@ private fun CanvasRoot(
 	state: CanvasState
 ) {
 	var offset by remember { mutableStateOf(IntOffset.Zero) }
-	LazyCanvas(
-		items = state.tasks,
-		offset = offset,
-		onDrag = { delta ->
-			offset += delta
+	MindMap(
+		mapOffset = offset,
+		random = Random(123),
+		onDrag = {
+			offset += it
 		},
 		modifier = Modifier
-			.fillMaxSize()
 			.background(MaterialTheme.colorScheme.background)
 			.clip(RectangleShape)
-	)
+	) {
+		state.tasks.forEach { task ->
+			TaskItem(
+				task = task,
+				onAction = {}
+			)
+		}
+	}
 }
